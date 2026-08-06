@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  PEMBINA
+  USER
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  DISMISSED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  name          String
+  email         String    @unique
+  passwordHash  String
+  bio           String?   @db.Text
+  avatarUrl     String?
+  role          Role      @default(USER)
+  isBanned      Boolean   @default(false)
+  banReason     String?
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  posts         Post[]
+  comments      Comment[]
+  reactions     Reaction[]
+  bookmarks     Bookmark[]
+  notifications Notification[]      @relation("NotificationRecipient")
+  actorNotifs   Notification[]      @relation("NotificationActor")
+  following     Follow[]            @relation("FollowingRelation")
+  followers     Follow[]            @relation("FollowerRelation")
+  chatMessages  ChatMessage[]
+  chatThread    ChatThread?         @relation("UserThread")
+  handledThreads ChatThread[]       @relation("AdminHandler")
+  reportsFiled  Report[]            @relation("ReportedBy")
+  otps          VerificationCode[]
+  readingList   ReadingListItem[]
+
+  @@index([email])
+  @@index([username])
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  type      String   // "REGISTER" | "RESET_PASSWORD"
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userEmail], references: [email])
+  userEmail String?
+
+  @@index([email, code])
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  content     String    @db.Text
+  imageUrl    String?
+  imageFileId String?
+  bookTitle   String?
+  bookAuthor  String?
+  isTakenDown Boolean   @default(false)
+  takedownReason String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  comments    Comment[]
+  reactions   Reaction[]
+  bookmarks   Bookmark[]
+  shares      Share[]
+  reports     Report[]
+
+  // Denormalized counters for fast feed ranking
+  likeCount    Int @default(0)
+  dislikeCount Int @default(0)
+  commentCount Int @default(0)
+  shareCount   Int @default(0)
+
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("CommentReplies")
+
+  @@index([postId])
+}
+
+model Reaction {
+  id     String       @id @default(cuid())
+  type   ReactionType
+  userId String
+  user   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
+
+model Share {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  follower    User     @relation("FollowerRelation", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User     @relation("FollowingRelation", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model Report {
+  id         String       @id @default(cuid())
+  reason     String       @db.Text
+  status     ReportStatus @default(PENDING)
+  createdAt  DateTime     @default(now())
+
+  postId     String
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  reporterId String
+  reporter   User         @relation("ReportedBy", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String   // LIKE, COMMENT, FOLLOW, TAKEDOWN, SYSTEM, CHAT
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  recipientId String
+  recipient   User   @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  actorId     String?
+  actor       User?  @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([recipientId, isRead])
+}
+
+model ChatThread {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation("UserThread", fields: [userId], references: [id], onDelete: Cascade)
+  handledById String?
+  handledBy   User?    @relation("AdminHandler", fields: [handledById], references: [id], onDelete: SetNull)
+  isOpen      Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  messages    ChatMessage[]
+}
+
+model ChatMessage {
+  id         String     @id @default(cuid())
+  threadId   String
+  thread     ChatThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     User       @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content    String     @db.Text
+  isFromAdmin Boolean   @default(false)
+  createdAt  DateTime   @default(now())
+
+  @@index([threadId])
+}
+
+model ReadingListItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookTitle String
+  bookAuthor String?
+  status    String   @default("WANT_TO_READ") // WANT_TO_READ | READING | FINISHED
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
