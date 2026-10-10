@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,12 +17,7 @@ export default function LoginPage() {
     setLoading(true);
     const res = await signIn("credentials", { email, password, redirect: false });
     setLoading(false);
-
     if (res?.error) {
-      if (res.error === "EMAIL_NOT_VERIFIED") {
-        router.push(`/verify?email=${encodeURIComponent(email)}`);
-        return;
-      }
       if (res.error === "ACCOUNT_BANNED") {
         setError("Akun kamu telah dinonaktifkan oleh admin.");
         return;
@@ -67,10 +61,7 @@ export default function LoginPage() {
       </form>
 
       <p className="text-sm text-center mt-4 text-gray-500">
-        Belum punya akun?{" "}
-        <Link href="/register" className="text-emerald-700 font-medium hover:underline">
-          Daftar
-        </Link>
+        Akun hanya dapat dibuat oleh admin.
       </p>
     </div>
   );

@@ -1,14 +1,14 @@
 # 📚 BookClub — Platform Sosial Komunitas Pecinta Buku
 
-Dibangun dengan Next.js 16 (App Router), Prisma + PostgreSQL (Neon), NextAuth v5, Resend (email OTP), dan ImageKit (upload gambar).
+- Dibangun dengan Next.js 16 (App Router), Prisma + PostgreSQL (Neon), NextAuth v5, dan ImageKit (upload gambar).
 
 ## ✨ Fitur
 
-- **Autentikasi**: registrasi wajib verifikasi email dengan kode OTP 6 digit (dikirim via Resend)
+- **Autentikasi**: login dengan akun yang dibuat oleh admin
 - **Role**: `ADMIN` (akses penuh), `PEMBINA` (takedown konten, balas chat CS, tidak bisa ban/ubah role), `USER` (kelola konten & profil sendiri)
 - **Sosial media**: post (teks + gambar + info buku), like/dislike, komentar (dengan balasan), share, bookmark, follow/unfollow, halaman profil
 - **Algoritma feed**: skor berbasis engagement + waktu (mirip "hot score"), dengan boost untuk akun yang diikuti — lihat `lib/algorithm.ts`
-- **Admin dashboard**: statistik, kelola pengguna (ban/role), moderasi konten (takedown/restore), kelola laporan, inbox customer service
+- **Admin dashboard**: statistik, membuat akun pengguna, kelola pengguna (ban/role), moderasi konten (takedown/restore), kelola laporan, inbox customer service
 - **Fitur minor**: notifikasi in-app, reading list (Ingin Dibaca/Sedang Dibaca/Selesai), laporkan post
 
 ## 🚀 Setup Lokal
@@ -23,7 +23,6 @@ Salin `.env.example` menjadi `.env` lalu isi:
 
 - **DATABASE_URL / DIRECT_URL**: buat project gratis di neon.tech, salin connection string (pooled untuk `DATABASE_URL`, direct untuk `DIRECT_URL`)
 - **AUTH_SECRET**: jalankan `openssl rand -base64 32`
-- **RESEND_API_KEY**: daftar gratis di resend.com, buat API key. Untuk kirim ke email selain milikmu sendiri, verifikasi domain di Resend dulu
 - **IMAGEKIT_***: daftar gratis di imagekit.io, ambil Public Key, Private Key, dan URL Endpoint dari dashboard Developer Options
 
 ### 3. Migrasi database & buat akun admin pertama
@@ -62,7 +61,6 @@ components/                # PostCard, CommentSection, Navbar, dll
 ## 🔒 Catatan Keamanan
 
 - Password di-hash dengan bcrypt
-- Kode OTP kedaluwarsa 10 menit
 - Role `PEMBINA` tidak bisa ban akun atau mengubah role (hanya `ADMIN`)
 - Semua endpoint mutasi memvalidasi sesi & kepemilikan data
 
@@ -77,7 +75,7 @@ Project ini dibuat di lingkungan sandbox tanpa akses ke `binaries.prisma.sh`, ja
 
 ## 🛠️ Pengembangan Lanjutan yang Disarankan
 
-- Rate limiting di endpoint publik (register, login, report)
+- Rate limiting di endpoint publik (login, report)
 - WebSocket/Pusher untuk chat real-time (saat ini polling setiap 8 detik)
 - Infinite scroll otomatis di feed (saat ini tombol "Muat lebih banyak")
-- Notifikasi email untuk aktivitas penting (bukan cuma OTP)
+- Notifikasi email untuk aktivitas penting

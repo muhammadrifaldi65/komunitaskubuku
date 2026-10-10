@@ -45,10 +45,10 @@ export default function HomePage() {
           </Link>
         ) : (
           <Link
-            href="/register"
+            href="/login"
             className="w-full sm:w-auto inline-flex justify-center px-3 py-1.5 bg-emerald-600 text-white rounded-full text-sm hover:bg-emerald-700"
           >
-            Gabung
+            Masuk untuk bergabung
           </Link>
         )}
       </div>

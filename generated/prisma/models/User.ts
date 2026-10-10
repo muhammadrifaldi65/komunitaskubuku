@@ -35,7 +35,6 @@ export type UserMinAggregateOutputType = {
   role: $Enums.Role | null
   isBanned: boolean | null
   banReason: string | null
-  emailVerified: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,7 +50,6 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.Role | null
   isBanned: boolean | null
   banReason: string | null
-  emailVerified: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,7 +65,6 @@ export type UserCountAggregateOutputType = {
   role: number
   isBanned: number
   banReason: number
-  emailVerified: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -85,7 +82,6 @@ export type UserMinAggregateInputType = {
   role?: true
   isBanned?: true
   banReason?: true
-  emailVerified?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -101,7 +97,6 @@ export type UserMaxAggregateInputType = {
   role?: true
   isBanned?: true
   banReason?: true
-  emailVerified?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,7 +112,6 @@ export type UserCountAggregateInputType = {
   role?: true
   isBanned?: true
   banReason?: true
-  emailVerified?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -206,7 +200,6 @@ export type UserGroupByOutputType = {
   role: $Enums.Role
   isBanned: boolean
   banReason: string | null
-  emailVerified: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -243,7 +236,6 @@ export type UserWhereInput = {
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   banReason?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerified?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
@@ -258,7 +250,6 @@ export type UserWhereInput = {
   chatThread?: Prisma.XOR<Prisma.ChatThreadNullableScalarRelationFilter, Prisma.ChatThreadWhereInput> | null
   handledThreads?: Prisma.ChatThreadListRelationFilter
   reportsFiled?: Prisma.ReportListRelationFilter
-  otps?: Prisma.VerificationCodeListRelationFilter
   readingList?: Prisma.ReadingListItemListRelationFilter
 }
 
@@ -273,7 +264,6 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
@@ -288,7 +278,6 @@ export type UserOrderByWithRelationInput = {
   chatThread?: Prisma.ChatThreadOrderByWithRelationInput
   handledThreads?: Prisma.ChatThreadOrderByRelationAggregateInput
   reportsFiled?: Prisma.ReportOrderByRelationAggregateInput
-  otps?: Prisma.VerificationCodeOrderByRelationAggregateInput
   readingList?: Prisma.ReadingListItemOrderByRelationAggregateInput
 }
 
@@ -306,7 +295,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   banReason?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerified?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
@@ -321,7 +309,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   chatThread?: Prisma.XOR<Prisma.ChatThreadNullableScalarRelationFilter, Prisma.ChatThreadWhereInput> | null
   handledThreads?: Prisma.ChatThreadListRelationFilter
   reportsFiled?: Prisma.ReportListRelationFilter
-  otps?: Prisma.VerificationCodeListRelationFilter
   readingList?: Prisma.ReadingListItemListRelationFilter
 }, "id" | "username" | "email">
 
@@ -336,7 +323,6 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -358,7 +344,6 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   banReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  emailVerified?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -374,7 +359,6 @@ export type UserCreateInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -389,7 +373,6 @@ export type UserCreateInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -404,7 +387,6 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -419,7 +401,6 @@ export type UserUncheckedCreateInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -434,7 +415,6 @@ export type UserUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -449,7 +429,6 @@ export type UserUpdateInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -464,7 +443,6 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -479,7 +457,6 @@ export type UserUncheckedUpdateInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -494,7 +471,6 @@ export type UserCreateManyInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -510,7 +486,6 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -526,7 +501,6 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,7 +516,6 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -558,7 +531,6 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -574,19 +546,18 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -605,28 +576,8 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type UserCreateNestedOneWithoutOtpsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOtpsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutOtpsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOtpsInput
-  upsert?: Prisma.UserUpsertWithoutOtpsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOtpsInput, Prisma.UserUpdateWithoutOtpsInput>, Prisma.UserUncheckedUpdateWithoutOtpsInput>
 }
 
 export type UserCreateNestedOneWithoutPostsInput = {
@@ -815,138 +766,6 @@ export type UserUpdateOneRequiredWithoutReadingListNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReadingListInput, Prisma.UserUpdateWithoutReadingListInput>, Prisma.UserUncheckedUpdateWithoutReadingListInput>
 }
 
-export type UserCreateWithoutOtpsInput = {
-  id?: string
-  username: string
-  name: string
-  email: string
-  passwordHash: string
-  bio?: string | null
-  avatarUrl?: string | null
-  role?: $Enums.Role
-  isBanned?: boolean
-  banReason?: string | null
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
-  comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
-  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
-  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
-  actorNotifs?: Prisma.NotificationCreateNestedManyWithoutActorInput
-  following?: Prisma.FollowCreateNestedManyWithoutFollowingInput
-  followers?: Prisma.FollowCreateNestedManyWithoutFollowerInput
-  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
-  chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
-  handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
-  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutOtpsInput = {
-  id?: string
-  username: string
-  name: string
-  email: string
-  passwordHash: string
-  bio?: string | null
-  avatarUrl?: string | null
-  role?: $Enums.Role
-  isBanned?: boolean
-  banReason?: string | null
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
-  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
-  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
-  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  actorNotifs?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
-  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
-  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
-  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
-  chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
-  handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
-  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutOtpsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
-}
-
-export type UserUpsertWithoutOtpsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutOtpsInput, Prisma.UserUncheckedUpdateWithoutOtpsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutOtpsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutOtpsInput, Prisma.UserUncheckedUpdateWithoutOtpsInput>
-}
-
-export type UserUpdateWithoutOtpsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
-  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
-  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
-  actorNotifs?: Prisma.NotificationUpdateManyWithoutActorNestedInput
-  following?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
-  followers?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
-  chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
-  chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
-  handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
-  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutOtpsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
-  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
-  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  actorNotifs?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
-  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
-  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
-  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
-  chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
-  handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
-  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
-}
-
 export type UserCreateWithoutPostsInput = {
   id?: string
   username: string
@@ -958,7 +777,6 @@ export type UserCreateWithoutPostsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
@@ -972,7 +790,6 @@ export type UserCreateWithoutPostsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -987,7 +804,6 @@ export type UserUncheckedCreateWithoutPostsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -1001,7 +817,6 @@ export type UserUncheckedCreateWithoutPostsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1032,7 +847,6 @@ export type UserUpdateWithoutPostsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
@@ -1046,7 +860,6 @@ export type UserUpdateWithoutPostsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1061,7 +874,6 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1075,7 +887,6 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1090,7 +901,6 @@ export type UserCreateWithoutCommentsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1104,7 +914,6 @@ export type UserCreateWithoutCommentsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1119,7 +928,6 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1133,7 +941,6 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1164,7 +971,6 @@ export type UserUpdateWithoutCommentsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1178,7 +984,6 @@ export type UserUpdateWithoutCommentsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1193,7 +998,6 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1207,7 +1011,6 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1222,7 +1025,6 @@ export type UserCreateWithoutReactionsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1236,7 +1038,6 @@ export type UserCreateWithoutReactionsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1251,7 +1052,6 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1265,7 +1065,6 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1296,7 +1095,6 @@ export type UserUpdateWithoutReactionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1310,7 +1108,6 @@ export type UserUpdateWithoutReactionsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1325,7 +1122,6 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1339,7 +1135,6 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1354,7 +1149,6 @@ export type UserCreateWithoutBookmarksInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1368,7 +1162,6 @@ export type UserCreateWithoutBookmarksInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1383,7 +1176,6 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1397,7 +1189,6 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1428,7 +1219,6 @@ export type UserUpdateWithoutBookmarksInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1442,7 +1232,6 @@ export type UserUpdateWithoutBookmarksInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1457,7 +1246,6 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1471,7 +1259,6 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1486,7 +1273,6 @@ export type UserCreateWithoutFollowersInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1500,7 +1286,6 @@ export type UserCreateWithoutFollowersInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1515,7 +1300,6 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1529,7 +1313,6 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1549,7 +1332,6 @@ export type UserCreateWithoutFollowingInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1563,7 +1345,6 @@ export type UserCreateWithoutFollowingInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1578,7 +1359,6 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1592,7 +1372,6 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1623,7 +1402,6 @@ export type UserUpdateWithoutFollowersInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1637,7 +1415,6 @@ export type UserUpdateWithoutFollowersInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1652,7 +1429,6 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1666,7 +1442,6 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1692,7 +1467,6 @@ export type UserUpdateWithoutFollowingInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1706,7 +1480,6 @@ export type UserUpdateWithoutFollowingInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1721,7 +1494,6 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1735,7 +1507,6 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1750,7 +1521,6 @@ export type UserCreateWithoutReportsFiledInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1764,7 +1534,6 @@ export type UserCreateWithoutReportsFiledInput = {
   chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1779,7 +1548,6 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1793,7 +1561,6 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1824,7 +1591,6 @@ export type UserUpdateWithoutReportsFiledInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1838,7 +1604,6 @@ export type UserUpdateWithoutReportsFiledInput = {
   chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -1853,7 +1618,6 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1867,7 +1631,6 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1882,7 +1645,6 @@ export type UserCreateWithoutNotificationsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1896,7 +1658,6 @@ export type UserCreateWithoutNotificationsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1911,7 +1672,6 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1925,7 +1685,6 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1945,7 +1704,6 @@ export type UserCreateWithoutActorNotifsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1959,7 +1717,6 @@ export type UserCreateWithoutActorNotifsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -1974,7 +1731,6 @@ export type UserUncheckedCreateWithoutActorNotifsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -1988,7 +1744,6 @@ export type UserUncheckedCreateWithoutActorNotifsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -2019,7 +1774,6 @@ export type UserUpdateWithoutNotificationsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2033,7 +1787,6 @@ export type UserUpdateWithoutNotificationsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -2048,7 +1801,6 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2062,7 +1814,6 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2088,7 +1839,6 @@ export type UserUpdateWithoutActorNotifsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2102,7 +1852,6 @@ export type UserUpdateWithoutActorNotifsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -2117,7 +1866,6 @@ export type UserUncheckedUpdateWithoutActorNotifsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2131,7 +1879,6 @@ export type UserUncheckedUpdateWithoutActorNotifsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2146,7 +1893,6 @@ export type UserCreateWithoutChatThreadInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -2160,7 +1906,6 @@ export type UserCreateWithoutChatThreadInput = {
   chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -2175,7 +1920,6 @@ export type UserUncheckedCreateWithoutChatThreadInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -2189,7 +1933,6 @@ export type UserUncheckedCreateWithoutChatThreadInput = {
   chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -2209,7 +1952,6 @@ export type UserCreateWithoutHandledThreadsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -2223,7 +1965,6 @@ export type UserCreateWithoutHandledThreadsInput = {
   chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -2238,7 +1979,6 @@ export type UserUncheckedCreateWithoutHandledThreadsInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -2252,7 +1992,6 @@ export type UserUncheckedCreateWithoutHandledThreadsInput = {
   chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -2283,7 +2022,6 @@ export type UserUpdateWithoutChatThreadInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2297,7 +2035,6 @@ export type UserUpdateWithoutChatThreadInput = {
   chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -2312,7 +2049,6 @@ export type UserUncheckedUpdateWithoutChatThreadInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2326,7 +2062,6 @@ export type UserUncheckedUpdateWithoutChatThreadInput = {
   chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2352,7 +2087,6 @@ export type UserUpdateWithoutHandledThreadsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2366,7 +2100,6 @@ export type UserUpdateWithoutHandledThreadsInput = {
   chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -2381,7 +2114,6 @@ export type UserUncheckedUpdateWithoutHandledThreadsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2395,7 +2127,6 @@ export type UserUncheckedUpdateWithoutHandledThreadsInput = {
   chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2410,7 +2141,6 @@ export type UserCreateWithoutChatMessagesInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -2424,7 +2154,6 @@ export type UserCreateWithoutChatMessagesInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
 }
 
@@ -2439,7 +2168,6 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -2453,7 +2181,6 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -2484,7 +2211,6 @@ export type UserUpdateWithoutChatMessagesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2498,7 +2224,6 @@ export type UserUpdateWithoutChatMessagesInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
 }
 
@@ -2513,7 +2238,6 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2527,7 +2251,6 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2542,7 +2265,6 @@ export type UserCreateWithoutReadingListInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -2557,7 +2279,6 @@ export type UserCreateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReadingListInput = {
@@ -2571,7 +2292,6 @@ export type UserUncheckedCreateWithoutReadingListInput = {
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
-  emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -2586,7 +2306,6 @@ export type UserUncheckedCreateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
-  otps?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReadingListInput = {
@@ -2616,7 +2335,6 @@ export type UserUpdateWithoutReadingListInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -2631,7 +2349,6 @@ export type UserUpdateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReadingListInput = {
@@ -2645,7 +2362,6 @@ export type UserUncheckedUpdateWithoutReadingListInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2660,7 +2376,6 @@ export type UserUncheckedUpdateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
-  otps?: Prisma.VerificationCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2680,7 +2395,6 @@ export type UserCountOutputType = {
   chatMessages: number
   handledThreads: number
   reportsFiled: number
-  otps: number
   readingList: number
 }
 
@@ -2696,7 +2410,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   chatMessages?: boolean | UserCountOutputTypeCountChatMessagesArgs
   handledThreads?: boolean | UserCountOutputTypeCountHandledThreadsArgs
   reportsFiled?: boolean | UserCountOutputTypeCountReportsFiledArgs
-  otps?: boolean | UserCountOutputTypeCountOtpsArgs
   readingList?: boolean | UserCountOutputTypeCountReadingListArgs
 }
 
@@ -2790,13 +2503,6 @@ export type UserCountOutputTypeCountReportsFiledArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountOtpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VerificationCodeWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountReadingListArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ReadingListItemWhereInput
 }
@@ -2813,7 +2519,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
-  emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -2828,7 +2533,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   chatThread?: boolean | Prisma.User$chatThreadArgs<ExtArgs>
   handledThreads?: boolean | Prisma.User$handledThreadsArgs<ExtArgs>
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
-  otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   readingList?: boolean | Prisma.User$readingListArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -2844,7 +2548,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
-  emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -2860,7 +2563,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
-  emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -2876,12 +2578,11 @@ export type UserSelectScalar = {
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
-  emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "bio" | "avatarUrl" | "role" | "isBanned" | "banReason" | "emailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "bio" | "avatarUrl" | "role" | "isBanned" | "banReason" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
@@ -2895,7 +2596,6 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   chatThread?: boolean | Prisma.User$chatThreadArgs<ExtArgs>
   handledThreads?: boolean | Prisma.User$handledThreadsArgs<ExtArgs>
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
-  otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   readingList?: boolean | Prisma.User$readingListArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -2917,7 +2617,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     chatThread: Prisma.$ChatThreadPayload<ExtArgs> | null
     handledThreads: Prisma.$ChatThreadPayload<ExtArgs>[]
     reportsFiled: Prisma.$ReportPayload<ExtArgs>[]
-    otps: Prisma.$VerificationCodePayload<ExtArgs>[]
     readingList: Prisma.$ReadingListItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2931,7 +2630,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.Role
     isBanned: boolean
     banReason: string | null
-    emailVerified: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -3340,7 +3038,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   chatThread<T extends Prisma.User$chatThreadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$chatThreadArgs<ExtArgs>>): Prisma.Prisma__ChatThreadClient<runtime.Types.Result.GetResult<Prisma.$ChatThreadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   handledThreads<T extends Prisma.User$handledThreadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$handledThreadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reportsFiled<T extends Prisma.User$reportsFiledArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsFiledArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   readingList<T extends Prisma.User$readingListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$readingListArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReadingListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3381,7 +3078,6 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isBanned: Prisma.FieldRef<"User", 'Boolean'>
   readonly banReason: Prisma.FieldRef<"User", 'String'>
-  readonly emailVerified: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -4057,30 +3753,6 @@ export type User$reportsFiledArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
-}
-
-/**
- * User.otps
- */
-export type User$otpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the VerificationCode
-   */
-  select?: Prisma.VerificationCodeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the VerificationCode
-   */
-  omit?: Prisma.VerificationCodeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VerificationCodeInclude<ExtArgs> | null
-  where?: Prisma.VerificationCodeWhereInput
-  orderBy?: Prisma.VerificationCodeOrderByWithRelationInput | Prisma.VerificationCodeOrderByWithRelationInput[]
-  cursor?: Prisma.VerificationCodeWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.VerificationCodeScalarFieldEnum | Prisma.VerificationCodeScalarFieldEnum[]
 }
 
 /**

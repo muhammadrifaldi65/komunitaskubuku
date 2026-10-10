@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface AdminPost {
   id: string;
@@ -14,6 +15,8 @@ interface AdminPost {
 }
 
 export default function AdminPostsPage() {
+  const { data: session } = useSession();
+  const isAdmin = session?.user.role === "ADMIN";
   const [posts, setPosts] = useState<AdminPost[]>([]);
   const [filter, setFilter] = useState<"all" | "active" | "taken_down">("all");
   const [loading, setLoading] = useState(true);
@@ -46,10 +49,24 @@ export default function AdminPostsPage() {
     if (res.ok) load();
   }
 
+  async function deletePost(p: AdminPost) {
+    if (!isAdmin || !window.confirm("Hapus postingan ini secara permanen?")) return;
+
+    const res = await fetch(`/api/admin/posts/${p.id}`, { method: "DELETE" });
+    if (res.ok) {
+      load();
+      return;
+    }
+    alert((await res.json()).error || "Gagal menghapus postingan");
+  }
+
+
   return (
     <div>
       <h1 className="font-bold text-xl mb-1">Moderasi Konten</h1>
-      <p className="text-xs text-gray-500 mb-4">Admin & Pembina bisa menurunkan atau memulihkan postingan.</p>
+      <p className="text-xs text-gray-500 mb-4">
+        Admin & Pembina bisa menurunkan atau memulihkan postingan. Admin juga bisa menghapus permanen.
+      </p>
 
       <div className="flex gap-2 mb-4">
         {(["all", "active", "taken_down"] as const).map((f) => (
@@ -78,14 +95,24 @@ export default function AdminPostsPage() {
                 </p>
                 {p.isTakenDown && <p className="text-xs text-red-500">Diturunkan: {p.takedownReason}</p>}
               </div>
-              <button
-                onClick={() => toggleTakedown(p)}
-                className={`shrink-0 text-xs px-3 py-1.5 rounded-full ${
-                  p.isTakenDown ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-600"
-                }`}
-              >
-                {p.isTakenDown ? "Pulihkan" : "Turunkan"}
-              </button>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  onClick={() => toggleTakedown(p)}
+                  className={`text-xs px-3 py-1.5 rounded-full ${
+                    p.isTakenDown ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-600"
+                  }`}
+                >
+                  {p.isTakenDown ? "Pulihkan" : "Turunkan"}
+                </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => deletePost(p)}
+                    className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  >
+                    Hapus
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ))}

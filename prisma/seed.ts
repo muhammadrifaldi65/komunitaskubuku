@@ -25,7 +25,6 @@ async function main() {
       email,
       passwordHash,
       role: "ADMIN",
-      emailVerified: new Date(),
     },
   });
 

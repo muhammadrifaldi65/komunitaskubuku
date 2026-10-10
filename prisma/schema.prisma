@@ -35,7 +35,6 @@ model User {
   role          Role      @default(USER)
   isBanned      Boolean   @default(false)
   banReason     String?
-  emailVerified DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -51,24 +50,10 @@ model User {
   chatThread    ChatThread?         @relation("UserThread")
   handledThreads ChatThread[]       @relation("AdminHandler")
   reportsFiled  Report[]            @relation("ReportedBy")
-  otps          VerificationCode[]
   readingList   ReadingListItem[]
 
   @@index([email])
   @@index([username])
-}
-
-model VerificationCode {
-  id        String   @id @default(cuid())
-  email     String
-  code      String
-  type      String   // "REGISTER" | "RESET_PASSWORD"
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  user      User?    @relation(fields: [userEmail], references: [email])
-  userEmail String?
-
-  @@index([email, code])
 }
 
 model Post {

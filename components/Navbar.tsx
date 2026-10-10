@@ -210,18 +210,6 @@ export default function Navbar() {
               >
                 Masuk
               </Link>
-              <Link
-                href="/register"
-                className="px-3.5 py-1.5 text-xs tracking-wide uppercase font-medium rounded-sm border"
-                style={{
-                  fontFamily: "var(--font-mono, monospace)",
-                  background: "#1F4D3A",
-                  color: "#FBFAF7",
-                  borderColor: "#1F4D3A",
-                }}
-              >
-                Daftar
-              </Link>
             </>
           )}
         </nav>
@@ -310,13 +298,6 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                 >
                   Masuk
-                </Link>
-                <Link
-                  href="/register"
-                  className="block rounded-sm bg-[#1F4D3A] px-4 py-3 text-center text-sm font-semibold text-white"
-                  onClick={() => setOpen(false)}
-                >
-                  Daftar
                 </Link>
               </>
             )}

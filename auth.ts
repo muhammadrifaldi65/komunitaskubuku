@@ -21,9 +21,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) return null;
 
-        if (!user.emailVerified) {
-          throw new Error("EMAIL_NOT_VERIFIED");
-        }
         if (user.isBanned) {
           throw new Error("ACCOUNT_BANNED");
         }

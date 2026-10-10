@@ -3,6 +3,58 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { permissions } from "@/lib/permissions";
 
+import bcrypt from "bcryptjs";
+import { z } from "zod";
+
+const createUserSchema = z.object({
+  username: z
+    .string()
+    .min(3)
+    .max(24)
+    .regex(/^[a-zA-Z0-9_.]+$/, "Username hanya boleh huruf, angka, underscore, titik"),
+  email: z.string().email(),
+  password: z.string().min(8, "Password minimal 8 karakter"),
+});
+
+export async function POST(req: Request) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") {
+    return NextResponse.json({ error: "Hanya Admin yang bisa membuat akun" }, { status: 403 });
+  }
+
+  const body = await req.json();
+  const parsed = createUserSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
+  }
+
+  const { username, email, password } = parsed.data;
+  const [existingEmail, existingUsername] = await Promise.all([
+    prisma.user.findUnique({ where: { email } }),
+    prisma.user.findUnique({ where: { username } }),
+  ]);
+
+  if (existingEmail) {
+    return NextResponse.json({ error: "Email sudah terdaftar" }, { status: 409 });
+  }
+  if (existingUsername) {
+    return NextResponse.json({ error: "Username sudah dipakai" }, { status: 409 });
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = await prisma.user.create({
+    data: {
+      name: username,
+      username,
+      email,
+      passwordHash,
+    },
+    select: { id: true, username: true, email: true },
+  });
+
+  return NextResponse.json({ user }, { status: 201 });
+}
+
 export async function GET(req: Request) {
   const session = await auth();
   if (!session || !permissions.canAccessAdminDashboard(session.user.role)) {
@@ -31,7 +83,6 @@ export async function GET(req: Request) {
       role: true,
       isBanned: true,
       banReason: true,
-      emailVerified: true,
       createdAt: true,
       avatarUrl: true,
       _count: { select: { posts: true } },
