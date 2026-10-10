@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 📚 BookClub — Platform Sosial Komunitas Pecinta Buku
 
 - Dibangun dengan Next.js 16 (App Router), Prisma + PostgreSQL (Neon), NextAuth v5, dan ImageKit (upload gambar).
@@ -80,6 +80,5 @@ Project ini dibuat di lingkungan sandbox tanpa akses ke `binaries.prisma.sh`, ja
 - WebSocket/Pusher untuk chat real-time (saat ini polling setiap 8 detik)
 - Infinite scroll otomatis di feed (saat ini tombol "Muat lebih banyak")
 - Notifikasi email untuk aktivitas penting
-=======
-sadasdsa
->>>>>>> 5a1e961253c72216f96894aff1c9de38d6066836
+
+
