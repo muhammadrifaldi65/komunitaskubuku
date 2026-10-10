@@ -43,7 +43,7 @@ Buka http://localhost:3000
 
 1. Push project ini ke GitHub
 2. Import repo di vercel.com
-3. Tambahkan semua environment variable dari `.env.example` di Project Settings → Environment Variables (ganti `NEXTAUTH_URL` dengan URL production kamu)
+3. Tambahkan semua environment variable dari `.env.example` di Project Settings → Environment Variables. Pastikan `NEXTAUTH_URL` berisi URL deployment aktif, bukan domain lama.
 4. Deploy. Setelah deploy pertama berhasil, jalankan migrasi dari lokal dengan `DATABASE_URL` production (atau pakai Neon console) lalu `npm run db:seed` sekali untuk akun admin pertama
 
 ## 🗂️ Struktur Penting

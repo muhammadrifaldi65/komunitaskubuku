@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -53,6 +54,14 @@ function IconTool() {
 export default function Navbar() {
   const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  async function handleSignOut() {
+    setOpen(false);
+    await signOut({ redirect: false });
+    router.replace("/");
+    router.refresh();
+  }
 
   return (
     <header
@@ -191,7 +200,7 @@ export default function Navbar() {
                     </Link>
                     <div className="my-1 border-t" style={{ borderColor: "#E4E0D6" }} />
                     <button
-                      onClick={() => signOut({ callbackUrl: "/" })}
+                      onClick={handleSignOut}
                       className="w-full text-left px-4 py-2 text-sm hover:bg-[#F1EEE6]"
                       style={{ color: "#A13D2E" }}
                     >
@@ -279,10 +288,7 @@ export default function Navbar() {
                     Pengaturan
                   </Link>
                   <button
-                    onClick={() => {
-                      setOpen(false);
-                      signOut({ callbackUrl: "/" });
-                    }}
+                    onClick={handleSignOut}
                     className="w-full text-left rounded-sm px-4 py-3 text-sm text-[#A13D2E]"
                   >
                     Keluar
