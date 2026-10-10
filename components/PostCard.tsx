@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-
+import { toPublicImageUrl } from "@/lib/media-url";
 export interface PostAuthor {
   id: string;
   username: string;
@@ -150,6 +150,7 @@ export default function PostCard({ post }: { post: PostData }) {
   }
 
   const spine = SPINE[state.author.role];
+  const imageUrl = toPublicImageUrl(state.imageUrl);
 
   return (
     <div
@@ -225,9 +226,9 @@ export default function PostCard({ post }: { post: PostData }) {
         <p className="mt-3 text-sm whitespace-pre-wrap leading-relaxed" style={{ color: "#1C1B19" }}>
           {state.content}
         </p>
-        {state.imageUrl && (
+        {imageUrl && (
           <img
-            src={state.imageUrl}
+            src={imageUrl}
             alt=""
             className="mt-3 rounded-sm max-h-[480px] w-full object-cover border"
             style={{ borderColor: "#E4E0D6" }}

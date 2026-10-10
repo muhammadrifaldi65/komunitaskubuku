@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "BookClub - Komunitas Pecinta Buku",
   description: "Platform sosial untuk komunitas pecinta buku",
+  icons: {
+    icon: "https://i.imgur.com/u2k2fsE.jpg",
+    shortcut: "https://i.imgur.com/u2k2fsE.jpg",
+    apple: "https://i.imgur.com/u2k2fsE.jpg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

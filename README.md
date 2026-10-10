@@ -24,7 +24,7 @@ Salin `.env.example` menjadi `.env` lalu isi:
 
 - **DATABASE_URL / DIRECT_URL**: buat project gratis di neon.tech, salin connection string (pooled untuk `DATABASE_URL`, direct untuk `DIRECT_URL`)
 - **AUTH_SECRET**: jalankan `openssl rand -base64 32`
-- **IMAGEKIT_***: daftar gratis di imagekit.io, ambil Public Key, Private Key, dan URL Endpoint dari dashboard Developer Options
+- **IMAGEKIT_***: daftar gratis di imagekit.io, ambil Public Key, Private Key, dan URL Endpoint dari dashboard Developer Options. Upload tetap masuk ImageKit; URL publik aplikasi dilayani melalui path `/media/...`, jadi DNS domain cukup mengarah ke aplikasi.
 
 ### 3. Migrasi database & buat akun admin pertama
 ```bash

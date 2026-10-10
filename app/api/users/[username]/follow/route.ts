@@ -19,7 +19,8 @@ export async function POST(_req: Request, { params }: { params: Promise<{ userna
 
   if (existing) {
     await prisma.follow.delete({ where: { id: existing.id } });
-    return NextResponse.json({ following: false });
+    const followersCount = await prisma.follow.count({ where: { followingId: target.id } });
+    return NextResponse.json({ following: false, followersCount });
   }
 
   await prisma.follow.create({
@@ -34,6 +35,6 @@ export async function POST(_req: Request, { params }: { params: Promise<{ userna
       link: `/profile/${session.user.username}`,
     },
   });
-
-  return NextResponse.json({ following: true });
+  const followersCount = await prisma.follow.count({ where: { followingId: target.id } });
+  return NextResponse.json({ following: true, followersCount });
 }

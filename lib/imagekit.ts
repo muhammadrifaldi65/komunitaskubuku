@@ -1,4 +1,5 @@
 import ImageKit from "imagekit";
+import { toImageKitProxyPath } from "@/lib/media-url";
 
 export const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
@@ -13,7 +14,7 @@ export async function uploadImageBase64(base64: string, fileName: string, folder
     folder,
     useUniqueFileName: true,
   });
-  return { url: result.url, fileId: result.fileId };
+  return { url: toImageKitProxyPath(result.url), fileId: result.fileId };
 }
 
 export async function deleteImage(fileId: string) {

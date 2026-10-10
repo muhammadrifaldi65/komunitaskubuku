@@ -3,10 +3,19 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { rankPosts } from "@/lib/algorithm";
+const imageUrlSchema = z.string().refine((value) => {
+  if (value.startsWith("/media/")) return true;
+  try {
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+}, "URL gambar tidak valid");
 
 const createSchema = z.object({
   content: z.string().min(1).max(3000),
-  imageUrl: z.string().url().optional().nullable(),
+  imageUrl: imageUrlSchema.optional().nullable(),
   imageFileId: z.string().optional().nullable(),
   bookTitle: z.string().max(200).optional().nullable(),
   bookAuthor: z.string().max(200).optional().nullable(),

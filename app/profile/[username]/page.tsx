@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import PostCard, { PostData } from "@/components/PostCard";
 
@@ -18,21 +18,31 @@ interface ProfileUser {
 
 export default function ProfilePage() {
   const { username } = useParams<{ username: string }>();
-  const { data: session } = useSession();
+  const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
   const [user, setUser] = useState<ProfileUser | null>(null);
   const [posts, setPosts] = useState<PostData[]>([]);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followBusy, setFollowBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const profileRequestId = useRef(0);
 
   async function load() {
+    const requestId = ++profileRequestId.current;
     const res = await fetch(`/api/users/${username}`);
+    if (requestId !== profileRequestId.current) return;
     if (res.status === 404) {
       setNotFound(true);
       setLoading(false);
       return;
     }
+    if (!res.ok) {
+      setLoading(false);
+      return;
+    }
     const data = await res.json();
+    if (requestId !== profileRequestId.current) return;
     setUser(data.user);
     setPosts(data.posts);
     setIsFollowing(data.isFollowing);
@@ -40,19 +50,36 @@ export default function ProfilePage() {
   }
 
   useEffect(() => {
+    if (sessionStatus === "loading") return;
+    setLoading(true);
+    setNotFound(false);
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username]);
+  }, [username, sessionStatus]);
 
   async function toggleFollow() {
-    if (!session) return (window.location.href = "/login");
-    const res = await fetch(`/api/users/${username}/follow`, { method: "POST" });
-    const data = await res.json();
-    if (res.ok) {
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+    if (followBusy) return;
+    profileRequestId.current += 1;
+
+    setFollowBusy(true);
+    try {
+      const res = await fetch(`/api/users/${username}/follow`, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || "Gagal mengubah status mengikuti");
+        return;
+      }
+
       setIsFollowing(data.following);
-      setUser((u) =>
-        u ? { ...u, _count: { ...u._count, followers: u._count.followers + (data.following ? 1 : -1) } } : u
-      );
+      if (typeof data.followersCount === "number") {
+        setUser((u) => (u ? { ...u, _count: { ...u._count, followers: data.followersCount } } : u));
+      }
+    } finally {
+      setFollowBusy(false);
     }
   }
 
@@ -77,6 +104,8 @@ export default function ProfilePage() {
           ) : (
             <button
               onClick={toggleFollow}
+              disabled={followBusy}
+              aria-pressed={isFollowing}
               className={`text-sm px-4 py-1.5 rounded-full ${
                 isFollowing ? "border text-gray-600 hover:bg-gray-50" : "bg-emerald-600 text-white hover:bg-emerald-700"
               }`}
