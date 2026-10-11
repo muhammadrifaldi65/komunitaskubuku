@@ -39,33 +39,33 @@ export default function AdminReportsPage() {
   return (
     <div>
       <h1 className="font-bold text-xl mb-1">Laporan Konten</h1>
-      <p className="text-xs text-gray-500 mb-4">Laporan yang belum ditinjau.</p>
+      <p className="text-xs text-[#64748b] mb-4">Laporan yang belum ditinjau.</p>
 
-      {loading && <p className="text-gray-400 text-sm">Memuat...</p>}
-      {!loading && reports.length === 0 && <p className="text-gray-400 text-sm">Tidak ada laporan tertunda 🎉</p>}
+      {loading && <p className="text-[#64748b] text-sm">Memuat...</p>}
+      {!loading && reports.length === 0 && <p className="text-[#64748b] text-sm">Tidak ada laporan tertunda.</p>}
 
-      <div className="bg-white border rounded-xl divide-y">
+      <div className="bg-white border border-[#dce4ed] rounded-2xl divide-y divide-[#dce4ed]">
         {reports.map((r) => (
-          <div key={r.id} className="p-3">
-            <p className="text-xs text-gray-500">
+          <div key={r.id} className="p-4">
+            <p className="text-xs text-[#64748b]">
               Dilaporkan oleh <b>@{r.reporter.username}</b> · {new Date(r.createdAt).toLocaleString("id-ID")}
             </p>
             <p className="text-sm mt-1">
               Alasan: <span className="italic">{r.reason}</span>
             </p>
-            <Link href={`/post/${r.post.id}`} className="text-xs text-emerald-700 hover:underline block mt-1">
+            <Link href={`/post/${r.post.id}`} className="text-xs text-[#2563eb] hover:underline block mt-1">
               Lihat postingan oleh @{r.post.author.username}: &ldquo;{r.post.content.slice(0, 80)}...&rdquo;
             </Link>
-            <div className="flex gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-3">
               <button
                 onClick={() => resolve(r.id, "RESOLVED")}
-                className="text-xs px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700"
+                className="min-h-11 text-xs px-3 py-2 rounded-full bg-blue-50 text-blue-700"
               >
                 Tandai Selesai
               </button>
               <button
                 onClick={() => resolve(r.id, "DISMISSED")}
-                className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-600"
+                className="min-h-11 text-xs px-3 py-2 rounded-full bg-slate-100 text-[#64748b]"
               >
                 Abaikan
               </button>

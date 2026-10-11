@@ -23,16 +23,37 @@ const createSchema = z.object({
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
+  const q = (searchParams.get("q") ?? "").trim();
+  const feed = searchParams.get("feed") ?? "all";
+  if (q.length > 100 || (feed !== "all" && feed !== "following")) {
+    return NextResponse.json({ error: "Pencarian maksimal 100 karakter; feed harus all atau following" }, { status: 400 });
+  }
   const cursor = searchParams.get("cursor") ?? undefined;
   const take = 20;
 
   const session = await auth();
+  if (feed === "following" && !session) {
+    return NextResponse.json({ error: "Harus login" }, { status: 401 });
+  }
   const currentUserId = session?.user.id ?? "__no_user__";
 
   const posts = await prisma.post.findMany({
-    where: { isTakenDown: false },
-    orderBy: { createdAt: "desc" },
-    take: 100, // ambil kumpulan lebih besar lalu di-rank, baru dipaginasi
+    where: {
+      isTakenDown: false,
+      author: {
+        isBanned: false,
+        ...(feed === "following" ? { followers: { some: { followerId: currentUserId } } } : {}),
+      },
+      ...(q ? {
+        OR: [
+          { content: { contains: q, mode: "insensitive" as const } },
+          { bookTitle: { contains: q, mode: "insensitive" as const } },
+          { bookAuthor: { contains: q, mode: "insensitive" as const } },
+        ],
+      } : {}),
+    },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take: take + 1,
     ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
     include: {
       author: { select: { id: true, username: true, name: true, avatarUrl: true, role: true } },
@@ -50,7 +71,11 @@ export async function GET(req: Request) {
     followedIds = new Set(follows.map((f: { followingId: string }) => f.followingId));
   }
 
-  const ranked = rankPosts(posts, followedIds).slice(0, take);
+  // Consume chronological pages before ranking; never use a ranked item's position as the boundary.
+  // The extra row signals another page without skipping it. IDs break equal-timestamp ties.
+  const page = posts.slice(0, take);
+  const nextCursor = posts.length > take ? page[page.length - 1].id : null;
+  const ranked = rankPosts(page, followedIds);
 
   const result = ranked.map((p: (typeof posts)[number]) => ({
     ...p,
@@ -59,8 +84,6 @@ export async function GET(req: Request) {
     reactions: undefined,
     bookmarks: undefined,
   }));
-
-  const nextCursor = ranked.length === take ? ranked[ranked.length - 1].id : null;
 
   return NextResponse.json({ posts: result, nextCursor });
 }

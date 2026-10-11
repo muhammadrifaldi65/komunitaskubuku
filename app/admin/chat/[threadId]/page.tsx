@@ -67,29 +67,29 @@ export default function AdminChatThreadPage() {
     load();
   }
 
-  if (loading) return <p className="text-gray-400 text-sm">Memuat...</p>;
-  if (!thread) return <p className="text-gray-400 text-sm">Percakapan tidak ditemukan.</p>;
+  if (loading) return <p className="text-[#64748b] text-sm">Memuat...</p>;
+  if (!thread) return <p className="text-[#64748b] text-sm">Percakapan tidak ditemukan.</p>;
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <h1 className="font-bold text-lg">
-          {thread.user.name} <span className="text-gray-400 font-normal">@{thread.user.username}</span>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <h1 className="min-w-0 font-bold text-lg">
+          {thread.user.name} <span className="text-[#64748b] font-normal">@{thread.user.username}</span>
         </h1>
         {thread.isOpen && (
-          <button onClick={closeThread} className="text-xs px-3 py-1.5 bg-gray-100 rounded-full hover:bg-gray-200">
+          <button onClick={closeThread} className="min-h-11 text-xs px-3 py-2 bg-slate-100 rounded-full hover:bg-slate-200">
             Tutup Percakapan
           </button>
         )}
       </div>
 
-      <div className="bg-white border rounded-xl p-4 h-[60vh] flex flex-col">
-        <div className="flex-1 overflow-y-auto space-y-2">
+      <div className="min-w-0 bg-white border border-[#dce4ed] rounded-2xl p-3 sm:p-4 h-[60dvh] min-h-80 flex flex-col">
+        <div className="min-h-0 flex-1 overflow-y-auto space-y-2">
           {thread.messages.map((m) => (
             <div key={m.id} className={`flex ${m.isFromAdmin ? "justify-end" : "justify-start"}`}>
               <div
-                className={`max-w-[75%] px-3 py-2 rounded-2xl text-sm ${
-                  m.isFromAdmin ? "bg-emerald-600 text-white" : "bg-gray-100 text-gray-800"
+                className={`min-w-0 max-w-[85%] whitespace-pre-wrap [overflow-wrap:anywhere] px-3 py-2 rounded-2xl text-sm ${
+                  m.isFromAdmin ? "bg-[#2563eb] text-white" : "bg-slate-100 text-[#172335]"
                 }`}
               >
                 {m.content}
@@ -98,16 +98,17 @@ export default function AdminChatThreadPage() {
           ))}
           <div ref={bottomRef} />
         </div>
-        <form onSubmit={send} className="flex gap-2 mt-3 border-t pt-3">
+        <form onSubmit={send} className="flex gap-2 mt-3 border-t border-[#dce4ed] pt-3">
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Balas pesan..."
-            className="flex-1 border rounded-full px-3 py-2 text-sm"
+            aria-label="Balasan pesan customer service"
+            className="min-w-0 flex-1 border border-[#dce4ed] rounded-full px-3 py-2 text-sm"
           />
           <button
             disabled={sending}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm hover:bg-emerald-700 disabled:opacity-50"
+            className="min-h-11 shrink-0 bg-[#2563eb] text-white px-4 py-2 rounded-full text-sm hover:bg-blue-700 disabled:opacity-50"
           >
             Kirim
           </button>

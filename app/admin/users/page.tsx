@@ -105,47 +105,50 @@ export default function AdminUsersPage() {
   return (
     <div>
       <h1 className="font-bold text-xl mb-1">Kelola Pengguna</h1>
-      <p className="text-xs text-gray-500 mb-4">
+      <p className="text-xs text-[#64748b] mb-4">
         {isAdmin
           ? "Buat akun pengguna dari sini. Registrasi publik dinonaktifkan."
           : "Kamu (Pembina) hanya bisa melihat data pengguna."}
       </p>
 
       {isAdmin && (
-        <form onSubmit={createUser} className="mb-5 rounded-xl border bg-white p-4 space-y-3">
+        <form onSubmit={createUser} className="mb-5 rounded-2xl border border-[#dce4ed] bg-white p-4 space-y-3">
           <h2 className="font-semibold">Buat akun pengguna</h2>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid min-w-0 gap-3 xl:grid-cols-3">
             <input
               required
               minLength={3}
               maxLength={24}
               placeholder="Username"
+              aria-label="Username akun baru"
               value={createForm.username}
               onChange={(e) => setCreateForm({ ...createForm, username: e.target.value.replace(/\s/g, "") })}
-              className="border rounded-lg px-3 py-2 text-sm"
+              className="min-w-0 w-full border border-[#dce4ed] rounded-xl px-3 py-2 text-sm"
             />
             <input
               required
               type="email"
               placeholder="Email"
+              aria-label="Email akun baru"
               value={createForm.email}
               onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
-              className="border rounded-lg px-3 py-2 text-sm"
+              className="min-w-0 w-full border border-[#dce4ed] rounded-xl px-3 py-2 text-sm"
             />
             <input
               required
               minLength={8}
               type="password"
               placeholder="Password (min. 8 karakter)"
+              aria-label="Password akun baru, minimal 8 karakter"
               value={createForm.password}
               onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
-              className="border rounded-lg px-3 py-2 text-sm"
+              className="min-w-0 w-full border border-[#dce4ed] rounded-xl px-3 py-2 text-sm"
             />
           </div>
           {createError && <p className="text-sm text-red-600">{createError}</p>}
           <button
             disabled={creating}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+            className="min-h-11 rounded-full bg-[#2563eb] px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
             {creating ? "Membuat..." : "Buat akun"}
           </button>
@@ -159,36 +162,38 @@ export default function AdminUsersPage() {
           onChange={(e) => setQ(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && load()}
           placeholder="Cari nama/username/email..."
-          className="flex-1 border rounded-lg px-3 py-2 text-sm"
+          aria-label="Cari pengguna berdasarkan nama, username, atau email"
+          className="min-w-0 flex-1 border border-[#dce4ed] rounded-full px-3 py-2 text-sm"
         />
-        <button onClick={load} className="px-4 border rounded-lg text-sm hover:bg-gray-50">
+        <button onClick={load} className="min-h-11 shrink-0 px-4 border border-[#dce4ed] rounded-full text-sm hover:bg-slate-50">
           Cari
         </button>
       </div>
 
-      {loading && <p className="text-gray-400 text-sm">Memuat...</p>}
+      {loading && <p className="text-[#64748b] text-sm">Memuat...</p>}
 
-      <div className="bg-white border rounded-xl divide-y">
+      <div className="bg-white border border-[#dce4ed] rounded-2xl divide-y divide-[#dce4ed]">
         {users.map((u) => (
-          <div key={u.id} className="p-3 flex items-center gap-3">
+          <div key={u.id} className="p-4 flex flex-wrap items-center gap-3">
             <img
               src={toPublicImageUrl(u.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${u.name}`}
-              className="w-9 h-9 rounded-full object-cover border"
+              className="w-9 h-9 shrink-0 rounded-full object-cover border border-[#dce4ed]"
               alt=""
             />
-            <div className="flex-1 min-w-0">
+            <div className="min-w-0 flex-1 basis-[calc(100%-3rem)] sm:basis-0">
               <p className="text-sm font-medium truncate">
-                {u.name} <span className="text-gray-400 font-normal">@{u.username}</span>
+                {u.name} <span className="text-[#64748b] font-normal">@{u.username}</span>
               </p>
-              <p className="text-xs text-gray-400 truncate">{u.email}</p>
+              <p className="text-xs text-[#64748b] truncate">{u.email}</p>
               {u.isBanned && <p className="text-xs text-red-500">Dibanned: {u.banReason}</p>}
             </div>
 
             <select
               value={u.role}
+              aria-label={`Peran @${u.username}`}
               disabled={!isAdmin}
               onChange={(e) => changeRole(u, e.target.value)}
-              className="text-xs border rounded-lg px-2 py-1 disabled:opacity-50"
+              className="min-h-11 text-xs border border-[#dce4ed] rounded-xl px-2 py-2 disabled:opacity-50"
             >
               <option value="USER">User</option>
               <option value="PEMBINA">Pembina</option>
@@ -198,8 +203,8 @@ export default function AdminUsersPage() {
             <button
               onClick={() => banToggle(u)}
               disabled={!isAdmin}
-              className={`text-xs px-3 py-1.5 rounded-full disabled:opacity-40 ${
-                u.isBanned ? "bg-gray-100 text-gray-600" : "bg-red-50 text-red-600"
+              className={`min-h-11 text-xs px-3 py-2 rounded-full disabled:opacity-40 ${
+                u.isBanned ? "bg-slate-100 text-[#64748b]" : "bg-red-50 text-red-600"
               }`}
             >
               {u.isBanned ? "Buka Ban" : "Ban"}
@@ -209,7 +214,7 @@ export default function AdminUsersPage() {
                 onClick={() => deleteUser(u)}
                 disabled={u.id === session?.user.id}
                 title={u.id === session?.user.id ? "Tidak bisa menghapus akun sendiri" : "Hapus akun"}
-                className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-40"
+                className="min-h-11 text-xs px-3 py-2 rounded-full bg-slate-100 text-[#172335] hover:bg-slate-200 disabled:opacity-40"
               >
                 Hapus
               </button>

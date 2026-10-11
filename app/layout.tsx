@@ -33,8 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-[var(--color-canvas)] text-[var(--color-ink)]">
         <a href="#main-content" className="skip-link">Langsung ke konten</a>
         <Providers>
-          <Navbar />
-          <main id="main-content" className="flex-1" tabIndex={-1}>{children}</main>
+          <div className="application-shell">
+            <Navbar />
+            <main id="main-content" className="application-content" tabIndex={-1}>{children}</main>
+          </div>
         </Providers>
       </body>
     </html>

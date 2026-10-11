@@ -59,29 +59,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { data: session } = useSession();
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 flex gap-6">
-      <aside className="w-48 shrink-0 hidden sm:block">
-        <div className="bg-white border rounded-xl p-2 sticky top-20">
-          <p className="text-xs text-gray-400 px-2 py-1">
+    <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col gap-5 px-4 py-6 font-sans text-[#172335] lg:flex-row">
+      <aside className="w-full shrink-0 lg:w-56">
+        <nav aria-label="Navigasi admin" className="grid grid-cols-2 gap-1 rounded-2xl border border-[#dce4ed] bg-white p-2 lg:sticky lg:top-20 lg:grid-cols-1">
+          <p className="col-span-full px-3 py-2 text-xs text-[#64748b]">
             Login sebagai {session?.user.role === "ADMIN" ? "Admin" : "Pembina"}
           </p>
           {NAV.map((item) => {
+            const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
             const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm mb-0.5 ${
-                  pathname === item.href ? "bg-emerald-600 text-white" : "hover:bg-gray-50 text-gray-700"
+                aria-current={active ? "page" : undefined}
+                className={`flex min-h-11 items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+                  active ? "bg-[#2563eb] text-white" : "text-[#64748b] hover:bg-[#f8fafc] hover:text-[#172335]"
                 }`}
               >
-                <Icon /> {item.label}
+                <span aria-hidden="true" className="shrink-0"><Icon /></span> {item.label}
               </Link>
             );
           })}
-        </div>
+        </nav>
       </aside>
-      <div className="flex-1 min-w-0">{children}</div>
+      <div className="min-w-0 flex-1 [overflow-wrap:anywhere]">{children}</div>
     </div>
   );
 }

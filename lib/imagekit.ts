@@ -16,11 +16,3 @@ export async function uploadImageBase64(base64: string, fileName: string, folder
   });
   return { url: toImageKitProxyPath(result.url), fileId: result.fileId };
 }
-
-export async function deleteImage(fileId: string) {
-  try {
-    await imagekit.deleteFile(fileId);
-  } catch (err) {
-    console.error("Failed to delete image from ImageKit:", err);
-  }
-}

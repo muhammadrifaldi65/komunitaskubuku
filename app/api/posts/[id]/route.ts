@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { deleteImage } from "@/lib/imagekit";
 
 const updateSchema = z.object({
   content: z.string().min(1).max(3000).optional(),
@@ -52,7 +51,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const session = await auth();
-  if (!session) return NextResponse.json({ error: "Harus login" }, { status: 401 });
+  if (!session?.user?.id) return NextResponse.json({ error: "Harus login" }, { status: 401 });
 
   const post = await prisma.post.findUnique({ where: { id } });
   if (!post) return NextResponse.json({ error: "Post tidak ditemukan" }, { status: 404 });
@@ -63,9 +62,7 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: "Tidak diizinkan" }, { status: 403 });
   }
 
-  if (post.imageFileId) {
-    await deleteImage(post.imageFileId);
-  }
+  // imageFileId is client-supplied, not proof of upload ownership. Retain remote media.
   await prisma.post.delete({ where: { id } });
 
   return NextResponse.json({ message: "Post dihapus" });

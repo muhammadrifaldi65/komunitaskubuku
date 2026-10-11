@@ -1,5 +1,5 @@
 
-# 📚 BookClub — Platform Sosial Komunitas Pecinta Buku
+# PTHREE — Platform Sosial Komunitas Pecinta Buku
 
 - Dibangun dengan Next.js 16 (App Router), Prisma + PostgreSQL (Neon), NextAuth v5, dan ImageKit (upload gambar).
 
@@ -11,8 +11,18 @@
 - **Algoritma feed**: skor berbasis engagement + waktu (mirip "hot score"), dengan boost untuk akun yang diikuti — lihat `lib/algorithm.ts`
 - **Admin dashboard**: statistik, membuat akun pengguna, kelola pengguna (ban/role), moderasi konten (takedown/restore), kelola laporan, inbox customer service
 - **Fitur minor**: notifikasi in-app, reading list (Ingin Dibaca/Sedang Dibaca/Selesai), laporkan post
-- **Tampilan**: beranda editorial, navigasi responsif, kartu post lebih lega, profil dengan daftar pengikut/mengikuti yang bisa dibuka.
+- **Tampilan**: feed tiga kolom di desktop, navigasi menu di mobile, sans-serif dan aksen biru; nama PTHREE serta rute fitur tetap. Dashboard admin menyediakan kelima menu di mobile dan desktop.
 - **Avatar**: upload dan gambar post memakai path publik `/media/...`; URL ImageKit lama dinormalisasi. Simpan profil memperbarui avatar sesi tanpa login ulang.
+- **Pencarian**: cari isi post, judul buku, atau penulis. Tab **Mengikuti** hanya memuat post akun yang diikuti; perlu login.
+- **Hapus post**: menu opsi pada post sendiri menyediakan hapus permanen dengan konfirmasi. Feed/profil diperbarui setelah berhasil; halaman detail kembali ke beranda. Admin tetap dapat menghapus post pengguna lain.
+
+### Feed dan penghapusan
+
+- `GET /api/posts?q=...&feed=all|following&cursor=...`: pencarian tanpa membedakan huruf besar/kecil, maksimal 100 karakter. Reset cursor saat filter berubah. Post akun diblokir atau konten diturunkan tidak ditampilkan.
+- Pagination mengikuti urutan waktu dan ID, 20 post per halaman; ranking diterapkan di dalam halaman agar tidak melewatkan atau menggandakan post.
+- `DELETE /api/posts/:id`: hanya pemilik atau admin; komentar/reaksi terkait ikut terhapus. File ImageKit tetap disimpan: `imageFileId` dari klien tidak membuktikan kepemilikan aset, sehingga penghapusan remote bisa merusak media milik orang lain.
+- Regresi feed: `node scripts/feed-regression.mjs`.
+- Regresi hapus: `node scripts/delete-post-regression.mjs`, dengan `DELETE_TEST_DISPOSABLE=1`, `DELETE_TEST_OWNER_COOKIE`, `DELETE_TEST_OTHER_COOKIE`; opsional `DELETE_TEST_ADMIN_COOKIE`. Gunakan akun uji sekali pakai.
 
 ### Follow dan pengikut
 

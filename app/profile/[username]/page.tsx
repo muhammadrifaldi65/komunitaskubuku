@@ -20,7 +20,7 @@ interface ProfileUser {
 
 type Member = Pick<ProfileUser, "id" | "username" | "name" | "avatarUrl" | "bio">;
 type ConnectionKind = "followers" | "following";
-const outlineButton = "rounded-full border border-stone-300 px-4 py-2 text-sm font-medium transition hover:bg-stone-100 disabled:opacity-50";
+const outlineButton = "rounded-full border border-[var(--border)] px-4 py-2 text-sm font-medium transition hover:bg-slate-100 disabled:opacity-50";
 
 function avatar(member: Member) {
   return toPublicImageUrl(member.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(member.name)}`;
@@ -62,25 +62,25 @@ function MemberList({ username, kind }: { username: string; kind: ConnectionKind
 
   return (
     <div aria-busy={loading}>
-      {!loading && !error && <p className="mb-4 text-sm text-stone-500">{total} anggota dalam lingkaran ini</p>}
-      <ul className="divide-y divide-stone-200">
+      {!loading && !error && <p className="mb-4 text-sm text-[var(--muted)]">{total} anggota dalam lingkaran ini</p>}
+      <ul className="divide-y divide-[var(--border)]">
         {members.map((member) => (
           <li key={member.id}>
-            <Link href={`/profile/${encodeURIComponent(member.username)}`} className="flex items-center gap-3 rounded-lg py-4 transition hover:bg-stone-100">
-              <img src={avatar(member)} alt="" className="h-11 w-11 shrink-0 rounded-full border border-stone-200 object-cover" />
+            <Link href={`/profile/${encodeURIComponent(member.username)}`} className="flex items-center gap-3 rounded-lg py-4 transition hover:bg-slate-100">
+              <img src={avatar(member)} alt="" className="h-11 w-11 shrink-0 rounded-full border border-[var(--border)] object-cover" />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-stone-800">{member.name}</p>
-                <p className="truncate text-sm text-stone-500">@{member.username}</p>
-                {member.bio && <p className="mt-1 line-clamp-1 text-sm text-stone-600">{member.bio}</p>}
+                <p className="truncate font-medium text-[var(--ink)]">{member.name}</p>
+                <p className="truncate text-sm text-[var(--muted)]">@{member.username}</p>
+                {member.bio && <p className="mt-1 line-clamp-1 text-sm text-[var(--muted)]">{member.bio}</p>}
               </div>
-              <span aria-hidden="true" className="text-stone-400">↗</span>
+              <span aria-hidden="true" className="text-[var(--muted)]">↗</span>
             </Link>
           </li>
         ))}
       </ul>
-      {loading && <p role="status" className="py-6 text-sm text-stone-500">Memuat anggota…</p>}
+      {loading && <p role="status" className="py-6 text-sm text-[var(--muted)]">Memuat anggota…</p>}
       {error && <div role="alert" className="py-4 text-sm text-red-800"><p>{error}</p><button onClick={() => setRetry((value) => value + 1)} className={`${outlineButton} mt-3`}>Coba lagi</button></div>}
-      {!loading && !error && members.length === 0 && <p className="py-6 text-sm text-stone-500">{kind === "followers" ? "Belum ada pengikut. Percakapan yang baik bisa menjadi awal." : "Belum mengikuti siapa pun."}</p>}
+      {!loading && !error && members.length === 0 && <p className="py-6 text-sm text-[var(--muted)]">{kind === "followers" ? "Belum ada pengikut. Percakapan yang baik bisa menjadi awal." : "Belum mengikuti siapa pun."}</p>}
       {!loading && !error && nextCursor && <button onClick={() => setCursor(nextCursor)} className={`${outlineButton} mt-4`}>Muat anggota lainnya</button>}
     </div>
   );
@@ -89,7 +89,7 @@ function MemberList({ username, kind }: { username: string; kind: ConnectionKind
 export default function ProfilePage() {
   const { username } = useParams<{ username: string }>();
   const { data: session, status } = useSession();
-  if (status === "loading") return <p role="status" className="py-20 text-center text-sm text-stone-500">Memuat profil…</p>;
+  if (status === "loading") return <p role="status" className="py-20 text-center text-sm text-[var(--muted)]">Memuat profil…</p>;
   return <ProfileContent key={`${username}:${session?.user.id ?? "guest"}`} username={username} viewerId={session?.user.id} />;
 }
 
@@ -166,8 +166,8 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
     }
   }
 
-  if (loading) return <p role="status" className="py-20 text-center text-sm text-stone-500">Memuat profil…</p>;
-  if (error || !user) return <div className="mx-auto max-w-xl px-5 py-20 text-center"><p role="alert" className="text-stone-600">{error || "Pengguna tidak ditemukan"}</p><button onClick={() => setRetry((value) => value + 1)} className={`${outlineButton} mt-5`}>Coba lagi</button><Link href="/" className="ml-4 text-sm underline">Kembali ke beranda</Link></div>;
+  if (loading) return <p role="status" className="py-20 text-center text-sm text-[var(--muted)]">Memuat profil…</p>;
+  if (error || !user) return <div className="mx-auto max-w-xl px-5 py-20 text-center"><p role="alert" className="text-[var(--muted)]">{error || "Pengguna tidak ditemukan"}</p><button onClick={() => setRetry((value) => value + 1)} className={`${outlineButton} mt-5`}>Coba lagi</button><Link href="/" className="ml-4 text-sm underline">Kembali ke beranda</Link></div>;
 
   const isOwnProfile = viewerId === user.id;
   const tabs = [
@@ -178,34 +178,34 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
-      <Link href="/" className="text-xs font-medium uppercase tracking-[0.18em] text-stone-500 hover:text-stone-800">Kembali ke ruang baca</Link>
-      <header className="mt-7 border-b border-stone-200 pb-7">
+      <Link href="/" className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--muted)] hover:text-[var(--ink)]">Kembali ke ruang baca</Link>
+      <header className="mt-7 border-b border-[var(--border)] pb-7">
         <div className="flex items-center justify-between gap-4">
-          <img src={avatar(user)} className="h-24 w-24 rounded-full border border-stone-200 object-cover p-1 sm:h-28 sm:w-28" alt="" />
+          <img src={avatar(user)} className="h-24 w-24 rounded-full border border-[var(--border)] object-cover p-1 sm:h-28 sm:w-28" alt="" />
           {isOwnProfile ? (
             <Link href="/settings" className={outlineButton}>Edit profil</Link>
           ) : (
-            <button onClick={changeFollow} disabled={followBusy} aria-pressed={isFollowing} className={`${outlineButton} ${isFollowing ? "text-stone-700" : "border-transparent bg-[#4b583d] text-white hover:bg-[#3b472e]"}`}>
+            <button onClick={changeFollow} disabled={followBusy} aria-pressed={isFollowing} className={`${outlineButton} ${isFollowing ? "text-[var(--ink)]" : "border-transparent bg-blue-600 text-white hover:bg-blue-700"}`}>
               {followBusy ? "Menyimpan…" : isFollowing ? "Mengikuti" : "Ikuti pembaca"}
             </button>
           )}
         </div>
         {followError && <p role="alert" className="mt-4 text-sm text-red-800">{followError}</p>}
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <h1 className="break-words font-[family-name:var(--font-display)] text-3xl leading-tight text-stone-900 sm:text-4xl">{user.name}</h1>
-          {user.role !== "USER" && <span className="rounded-full border border-stone-300 px-2.5 py-1 text-[10px] uppercase tracking-widest text-[#4b583d]">{user.role === "ADMIN" ? "Admin" : "Pembina"}</span>}
+          <h1 className="break-words font-semibold text-2xl leading-tight text-[var(--ink)]">{user.name}</h1>
+          {user.role !== "USER" && <span className="rounded-full border border-[var(--border)] px-2.5 py-1 text-[10px] uppercase tracking-widest text-blue-600">{user.role === "ADMIN" ? "Admin" : "Pembina"}</span>}
         </div>
-        <p className="mt-2 text-sm text-stone-500">@{user.username}</p>
-        {user.bio && <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-stone-700">{user.bio}</p>}
-        <p className="mt-4 text-xs text-stone-400">Di ruang baca sejak {new Date(user.createdAt).toLocaleDateString("id-ID", { month: "long", year: "numeric" })}</p>
+        <p className="mt-2 text-sm text-[var(--muted)]">@{user.username}</p>
+        {user.bio && <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-[var(--ink)]">{user.bio}</p>}
+        <p className="mt-4 text-xs text-[var(--muted)]">Di ruang baca sejak {new Date(user.createdAt).toLocaleDateString("id-ID", { month: "long", year: "numeric" })}</p>
       </header>
-      <nav aria-label="Isi profil" className="mb-6 grid grid-cols-3 border-b border-stone-200">
-        {tabs.map((item) => <button key={item.key} onClick={() => setTab(item.key)} aria-current={tab === item.key ? "page" : undefined} aria-controls="profile-content" className={`border-b-2 px-2 py-5 text-sm transition ${tab === item.key ? "border-[#4b583d] text-[#4b583d]" : "border-transparent text-stone-500 hover:text-stone-800"}`}><span className="block font-[family-name:var(--font-display)] text-2xl">{item.count}</span><span className="mt-1 block text-xs">{item.label}</span></button>)}
+      <nav aria-label="Isi profil" className="mb-6 grid grid-cols-3 border-b border-[var(--border)]">
+        {tabs.map((item) => <button key={item.key} onClick={() => setTab(item.key)} aria-current={tab === item.key ? "page" : undefined} aria-controls="profile-content" className={`border-b-2 px-2 py-5 text-sm transition ${tab === item.key ? "border-blue-600 text-blue-600" : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"}`}><span className="block font-semibold text-2xl">{item.count}</span><span className="mt-1 block text-xs">{item.label}</span></button>)}
       </nav>
       <section id="profile-content" aria-label={tabs.find((item) => item.key === tab)?.label}>
         {tab === "posts" ? <>
-          {posts.map((post) => <PostCard key={post.id} post={post} />)}
-          {posts.length === 0 && <div className="py-12 text-center"><h2 className="font-[family-name:var(--font-display)] text-2xl text-stone-700">Halaman yang masih kosong.</h2><p className="mt-3 text-sm text-stone-500">Belum ada tulisan. Setiap cerita punya waktunya sendiri.</p></div>}
+          {posts.map((post) => <PostCard key={post.id} post={post} onDeleted={(id) => { setPosts((current) => current.filter((item) => item.id !== id)); setUser((current) => current ? { ...current, _count: { ...current._count, posts: Math.max(0, current._count.posts - 1) } } : current); }} />)}
+          {posts.length === 0 && <div className="py-12 text-center"><h2 className="font-semibold text-2xl text-[var(--ink)]">Halaman yang masih kosong.</h2><p className="mt-3 text-sm text-[var(--muted)]">Belum ada tulisan. Setiap cerita punya waktunya sendiri.</p></div>}
         </> : <MemberList key={`${tab}:${connectionsVersion}`} username={username} kind={tab} />}
       </section>
     </div>

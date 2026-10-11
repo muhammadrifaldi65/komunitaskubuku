@@ -36,12 +36,6 @@ function timeAgo(dateStr: string) {
   return `${Math.floor(diff / 86400)}h`;
 }
 
-/* Spine tab color by role — a small nod to color-coded library spines */
-const SPINE: Record<PostAuthor["role"], string> = {
-  ADMIN: "#A13D2E",
-  PEMBINA: "#B8863B",
-  USER: "#1F4D3A",
-};
 
 function IconThumbUp({ filled }: { filled?: boolean }) {
   return (
@@ -88,12 +82,35 @@ function IconMore() {
   );
 }
 
-export default function PostCard({ post }: { post: PostData }) {
+export default function PostCard({ post, onDeleted }: { post: PostData; onDeleted?: (id: string) => void }) {
   const { data: session } = useSession();
   const [state, setState] = useState(post);
   const [busy, setBusy] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [reportReason, setReportReason] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+
+  async function deletePost() {
+    if (deleting || !window.confirm("Hapus postingan ini beserta komentar dan reaksinya? Tindakan ini permanen dan tidak dapat dibatalkan.")) return;
+    setDeleting(true);
+    setDeleteError("");
+    try {
+      const res = await fetch(`/api/posts/${state.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Gagal menghapus postingan. Coba lagi.");
+      }
+      setDeleted(true);
+      onDeleted?.(state.id);
+    } catch (error) {
+      setDeleteError(error instanceof Error ? error.message : "Koneksi terputus. Coba lagi.");
+    } finally {
+      setDeleting(false);
+    }
+  }
 
   async function react(type: "LIKE" | "DISLIKE") {
     if (!session) return (window.location.href = "/login");
@@ -149,165 +166,57 @@ export default function PostCard({ post }: { post: PostData }) {
     }
   }
 
-  const spine = SPINE[state.author.role];
+  const canDelete = session?.user.id === state.author.id || session?.user.role === "ADMIN";
   const imageUrl = toPublicImageUrl(state.imageUrl);
+  const actionClass = "inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-full px-2 text-xs transition hover:bg-slate-100 disabled:opacity-50";
+
+  if (deleted) return null;
 
   return (
-    <article className="post-card">
-      <div className="flex items-center justify-between">
-        <Link href={`/profile/${state.author.username}`} className="flex items-center gap-2.5">
-          <img
-            src={toPublicImageUrl(state.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${state.author.name}`}
-            className="w-9 h-9 rounded-full object-cover ring-1"
-            style={{ boxShadow: "0 0 0 1px #E4E0D6" }}
-            alt=""
-          />
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-sm" style={{ color: "#1C1B19" }}>
-                {state.author.name}
-              </span>
-              {state.author.role !== "USER" && (
-                <span
-                  className="text-[9px] px-1.5 py-0.5 uppercase tracking-widest rounded-[2px] border"
-                  style={{
-                    fontFamily: "var(--font-mono, monospace)",
-                    color: spine,
-                    borderColor: spine,
-                  }}
-                >
-                  {state.author.role === "ADMIN" ? "Admin" : "Pembina"}
-                </span>
-              )}
+    <article className="post-card mb-4 rounded-2xl border border-[var(--border)] bg-white p-4 text-[var(--ink)] sm:p-5" aria-busy={deleting}>
+      <div className="flex items-start justify-between gap-2">
+        <Link href={`/profile/${state.author.username}`} className="flex min-w-0 items-center gap-2.5">
+          <img src={toPublicImageUrl(state.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(state.author.name)}`} className="h-10 w-10 shrink-0 rounded-full border border-[var(--border)] object-cover" alt="" />
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-sm font-semibold">{state.author.name}</span>
+              {state.author.role !== "USER" && <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-600">{state.author.role === "ADMIN" ? "Admin" : "Pembina"}</span>}
             </div>
-            <div
-              className="text-xs mt-0.5"
-              style={{ fontFamily: "var(--font-mono, monospace)", color: "#8A8478" }}
-            >
-              @{state.author.username} · {timeAgo(state.createdAt)}
-            </div>
+            <p className="mt-0.5 break-words text-xs text-[var(--muted)]">@{state.author.username} · {timeAgo(state.createdAt)}</p>
           </div>
         </Link>
-        <button
-          onClick={() => setShowReport((s) => !s)}
-          className="p-1.5 rounded-sm"
-          style={{ color: "#8A8478" }}
-          aria-label="Opsi lainnya"
-        >
-          <IconMore />
-        </button>
+        <button type="button" onClick={() => setShowOptions((value) => !value)} className={`${actionClass} shrink-0 text-[var(--muted)]`} aria-label="Opsi postingan" aria-expanded={showOptions} aria-controls={`post-options-${state.id}`} disabled={deleting}><IconMore /></button>
       </div>
 
-      {(state.bookTitle || state.bookAuthor) && (
-        <div
-          className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm px-3 py-2.5 border-l-2 rounded-[2px]"
-          style={{ background: "#FBFAF7", borderColor: "#B8863B", color: "#5C5648" }}
-        >
-          <span
-            className="uppercase tracking-widest text-[9px]"
-            style={{ fontFamily: "var(--font-mono, monospace)", color: "#B8863B" }}
-          >
-            Sedang dibahas
-          </span>
-          <span style={{ fontFamily: "var(--font-display, serif)" }} className="italic">
-            {state.bookTitle}
-            {state.bookAuthor ? ` — ${state.bookAuthor}` : ""}
-          </span>
-        </div>
-      )}
+      {showOptions && <div id={`post-options-${state.id}`} className="mt-3 flex flex-wrap gap-2 rounded-xl border border-[var(--border)] bg-[var(--canvas)] p-2" onKeyDown={(event) => { if (event.key === "Escape") setShowOptions(false); }}>
+        {canDelete && <button type="button" onClick={deletePost} disabled={deleting} className="min-h-10 rounded-full px-3 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50">{deleting ? "Menghapus…" : "Hapus postingan"}</button>}
+        <button type="button" onClick={() => { setShowReport((value) => !value); setShowOptions(false); }} disabled={deleting} className="min-h-10 rounded-full px-3 text-sm text-[var(--muted)] hover:bg-slate-100">Laporkan postingan</button>
+      </div>}
+      {deleteError && <p role="alert" className="mt-3 text-sm text-red-600">{deleteError}</p>}
+      {deleting && <p role="status" className="mt-2 text-xs text-[var(--muted)]">Menghapus postingan…</p>}
+
+      {(state.bookTitle || state.bookAuthor) && <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--canvas)] px-3 py-2.5 text-sm">
+        <p className="mb-1 text-xs font-medium text-blue-600">Sedang dibahas</p>
+        <p className="font-medium">{state.bookTitle}{state.bookAuthor ? ` — ${state.bookAuthor}` : ""}</p>
+      </div>}
 
       <Link href={`/post/${state.id}`}>
-        <p className="mt-4 text-[15px] whitespace-pre-wrap break-words leading-[1.8]" style={{ color: "#1C1B19" }}>
-          {state.content}
-        </p>
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt=""
-            className="mt-3 rounded-sm max-h-[480px] w-full object-cover border"
-            style={{ borderColor: "#E4E0D6" }}
-          />
-        )}
+        <p className="mt-4 whitespace-pre-wrap break-words text-[15px] leading-7">{state.content}</p>
+        {imageUrl && <img src={imageUrl} alt="Gambar postingan" className="mt-3 max-h-[480px] w-full rounded-xl border border-[var(--border)] object-cover" />}
       </Link>
 
-      {showReport && (
-        <div className="mt-3 p-3 rounded-sm text-sm border" style={{ background: "#FBFAF7", borderColor: "#E4E0D6" }}>
-          <label
-            className="block text-[10px] uppercase tracking-widest mb-1.5"
-            style={{ fontFamily: "var(--font-mono, monospace)", color: "#8A8478" }}
-          >
-            Laporkan post ini
-          </label>
-          <input
-            value={reportReason}
-            onChange={(e) => setReportReason(e.target.value)}
-            placeholder="Jelaskan alasannya..."
-            className="w-full border rounded-sm px-2.5 py-1.5 text-sm bg-white"
-            style={{ borderColor: "#E4E0D6", color: "#1C1B19" }}
-          />
-          <button
-            onClick={submitReport}
-            className="mt-2 text-xs uppercase tracking-wide font-medium"
-            style={{ fontFamily: "var(--font-mono, monospace)", color: "#A13D2E" }}
-          >
-            Kirim Laporan
-          </button>
-        </div>
-      )}
+      {showReport && <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--canvas)] p-3 text-sm">
+        <label htmlFor={`report-${state.id}`} className="mb-2 block font-medium">Laporkan postingan ini</label>
+        <input id={`report-${state.id}`} value={reportReason} onChange={(event) => setReportReason(event.target.value)} placeholder="Jelaskan alasannya..." className="w-full rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-sm" />
+        <button type="button" onClick={submitReport} className="mt-2 min-h-10 rounded-full px-3 text-sm font-medium text-blue-600">Kirim laporan</button>
+      </div>}
 
-      <div className="post-actions">
-        <button
-          onClick={() => react("LIKE")}
-          disabled={busy}
-          aria-label="Suka post"
-          aria-pressed={state.myReaction === "LIKE"}
-          style={{ color: state.myReaction === "LIKE" ? "#1F4D3A" : "#5C5648" }}
-        >
-          <IconThumbUp filled={state.myReaction === "LIKE"} />
-          <span style={{ fontFamily: "var(--font-mono, monospace)" }} className="text-xs">
-            {state.likeCount}
-          </span>
-        </button>
-        <button
-          onClick={() => react("DISLIKE")}
-          disabled={busy}
-          aria-label="Tidak suka post"
-          aria-pressed={state.myReaction === "DISLIKE"}
-          style={{ color: state.myReaction === "DISLIKE" ? "#A13D2E" : "#5C5648" }}
-        >
-          <IconThumbDown filled={state.myReaction === "DISLIKE"} />
-          <span style={{ fontFamily: "var(--font-mono, monospace)" }} className="text-xs">
-            {state.dislikeCount}
-          </span>
-        </button>
-        <Link
-          href={`/post/${state.id}`}
-          aria-label={`${state.commentCount} komentar`}
-          style={{ color: "#5C5648" }}
-        >
-          <IconComment />
-          <span style={{ fontFamily: "var(--font-mono, monospace)" }} className="text-xs">
-            {state.commentCount}
-          </span>
-        </Link>
-        <button
-          onClick={share}
-          aria-label="Bagikan post"
-          style={{ color: "#5C5648" }}
-        >
-          <IconShare />
-          <span style={{ fontFamily: "var(--font-mono, monospace)" }} className="text-xs">
-            {state.shareCount}
-          </span>
-        </button>
-        <button
-          onClick={toggleBookmark}
-          aria-label={state.isBookmarked ? "Hapus dari daftar bacaan" : "Simpan ke daftar bacaan"}
-          aria-pressed={!!state.isBookmarked}
-          style={{ color: state.isBookmarked ? "#B8863B" : "#5C5648" }}
-        >
-          <IconBookmark filled={state.isBookmarked} />
-        </button>
+      <div className="mt-4 flex items-center justify-between gap-1 border-t border-[var(--border)] pt-2 text-[var(--muted)]">
+        <button onClick={() => react("LIKE")} disabled={busy || deleting} aria-label="Suka post" aria-pressed={state.myReaction === "LIKE"} className={`${actionClass} ${state.myReaction === "LIKE" ? "text-blue-600" : ""}`}><IconThumbUp filled={state.myReaction === "LIKE"} /><span>{state.likeCount}</span></button>
+        <button onClick={() => react("DISLIKE")} disabled={busy || deleting} aria-label="Tidak suka post" aria-pressed={state.myReaction === "DISLIKE"} className={`${actionClass} ${state.myReaction === "DISLIKE" ? "text-blue-600" : ""}`}><IconThumbDown filled={state.myReaction === "DISLIKE"} /><span>{state.dislikeCount}</span></button>
+        <Link href={`/post/${state.id}`} aria-label={`${state.commentCount} komentar`} className={actionClass}><IconComment /><span>{state.commentCount}</span></Link>
+        <button onClick={share} disabled={deleting} aria-label="Bagikan post" className={actionClass}><IconShare /><span>{state.shareCount}</span></button>
+        <button onClick={toggleBookmark} disabled={deleting} aria-label={state.isBookmarked ? "Hapus dari daftar bacaan" : "Simpan ke daftar bacaan"} aria-pressed={!!state.isBookmarked} className={`${actionClass} ${state.isBookmarked ? "text-blue-600" : ""}`}><IconBookmark filled={state.isBookmarked} /></button>
       </div>
     </article>
   );
