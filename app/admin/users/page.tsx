@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { toPublicImageUrl } from "@/lib/media-url";
 
 interface AdminUser {
   id: string;
@@ -171,7 +172,7 @@ export default function AdminUsersPage() {
         {users.map((u) => (
           <div key={u.id} className="p-3 flex items-center gap-3">
             <img
-              src={u.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${u.name}`}
+              src={toPublicImageUrl(u.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${u.name}`}
               className="w-9 h-9 rounded-full object-cover border"
               alt=""
             />

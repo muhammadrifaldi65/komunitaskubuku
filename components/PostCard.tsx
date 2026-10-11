@@ -153,17 +153,11 @@ export default function PostCard({ post }: { post: PostData }) {
   const imageUrl = toPublicImageUrl(state.imageUrl);
 
   return (
-    <div
-      className="relative bg-white border rounded-sm mb-3 pl-4 pr-4 py-4 overflow-hidden"
-      style={{ borderColor: "#E4E0D6" }}
-    >
-      {/* spine tab */}
-      <span className="absolute left-0 top-0 bottom-0 w-1" style={{ background: spine }} aria-hidden />
-
+    <article className="post-card">
       <div className="flex items-center justify-between">
         <Link href={`/profile/${state.author.username}`} className="flex items-center gap-2.5">
           <img
-            src={state.author.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${state.author.name}`}
+            src={toPublicImageUrl(state.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${state.author.name}`}
             className="w-9 h-9 rounded-full object-cover ring-1"
             style={{ boxShadow: "0 0 0 1px #E4E0D6" }}
             alt=""
@@ -206,7 +200,7 @@ export default function PostCard({ post }: { post: PostData }) {
 
       {(state.bookTitle || state.bookAuthor) && (
         <div
-          className="mt-3 inline-flex items-center gap-2 text-xs px-2.5 py-1.5 border-l-2 rounded-[2px]"
+          className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm px-3 py-2.5 border-l-2 rounded-[2px]"
           style={{ background: "#FBFAF7", borderColor: "#B8863B", color: "#5C5648" }}
         >
           <span
@@ -223,7 +217,7 @@ export default function PostCard({ post }: { post: PostData }) {
       )}
 
       <Link href={`/post/${state.id}`}>
-        <p className="mt-3 text-sm whitespace-pre-wrap leading-relaxed" style={{ color: "#1C1B19" }}>
+        <p className="mt-4 text-[15px] whitespace-pre-wrap break-words leading-[1.8]" style={{ color: "#1C1B19" }}>
           {state.content}
         </p>
         {imageUrl && (
@@ -261,10 +255,12 @@ export default function PostCard({ post }: { post: PostData }) {
         </div>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center gap-1 text-sm border-t pt-3" style={{ borderColor: "#E4E0D6" }}>
+      <div className="post-actions">
         <button
           onClick={() => react("LIKE")}
-          className="min-w-[100px] flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-sm transition-colors"
+          disabled={busy}
+          aria-label="Suka post"
+          aria-pressed={state.myReaction === "LIKE"}
           style={{ color: state.myReaction === "LIKE" ? "#1F4D3A" : "#5C5648" }}
         >
           <IconThumbUp filled={state.myReaction === "LIKE"} />
@@ -274,7 +270,9 @@ export default function PostCard({ post }: { post: PostData }) {
         </button>
         <button
           onClick={() => react("DISLIKE")}
-          className="min-w-[100px] flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-sm transition-colors"
+          disabled={busy}
+          aria-label="Tidak suka post"
+          aria-pressed={state.myReaction === "DISLIKE"}
           style={{ color: state.myReaction === "DISLIKE" ? "#A13D2E" : "#5C5648" }}
         >
           <IconThumbDown filled={state.myReaction === "DISLIKE"} />
@@ -284,7 +282,7 @@ export default function PostCard({ post }: { post: PostData }) {
         </button>
         <Link
           href={`/post/${state.id}`}
-          className="min-w-[100px] flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-sm"
+          aria-label={`${state.commentCount} komentar`}
           style={{ color: "#5C5648" }}
         >
           <IconComment />
@@ -294,7 +292,7 @@ export default function PostCard({ post }: { post: PostData }) {
         </Link>
         <button
           onClick={share}
-          className="min-w-[100px] flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-sm"
+          aria-label="Bagikan post"
           style={{ color: "#5C5648" }}
         >
           <IconShare />
@@ -304,12 +302,13 @@ export default function PostCard({ post }: { post: PostData }) {
         </button>
         <button
           onClick={toggleBookmark}
-          className="min-w-[100px] flex-1 flex items-center justify-center py-1.5 rounded-sm"
+          aria-label={state.isBookmarked ? "Hapus dari daftar bacaan" : "Simpan ke daftar bacaan"}
+          aria-pressed={!!state.isBookmarked}
           style={{ color: state.isBookmarked ? "#B8863B" : "#5C5648" }}
         >
           <IconBookmark filled={state.isBookmarked} />
         </button>
       </div>
-    </div>
+    </article>
   );
 }

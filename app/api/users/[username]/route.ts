@@ -17,7 +17,13 @@ export async function GET(_req: Request, { params }: { params: Promise<{ usernam
       role: true,
       createdAt: true,
       isBanned: true,
-      _count: { select: { posts: true, followers: true, following: true } },
+      _count: {
+        select: {
+          posts: { where: { isTakenDown: false } },
+          followers: { where: { follower: { isBanned: false } } },
+          following: { where: { following: { isBanned: false } } },
+        },
+      },
     },
   });
 
@@ -35,7 +41,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ usernam
   });
 
   let isFollowing = false;
-  if (session) {
+  if (session?.user?.id) {
     const f = await prisma.follow.findUnique({
       where: { followerId_followingId: { followerId: session.user.id, followingId: user.id } },
     });

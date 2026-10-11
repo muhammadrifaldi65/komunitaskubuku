@@ -3,11 +3,12 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { isValidAvatarUrl, toPublicImageUrl } from "@/lib/media-url";
 
 const schema = z.object({
   name: z.string().min(2).max(60).optional(),
   bio: z.string().max(300).optional().nullable(),
-  avatarUrl: z.string().url().optional().nullable(),
+  avatarUrl: z.string().refine(isValidAvatarUrl, "URL foto profil tidak valid").optional().nullable(),
   currentPassword: z.string().min(8).optional(),
   newPassword: z.string().min(8).optional(),
 });
@@ -51,7 +52,7 @@ export async function PATCH(req: Request) {
   const updateData: Record<string, unknown> = {};
   if (parsed.data.name !== undefined) updateData.name = parsed.data.name;
   if (parsed.data.bio !== undefined) updateData.bio = parsed.data.bio;
-  if (parsed.data.avatarUrl !== undefined) updateData.avatarUrl = parsed.data.avatarUrl;
+  if (parsed.data.avatarUrl !== undefined) updateData.avatarUrl = toPublicImageUrl(parsed.data.avatarUrl);
 
   if (currentPassword && newPassword) {
     const user = await prisma.user.findUnique({

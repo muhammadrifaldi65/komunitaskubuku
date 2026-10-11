@@ -44,8 +44,8 @@ model User {
   bookmarks     Bookmark[]
   notifications Notification[]      @relation("NotificationRecipient")
   actorNotifs   Notification[]      @relation("NotificationActor")
-  following     Follow[]            @relation("FollowingRelation")
-  followers     Follow[]            @relation("FollowerRelation")
+  following     Follow[]            @relation("FollowerRelation")
+  followers     Follow[]            @relation("FollowingRelation")
   chatMessages  ChatMessage[]
   chatThread    ChatThread?         @relation("UserThread")
   handledThreads ChatThread[]       @relation("AdminHandler")

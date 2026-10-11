@@ -6,6 +6,23 @@ import { authConfig } from "@/auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
+  callbacks: {
+    ...authConfig.callbacks,
+    async jwt(params) {
+      const token = await authConfig.callbacks!.jwt!(params);
+      if (token && params.trigger === "update") {
+        const user = await prisma.user.findUnique({
+          where: { id: token.id },
+          select: { name: true, avatarUrl: true },
+        });
+        if (user) {
+          token.name = user.name;
+          token.avatarUrl = user.avatarUrl ?? undefined;
+        }
+      }
+      return token;
+    },
+  },
   providers: [
     Credentials({
       name: "credentials",

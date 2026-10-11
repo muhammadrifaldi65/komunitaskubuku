@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import type { Session, User } from "next-auth";
+import { toPublicImageUrl } from "@/lib/media-url";
 
 /**
  * Config ini TIDAK boleh mengandung apa pun yang bergantung pada Prisma/bcrypt
@@ -29,7 +30,7 @@ export const authConfig: NextAuthConfig = {
         session.user.id = token.id;
         session.user.role = token.role;
         session.user.username = token.username;
-        session.user.avatarUrl = token.avatarUrl;
+        session.user.avatarUrl = toPublicImageUrl(token.avatarUrl) ?? undefined;
       }
       return session;
     },

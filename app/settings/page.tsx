@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { toPublicImageUrl } from "@/lib/media-url";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -14,6 +16,7 @@ function fileToBase64(file: File): Promise<string> {
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { update } = useSession();
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -41,6 +44,9 @@ export default function SettingsPage() {
   async function onPickAvatar(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    e.target.value = "";
+    setMessage(null);
+    setMessageType(null);
     setSaving(true);
     try {
       const base64 = await fileToBase64(file);
@@ -50,7 +56,13 @@ export default function SettingsPage() {
         body: JSON.stringify({ base64, fileName: file.name, folder: "avatars" }),
       });
       const data = await res.json();
-      if (res.ok) setAvatarUrl(data.url);
+      if (!res.ok) throw new Error(data.error || "Gagal mengunggah foto profil");
+      setAvatarUrl(toPublicImageUrl(data.url) ?? null);
+      setMessage("Foto berhasil diunggah. Simpan perubahan untuk menerapkannya.");
+      setMessageType("success");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Gagal mengunggah foto profil");
+      setMessageType("error");
     } finally {
       setSaving(false);
     }
@@ -83,25 +95,27 @@ export default function SettingsPage() {
       body.newPassword = newPassword;
     }
 
-    const res = await fetch("/api/me", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    setSaving(false);
-
-    const data = await res.json();
-    if (res.ok) {
-      setMessage("Profil berhasil disimpan");
-      setMessageType("success");
+    try {
+      const res = await fetch("/api/me", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal menyimpan profil");
+      setAvatarUrl(toPublicImageUrl(data.user.avatarUrl) ?? null);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
+      await update({});
+      setMessage("Profil berhasil disimpan");
+      setMessageType("success");
       router.refresh();
-    } else {
-      setMessage(data.error || "Terjadi kesalahan");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Gagal menyimpan profil");
       setMessageType("error");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -113,13 +127,13 @@ export default function SettingsPage() {
       <form onSubmit={handleSave} className="space-y-3 bg-white border rounded-xl p-4">
         <div className="flex flex-col items-center gap-2">
           <img
-            src={avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
+            src={toPublicImageUrl(avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
             className="w-20 h-20 rounded-full object-cover border"
             alt=""
           />
           <label className="text-xs text-emerald-700 cursor-pointer hover:underline">
             Ganti foto profil
-            <input type="file" accept="image/*" onChange={onPickAvatar} className="hidden" />
+            <input type="file" accept="image/*" onChange={onPickAvatar} disabled={saving} className="hidden" />
           </label>
         </div>
         <input
@@ -161,7 +175,7 @@ export default function SettingsPage() {
           />
         </div>
         {message && (
-          <p className={messageType === "error" ? "text-red-600 text-sm" : "text-emerald-600 text-sm"}>
+          <p role={messageType === "error" ? "alert" : "status"} className={messageType === "error" ? "text-red-600 text-sm" : "text-emerald-600 text-sm"}>
             {message}
           </p>
         )}

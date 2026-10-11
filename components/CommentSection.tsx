@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { toPublicImageUrl } from "@/lib/media-url";
 
 interface CommentAuthor {
   id: string;
@@ -76,7 +77,7 @@ function CommentItem({ comment, postId, onReplied }: { comment: CommentData; pos
     <div className="py-2.5">
       <div className="flex gap-2.5">
         <img
-          src={comment.author.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${comment.author.name}`}
+          src={toPublicImageUrl(comment.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${comment.author.name}`}
           className="w-7 h-7 rounded-full object-cover ring-1 shrink-0"
           style={{ boxShadow: "0 0 0 1px #E4E0D6" }}
           alt=""

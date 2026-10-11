@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BookClub - Komunitas Pecinta Buku",
+  title: "PTHREE - Komunitas Pecinta Buku",
   description: "Platform sosial untuk komunitas pecinta buku",
   icons: {
     icon: "https://i.imgur.com/u2k2fsE.jpg",
@@ -31,9 +31,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--color-canvas)] text-[var(--color-ink)]">
+        <a href="#main-content" className="skip-link">Langsung ke konten</a>
         <Providers>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1" tabIndex={-1}>{children}</main>
         </Providers>
       </body>
     </html>

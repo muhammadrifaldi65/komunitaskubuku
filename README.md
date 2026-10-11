@@ -11,6 +11,16 @@
 - **Algoritma feed**: skor berbasis engagement + waktu (mirip "hot score"), dengan boost untuk akun yang diikuti — lihat `lib/algorithm.ts`
 - **Admin dashboard**: statistik, membuat akun pengguna, kelola pengguna (ban/role), moderasi konten (takedown/restore), kelola laporan, inbox customer service
 - **Fitur minor**: notifikasi in-app, reading list (Ingin Dibaca/Sedang Dibaca/Selesai), laporkan post
+- **Tampilan**: beranda editorial, navigasi responsif, kartu post lebih lega, profil dengan daftar pengikut/mengikuti yang bisa dibuka.
+- **Avatar**: upload dan gambar post memakai path publik `/media/...`; URL ImageKit lama dinormalisasi. Simpan profil memperbarui avatar sesi tanpa login ulang.
+
+### Follow dan pengikut
+
+- `PUT /api/users/:username/follow` menerima `{ "following": true }` atau `false`. Idempoten: request berulang tidak membalik status; relasi dan notifikasi disimpan dalam satu transaksi. `POST` toggle lama tidak digunakan.
+- `GET /api/users/:username/connections?kind=followers|following&after=<id>` mengembalikan `{ members, total, nextCursor }`, maksimal 30 anggota aktif per halaman.
+- Jumlah pengikut/mengikuti tidak mencakup akun diblokir. Relasi Prisma telah dikoreksi; jalankan `npx prisma generate`, lalu restart server setelah memperbarui kode. Tidak ada perubahan tabel atau migrasi data.
+- Cek avatar: `npx tsx lib/media-url.test.ts`.
+- Cek follow: jalankan `node scripts/follow-regression.mjs` dengan `FOLLOW_TEST_DISPOSABLE=1`, `FOLLOW_TEST_COOKIE`, `FOLLOW_TEST_ACTOR`, `FOLLOW_TEST_TARGET`; opsional `FOLLOW_TEST_BASE_URL`. Wajib dua akun uji sekali pakai karena pengujian membuat notifikasi.
 
 ## 🚀 Setup Lokal
 

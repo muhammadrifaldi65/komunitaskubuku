@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toPublicImageUrl } from "@/lib/media-url";
 
 interface Thread {
   id: string;
@@ -35,7 +36,7 @@ export default function AdminChatListPage() {
         {threads.map((t) => (
           <Link key={t.id} href={`/admin/chat/${t.id}`} className="flex items-center gap-3 p-3 hover:bg-gray-50">
             <img
-              src={t.user.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${t.user.name}`}
+              src={toPublicImageUrl(t.user.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${t.user.name}`}
               className="w-9 h-9 rounded-full object-cover border"
               alt=""
             />
