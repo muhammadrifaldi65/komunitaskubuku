@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { toPublicImageUrl } from "@/lib/media-url";
@@ -28,205 +28,174 @@ function timeAgo(dateStr: string) {
   return `${Math.floor(diff / 86400)}h`;
 }
 
-const ROLE_ACCENT: Record<string, string> = {
-  ADMIN: "#A13D2E",
-  PEMBINA: "#B8863B",
-  USER: "#1F4D3A",
-};
-
-function IconReply() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M9 17 4 12l5-5M4 12h11a5 5 0 0 1 5 5v2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-function IconSend() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="m3 11 18-8-8 18-2-8-8-2Z" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+async function sendComment(postId: string, content: string, parentId?: string) {
+  const response = await fetch(`/api/posts/${postId}/comments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content, parentId }),
+  });
+  const data = await response.json().catch(() => null);
+  if (!response.ok) throw new Error(data?.error || "Gagal menyimpan komentar. Silakan coba lagi");
 }
 
-function CommentItem({ comment, postId, onReplied }: { comment: CommentData; postId: string; onReplied: () => void }) {
+function CommentItem({ comment, postId, onReplied, parentUsername }: {
+  comment: CommentData;
+  postId: string;
+  onReplied: () => Promise<void>;
+  parentUsername?: string;
+}) {
   const { data: session } = useSession();
   const [replying, setReplying] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [busy, setBusy] = useState(false);
-  const accent = ROLE_ACCENT[comment.author.role] || "#1F4D3A";
+  const [error, setError] = useState("");
+  const composerId = useId();
+  const repliesId = useId();
+  const replies = comment.replies || [];
 
-  async function submitReply() {
-    if (!session) return (window.location.href = "/login");
-    if (!replyText.trim()) return;
+  async function submitReply(event: React.FormEvent) {
+    event.preventDefault();
+    if (!session || busy || !replyText.trim()) return;
     setBusy(true);
-    const res = await fetch(`/api/posts/${postId}/comments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: replyText, parentId: comment.id }),
-    });
-    setBusy(false);
-    if (res.ok) {
+    setError("");
+    try {
+      await sendComment(postId, replyText, comment.id);
       setReplyText("");
       setReplying(false);
-      onReplied();
+      await onReplied();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Koneksi terputus. Silakan coba lagi");
+    } finally {
+      setBusy(false);
     }
   }
 
   return (
-    <div className="py-2.5">
-      <div className="flex gap-2.5">
+    <article className="min-w-0 border-t py-4">
+      <div className="flex gap-3">
         <img
-          src={toPublicImageUrl(comment.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${comment.author.name}`}
-          className="w-7 h-7 rounded-full object-cover ring-1 shrink-0"
-          style={{ boxShadow: "0 0 0 1px #E4E0D6" }}
+          src={toPublicImageUrl(comment.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(comment.author.name)}`}
+          className="h-9 w-9 shrink-0 rounded-full object-cover"
           alt=""
         />
-        <div className="flex-1 min-w-0">
-          <div
-            className="rounded-sm px-3 py-2 border-l-2"
-            style={{ background: "#FBFAF7", borderColor: accent }}
-          >
-            <Link
-              href={`/profile/${comment.author.username}`}
-              className="font-semibold text-xs hover:underline"
-              style={{ color: "#1C1B19" }}
-            >
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm">
+            <Link href={`/profile/${encodeURIComponent(comment.author.username)}`} className="font-semibold hover:underline [overflow-wrap:anywhere]">
               {comment.author.name}
             </Link>
-            <p className="text-sm mt-0.5 leading-relaxed" style={{ color: "#1C1B19" }}>
-              {comment.content}
-            </p>
+            <span className="text-[var(--color-muted)] [overflow-wrap:anywhere]">@{comment.author.username}</span>
+            <time dateTime={comment.createdAt} title={new Date(comment.createdAt).toLocaleString("id-ID")} className="text-xs text-[var(--color-muted)]">
+              {timeAgo(comment.createdAt)}
+            </time>
           </div>
-          <div
-            className="flex items-center gap-3 text-xs mt-1 px-1"
-            style={{ fontFamily: "var(--font-mono, monospace)", color: "#8A8478" }}
-          >
-            <span>{timeAgo(comment.createdAt)}</span>
-            <button
-              onClick={() => setReplying((r) => !r)}
-              className="flex items-center gap-1 hover:opacity-70"
-            >
-              <IconReply />
-              Balas
+          {parentUsername && <p className="mt-1 text-xs text-[var(--color-muted)] [overflow-wrap:anywhere]">Membalas @{parentUsername}</p>}
+          <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed [overflow-wrap:anywhere]">{comment.content}</p>
+          {session ? (
+            <button type="button" onClick={() => setReplying(!replying)} aria-expanded={replying} aria-controls={replying ? composerId : undefined} className="min-h-11 text-xs font-medium text-[var(--color-accent)]">
+              {replying ? "Batal membalas" : "Balas"}
             </button>
-          </div>
-
+          ) : <Link href="/login" className="inline-flex min-h-11 items-center text-xs text-[var(--color-accent)]">Masuk untuk membalas</Link>}
           {replying && (
-            <div className="mt-1.5 flex gap-1.5">
-              <input
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-                placeholder="Tulis balasan..."
-                className="flex-1 border rounded-sm px-3 py-1.5 text-xs bg-white"
-                style={{ borderColor: "#E4E0D6", color: "#1C1B19" }}
-                autoFocus
-              />
-              <button
-                disabled={busy}
-                onClick={submitReply}
-                className="flex items-center gap-1 text-xs font-medium px-2.5 rounded-sm border disabled:opacity-40"
-                style={{ borderColor: "#1F4D3A", color: "#1F4D3A" }}
-              >
-                <IconSend />
-              </button>
-            </div>
+            <form id={composerId} onSubmit={submitReply} className="mb-2 space-y-2" aria-busy={busy}>
+              <label htmlFor={`${composerId}-text`} className="block text-xs text-[var(--color-muted)]">Balasan untuk @{comment.author.username}</label>
+              <textarea id={`${composerId}-text`} value={replyText} onChange={(event) => setReplyText(event.target.value)} disabled={busy} maxLength={1000} required rows={3} autoFocus placeholder="Tulis balasan..." className="w-full resize-y rounded-xl border bg-[var(--color-surface)] px-3 py-2 text-sm" />
+              <button type="submit" disabled={busy || !replyText.trim()} className="button-primary">{busy ? "Mengirim..." : "Kirim balasan"}</button>
+            </form>
           )}
-
-          {comment.replies && comment.replies.length > 0 && (
-            <div className="ml-4 mt-1 pl-3 border-l" style={{ borderColor: "#E4E0D6" }}>
-              {comment.replies.map((r) => (
-                <CommentItem key={r.id} comment={r} postId={postId} onReplied={onReplied} />
-              ))}
-            </div>
+          {error && <p role="alert" className="mb-2 text-sm text-red-700">{error}</p>}
+          {replies.length > 0 && (
+            <button type="button" aria-expanded={expanded} aria-controls={repliesId} onClick={() => setExpanded(!expanded)} className="block min-h-11 text-left text-sm font-medium text-[var(--color-accent)]">
+              {expanded ? "Sembunyikan balasan" : "Lihat balasan lainnya"} ({replies.length})
+            </button>
           )}
         </div>
       </div>
-    </div>
+      {/* ponytail: one reply gutter at every depth; use a separate thread view if branching needs more context. */}
+      {replies.length > 0 && (
+        <div id={repliesId} hidden={!expanded} className={parentUsername ? "" : "ml-3 border-l pl-3 sm:ml-5 sm:pl-4"}>
+          {expanded && replies.map((reply) => <CommentItem key={reply.id} comment={reply} postId={postId} onReplied={onReplied} parentUsername={comment.author.username} />)}
+        </div>
+      )}
+    </article>
   );
 }
 
 export default function CommentSection({ postId }: { postId: string }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [comments, setComments] = useState<CommentData[]>([]);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const composerId = useId();
+  const loadVersion = useRef(0);
 
-  async function load() {
+  const load = useCallback(async (signal?: AbortSignal) => {
+    const version = ++loadVersion.current;
     setLoading(true);
-    const res = await fetch(`/api/posts/${postId}/comments`);
-    const data = await res.json();
-    if (res.ok) setComments(data.comments);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setLoadError("");
+    try {
+      const response = await fetch(`/api/posts/${postId}/comments`, { signal });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Gagal memuat komentar");
+      if (version === loadVersion.current && !signal?.aborted) setComments(data.comments);
+    } catch (error) {
+      if (version === loadVersion.current && !signal?.aborted) {
+        setComments([]);
+        setLoadError(error instanceof Error ? error.message : "Gagal memuat komentar. Silakan coba lagi");
+      }
+    } finally {
+      if (version === loadVersion.current && !signal?.aborted) setLoading(false);
+    }
   }, [postId]);
 
-  async function submitComment(e: React.FormEvent) {
-    e.preventDefault();
-    if (!session) return (window.location.href = "/login");
-    if (!text.trim()) return;
+  useEffect(() => {
+    const controller = new AbortController();
+    setComments([]);
+    setText("");
+    setSubmitError("");
+    void load(controller.signal);
+    return () => { controller.abort(); loadVersion.current++; };
+  }, [load]);
+
+  async function submitComment(event: React.FormEvent) {
+    event.preventDefault();
+    if (!session || busy || !text.trim()) return;
     setBusy(true);
-    const res = await fetch(`/api/posts/${postId}/comments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: text }),
-    });
-    setBusy(false);
-    if (res.ok) {
+    setSubmitError("");
+    try {
+      await sendComment(postId, text);
       setText("");
-      load();
+      await load();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Koneksi terputus. Silakan coba lagi");
+    } finally {
+      setBusy(false);
     }
   }
 
   return (
-    <div className="mt-4 border-t pt-3" style={{ borderColor: "#E4E0D6" }}>
-      <div
-        className="text-[10px] uppercase tracking-widest mb-2.5"
-        style={{ fontFamily: "var(--font-mono, monospace)", color: "#8A8478" }}
-      >
-        Komentar {comments.length > 0 ? `· ${comments.length}` : ""}
-      </div>
-
-      <form onSubmit={submitComment} className="flex flex-col gap-2 mb-1">
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={session ? "Tulis komentar..." : "Masuk untuk berkomentar"}
-          disabled={!session}
-          rows={4}
-          className="min-h-[100px] resize-none border rounded-sm px-3 py-2 text-sm bg-white disabled:bg-[#FBFAF7] disabled:text-[#8A8478]"
-          style={{ borderColor: "#E4E0D6", color: "#1C1B19" }}
-        />
-        <button
-          disabled={busy || !session}
-          className="w-full flex items-center justify-center gap-1.5 text-xs font-medium uppercase tracking-wide px-3 py-2 rounded-sm border disabled:opacity-40"
-          style={{ fontFamily: "var(--font-mono, monospace)", borderColor: "#1F4D3A", color: "#1F4D3A" }}
-        >
-          <IconSend />
-          Kirim
-        </button>
-      </form>
-
-      {loading && (
-        <p className="text-xs mt-2" style={{ color: "#8A8478" }}>
-          Memuat komentar...
-        </p>
+    <section className="mt-4 border-t pt-4" aria-label="Komentar">
+      <h2 className="mb-4 text-base font-semibold">Percakapan</h2>
+      {session ? (
+        <form onSubmit={submitComment} className="mb-4 space-y-3" aria-busy={busy}>
+          <label htmlFor={composerId} className="block text-sm font-medium">Tulis komentar</label>
+          <textarea id={composerId} value={text} onChange={(event) => setText(event.target.value)} disabled={busy} maxLength={1000} required rows={3} placeholder="Bagikan pendapatmu tentang bacaan ini..." className="w-full resize-y rounded-xl border bg-[var(--color-surface)] px-3 py-3 text-sm" />
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs text-[var(--color-muted)]">{text.length}/1.000</span>
+            <button type="submit" disabled={busy || !text.trim()} className="button-primary">{busy ? "Mengirim..." : "Kirim komentar"}</button>
+          </div>
+          {submitError && <p role="alert" className="text-sm text-red-700">{submitError}</p>}
+        </form>
+      ) : status === "loading" ? <p role="status" className="mb-4 text-sm text-[var(--color-muted)]">Memuat sesi...</p> : (
+        <p className="mb-4 text-sm text-[var(--color-muted)]"><Link href="/login" className="font-medium text-[var(--color-accent)] hover:underline">Masuk</Link> untuk ikut berkomentar.</p>
       )}
-      {!loading && comments.length === 0 && (
-        <p className="text-xs mt-2" style={{ color: "#8A8478" }}>
-          Belum ada komentar. Jadi yang pertama berbagi pendapat.
-        </p>
-      )}
-      <div className="divide-y" style={{ borderColor: "#E4E0D6" }}>
-        {comments.map((c) => (
-          <CommentItem key={c.id} comment={c} postId={postId} onReplied={load} />
-        ))}
-      </div>
-    </div>
+      {loading && <p role="status" className="py-3 text-sm text-[var(--color-muted)]">Memuat komentar...</p>}
+      {loadError && <div className="py-3"><p role="alert" className="text-sm text-red-700">{loadError}</p><button type="button" onClick={() => void load()} className="min-h-11 text-sm font-medium text-[var(--color-accent)]">Coba lagi</button></div>}
+      {!loading && !loadError && comments.length === 0 && <p className="py-3 text-sm text-[var(--color-muted)]">Belum ada komentar. Jadi yang pertama berbagi pendapat.</p>}
+      {comments.map((comment) => <CommentItem key={comment.id} comment={comment} postId={postId} onReplied={load} />)}
+    </section>
   );
 }

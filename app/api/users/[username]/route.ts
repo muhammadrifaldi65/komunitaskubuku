@@ -37,6 +37,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ usernam
     take: 30,
     include: {
       author: { select: { id: true, username: true, name: true, avatarUrl: true, role: true } },
+      reactions: { where: { userId: session?.user.id ?? "__no_user__" }, select: { type: true } },
+      bookmarks: { where: { userId: session?.user.id ?? "__no_user__" }, select: { id: true } },
     },
   });
 
@@ -48,5 +50,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ usernam
     isFollowing = !!f;
   }
 
-  return NextResponse.json({ user, posts, isFollowing });
+  return NextResponse.json({
+    user,
+    posts: posts.map(({ reactions, bookmarks, ...post }) => ({ ...post, myReaction: reactions[0]?.type ?? null, isBookmarked: bookmarks.length > 0 })),
+    isFollowing,
+  }, { headers: { "Cache-Control": "private, no-store" } });
 }

@@ -11,16 +11,21 @@ const updateSchema = z.object({
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const post = await prisma.post.findUnique({
-    where: { id },
+  const session = await auth();
+  const currentUserId = session?.user.id ?? "__no_user__";
+  const post = await prisma.post.findFirst({
+    where: { id, isTakenDown: false, author: { isBanned: false } },
     include: {
       author: { select: { id: true, username: true, name: true, avatarUrl: true, role: true } },
+      reactions: { where: { userId: currentUserId }, select: { type: true } },
+      bookmarks: { where: { userId: currentUserId }, select: { id: true } },
     },
   });
   if (!post || post.isTakenDown) {
     return NextResponse.json({ error: "Post tidak ditemukan" }, { status: 404 });
   }
-  return NextResponse.json({ post });
+  const { reactions, bookmarks, ...data } = post;
+  return NextResponse.json({ post: { ...data, myReaction: reactions[0]?.type ?? null, isBookmarked: bookmarks.length > 0 } }, { headers: { "Cache-Control": "private, no-store" } });
 }
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {

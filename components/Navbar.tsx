@@ -9,7 +9,8 @@ import { toPublicImageUrl } from "@/lib/media-url";
 const paths: Record<string, string> = {
   home: "m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z",
   search: "m21 21-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0",
-  book: "M4 3h16v19l-8-5-8 5Z",
+  book: "M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1m0-16c3-2 7-2 10-1v16c-3-1-7-1-10 1V5Z",
+  bookmark: "M6 3h12v18l-6-4-6 4Z",
   bell: "M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M10 21h4",
   mail: "M3 5h18v14H3ZM3 5l9 8 9-8",
   user: "M20 21v-2a7 7 0 0 0-14 0v2M17 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0",
@@ -31,6 +32,7 @@ export default function Navbar() {
     { href: "/?search=1", label: "Jelajahi", icon: "search" },
     ...(session ? [
       { href: "/reading-list", label: "Daftar bacaan", icon: "book" },
+      { href: "/bookmarks", label: "Markah", icon: "bookmark" },
       { href: "/notifications", label: "Notifikasi", icon: "bell" },
       { href: "/messages", label: "Pesan", icon: "mail" },
       { href: `/profile/${session.user.username}`, label: "Profil", icon: "user" },

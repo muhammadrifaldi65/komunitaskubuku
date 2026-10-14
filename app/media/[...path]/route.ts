@@ -21,10 +21,20 @@ export async function GET(req: Request, { params }: { params: Promise<{ path: st
     return NextResponse.json({ error: "ImageKit belum dikonfigurasi" }, { status: 500 });
   }
 
-  const upstream = await fetch(upstreamUrl, {
-    headers: { Accept: req.headers.get("accept") || "image/*" },
-    next: { revalidate: 3600 },
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(upstreamUrl, {
+      headers: { Accept: req.headers.get("accept") || "image/*" },
+      signal: AbortSignal.timeout(10000),
+      next: { revalidate: 3600 },
+    });
+  } catch (error) {
+    console.error("ImageKit media connection failed", upstreamUrl.hostname, error);
+    return NextResponse.json(
+      { error: "Gambar belum dapat dimuat. Periksa koneksi dan DNS server ke ImageKit." },
+      { status: 502, headers: { "Cache-Control": "no-store" } },
+    );
+  }
 
   if (!upstream.ok) {
     return new NextResponse(null, { status: upstream.status });

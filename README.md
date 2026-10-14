@@ -32,6 +32,14 @@
 - Cek avatar: `npx tsx lib/media-url.test.ts`.
 - Cek follow: jalankan `node scripts/follow-regression.mjs` dengan `FOLLOW_TEST_DISPOSABLE=1`, `FOLLOW_TEST_COOKIE`, `FOLLOW_TEST_ACTOR`, `FOLLOW_TEST_TARGET`; opsional `FOLLOW_TEST_BASE_URL`. Wajib dua akun uji sekali pakai karena pengujian membuat notifikasi.
 
+### Composer, markah, dan komentar
+
+- `/create`: penghitung 3.000 karakter, informasi buku opsional, pratinjau gambar, batas 6 MB, status upload/publikasi, dan pencegahan kirim ganda. Kegagalan tidak mengosongkan draf pada halaman.
+- `/bookmarks`: markah privat disimpan di database, tetap tersedia setelah refresh. `PUT /api/posts/:id/bookmark` menerima `{ "bookmarked": true }` atau `false`; idempoten. `GET /api/bookmarks?cursor=...` mengurutkan waktu penyimpanan dengan pagination 20 post.
+- Balasan komentar tersembunyi sampai tombol **Lihat balasan lainnya** ditekan; dapat disembunyikan kembali. Balasan mempertahankan komentar tujuan, termasuk percakapan bertingkat.
+- Regresi: `node scripts/bookmark-regression.mjs` dan `node scripts/comments-regression.mjs`. Variabel akun/post uji dijelaskan pada awal masing-masing skrip; gunakan data sekali pakai.
+- Media ImageKit: kegagalan koneksi upstream mengembalikan HTTP 502 tanpa cache. `UND_ERR_CONNECT_TIMEOUT` berarti koneksi server ke ImageKit tidak tersambung; periksa DNS, firewall, dan akses HTTPS server. Penanganan error aplikasi tidak memperbaiki jaringan eksternal.
+
 ## 🚀 Setup Lokal
 
 ### 1. Install dependencies

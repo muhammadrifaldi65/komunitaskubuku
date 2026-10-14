@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { toPublicImageUrl } from "@/lib/media-url";
 export interface PostAuthor {
@@ -82,7 +82,7 @@ function IconMore() {
   );
 }
 
-export default function PostCard({ post, onDeleted }: { post: PostData; onDeleted?: (id: string) => void }) {
+export default function PostCard({ post, onDeleted, onBookmarkChanged }: { post: PostData; onDeleted?: (id: string) => void; onBookmarkChanged?: (id: string, bookmarked: boolean) => void }) {
   const { data: session } = useSession();
   const [state, setState] = useState(post);
   const [busy, setBusy] = useState(false);
@@ -92,6 +92,9 @@ export default function PostCard({ post, onDeleted }: { post: PostData; onDelete
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState("");
+  const bookmarkRequest = useRef(false);
+  const [bookmarkBusy, setBookmarkBusy] = useState(false);
+  const [bookmarkError, setBookmarkError] = useState("");
 
   async function deletePost() {
     if (deleting || !window.confirm("Hapus postingan ini beserta komentar dan reaksinya? Tindakan ini permanen dan tidak dapat dibatalkan.")) return;
@@ -133,9 +136,26 @@ export default function PostCard({ post, onDeleted }: { post: PostData; onDelete
 
   async function toggleBookmark() {
     if (!session) return (window.location.href = "/login");
-    const res = await fetch(`/api/posts/${state.id}/bookmark`, { method: "POST" });
-    const data = await res.json();
-    if (res.ok) setState((s) => ({ ...s, isBookmarked: data.bookmarked }));
+    if (bookmarkRequest.current) return;
+    bookmarkRequest.current = true;
+    setBookmarkBusy(true);
+    setBookmarkError("");
+    try {
+      const res = await fetch(`/api/posts/${state.id}/bookmark`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookmarked: !state.isBookmarked }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal menyimpan markah. Coba lagi.");
+      setState((s) => ({ ...s, isBookmarked: data.bookmarked }));
+      onBookmarkChanged?.(state.id, data.bookmarked);
+    } catch (error) {
+      setBookmarkError(error instanceof Error ? error.message : "Koneksi terputus. Coba lagi.");
+    } finally {
+      bookmarkRequest.current = false;
+      setBookmarkBusy(false);
+    }
   }
 
   async function share() {
@@ -216,8 +236,9 @@ export default function PostCard({ post, onDeleted }: { post: PostData; onDelete
         <button onClick={() => react("DISLIKE")} disabled={busy || deleting} aria-label="Tidak suka post" aria-pressed={state.myReaction === "DISLIKE"} className={`${actionClass} ${state.myReaction === "DISLIKE" ? "text-blue-600" : ""}`}><IconThumbDown filled={state.myReaction === "DISLIKE"} /><span>{state.dislikeCount}</span></button>
         <Link href={`/post/${state.id}`} aria-label={`${state.commentCount} komentar`} className={actionClass}><IconComment /><span>{state.commentCount}</span></Link>
         <button onClick={share} disabled={deleting} aria-label="Bagikan post" className={actionClass}><IconShare /><span>{state.shareCount}</span></button>
-        <button onClick={toggleBookmark} disabled={deleting} aria-label={state.isBookmarked ? "Hapus dari daftar bacaan" : "Simpan ke daftar bacaan"} aria-pressed={!!state.isBookmarked} className={`${actionClass} ${state.isBookmarked ? "text-blue-600" : ""}`}><IconBookmark filled={state.isBookmarked} /></button>
+        <button onClick={toggleBookmark} disabled={deleting || bookmarkBusy} aria-label={bookmarkBusy ? "Menyimpan markah…" : state.isBookmarked ? "Hapus dari Markah" : "Simpan ke Markah"} aria-pressed={!!state.isBookmarked} className={`${actionClass} ${state.isBookmarked ? "text-blue-600" : ""}`}><IconBookmark filled={state.isBookmarked} /></button>
       </div>
+      {bookmarkError && <p role="alert" className="mt-2 text-sm text-red-600">{bookmarkError}</p>}
     </article>
   );
 }
