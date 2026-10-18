@@ -62,7 +62,9 @@ export const ModelName = {
   Notification: 'Notification',
   ChatThread: 'ChatThread',
   ChatMessage: 'ChatMessage',
-  ReadingListItem: 'ReadingListItem'
+  ReadingListItem: 'ReadingListItem',
+  DmThread: 'DmThread',
+  DmMessage: 'DmMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,6 +91,9 @@ export const UserScalarFieldEnum = {
   passwordHash: 'passwordHash',
   bio: 'bio',
   avatarUrl: 'avatarUrl',
+  coverUrl: 'coverUrl',
+  location: 'location',
+  website: 'website',
   role: 'role',
   isBanned: 'isBanned',
   banReason: 'banReason',
@@ -234,6 +239,29 @@ export const ReadingListItemScalarFieldEnum = {
 } as const
 
 export type ReadingListItemScalarFieldEnum = (typeof ReadingListItemScalarFieldEnum)[keyof typeof ReadingListItemScalarFieldEnum]
+
+
+export const DmThreadScalarFieldEnum = {
+  id: 'id',
+  firstId: 'firstId',
+  secondId: 'secondId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DmThreadScalarFieldEnum = (typeof DmThreadScalarFieldEnum)[keyof typeof DmThreadScalarFieldEnum]
+
+
+export const DmMessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  senderId: 'senderId',
+  content: 'content',
+  createdAt: 'createdAt',
+  readAt: 'readAt'
+} as const
+
+export type DmMessageScalarFieldEnum = (typeof DmMessageScalarFieldEnum)[keyof typeof DmMessageScalarFieldEnum]
 
 
 export const SortOrder = {

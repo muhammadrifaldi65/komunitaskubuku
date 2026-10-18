@@ -33,7 +33,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ username
           await tx.notification.create({
             data: {
               recipientId: target.id, actorId: actor.id, type: "FOLLOW",
-              message: "mulai mengikuti kamu", link: `/profile/${encodeURIComponent(actor.username)}`,
+              message: "mulai mengikuti kamu", link: `/${encodeURIComponent(actor.username)}`,
             },
           });
         }

@@ -16,6 +16,18 @@
 - **Pencarian**: cari isi post, judul buku, atau penulis. Tab **Mengikuti** hanya memuat post akun yang diikuti; perlu login.
 - **Hapus post**: menu opsi pada post sendiri menyediakan hapus permanen dengan konfirmasi. Feed/profil diperbarui setelah berhasil; halaman detail kembali ke beranda. Admin tetap dapat menghapus post pengguna lain.
 
+### Profil, trending, dan pesan pribadi
+
+- Tampilan profil mengikuti susunan X: sampul penuh rasio 3:1, avatar bulat menumpuk tepi bawah sampul, tombol aksi di kanan, identitas rapat di bawah. Responsif desktop/mobile.
+
+- `/settings`: nama, username unik (3–24 karakter), bio, lokasi, website HTTP(S), avatar/sampul, serta ganti password dengan password lama. Avatar/sampul diunggah ke folder milik pengguna dan disajikan melalui `/media/...` pada domain aplikasi.
+- Profil publik memakai `/<username>`; username rute aplikasi seperti `admin`, `settings`, dan `messages` dilarang. Perubahan username langsung memperbarui sesi. URL profil lama tidak dipertahankan.
+- Klik pencarian/Jelajahi menampilkan 10 hashtag terbanyak selama 24 jam terakhir. Penghitungan tidak membedakan kapital, satu hashtag dihitung sekali per post; post diturunkan dan akun diblokir dikecualikan. Klik hashtag mencari tag utuh, bukan awalan.
+- `/messages`: DM privat, unread, riwayat berpaginasi, polling 8 detik. Pengiriman hanya diizinkan bila **penerima mengikuti pengirim**, diperiksa lagi setiap pengiriman termasuk setelah unfollow. Hanya kedua peserta bisa mengakses isi atau menandai pesan dibaca. Customer service tetap tersedia di `/support`.
+- Migrasi: `npx prisma migrate deploy && npx prisma generate`. Migrasi menolak username lama yang bentrok/terlarang tanpa menggantinya diam-diam; pilih pengganti sebelum menjalankannya. Seed baru menggunakan `bookclub_admin`.
+- Verifikasi: `npx tsx scripts/profile-regression.mjs`, `npx tsx scripts/hashtags-regression.ts`, dan `node scripts/dm-regression.mjs`. Regresi DM membutuhkan tiga akun sekali pakai; variabel lingkungan tercantum di awal skrip. Skrip hashtag memakai PostgreSQL nyata tanpa mengubah data.
+- Production self-hosted: set `AUTH_TRUST_HOST=true` hanya jika host/proxy deployment dikendalikan sendiri dan header Host diteruskan secara tepercaya; tanpa konfigurasi tersebut Auth.js bisa menolak sesi dengan `UntrustedHost`.
+
 ### Feed dan penghapusan
 
 - `GET /api/posts?q=...&feed=all|following&cursor=...`: pencarian tanpa membedakan huruf besar/kecil, maksimal 100 karakter. Reset cursor saat filter berubah. Post akun diblokir atau konten diturunkan tidak ditampilkan.

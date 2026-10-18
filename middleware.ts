@@ -20,7 +20,7 @@ export default auth((req) => {
     }
   }
 
-  const protectedPrefixes = ["/settings", "/notifications", "/messages", "/create"];
+  const protectedPrefixes = ["/settings", "/notifications", "/messages", "/support", "/create"];
   if (protectedPrefixes.some((p) => pathname.startsWith(p)) && !isLoggedIn) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
@@ -29,5 +29,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/settings/:path*", "/notifications/:path*", "/messages/:path*", "/create/:path*"],
+  matcher: ["/admin/:path*", "/settings/:path*", "/notifications/:path*", "/messages/:path*", "/support/:path*", "/create/:path*"],
 };

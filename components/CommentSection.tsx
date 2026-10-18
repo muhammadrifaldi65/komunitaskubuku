@@ -81,7 +81,7 @@ function CommentItem({ comment, postId, onReplied, parentUsername }: {
         />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm">
-            <Link href={`/profile/${encodeURIComponent(comment.author.username)}`} className="font-semibold hover:underline [overflow-wrap:anywhere]">
+            <Link href={`/${encodeURIComponent(comment.author.username)}`} className="font-semibold hover:underline [overflow-wrap:anywhere]">
               {comment.author.name}
             </Link>
             <span className="text-[var(--color-muted)] [overflow-wrap:anywhere]">@{comment.author.username}</span>

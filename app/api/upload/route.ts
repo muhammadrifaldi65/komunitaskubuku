@@ -5,8 +5,8 @@ import { uploadImageBase64 } from "@/lib/imagekit";
 
 const schema = z.object({
   base64: z.string().min(10),
-  fileName: z.string().min(1).max(200),
-  folder: z.enum(["posts", "avatars"]).default("posts"),
+  fileName: z.string().min(1).max(200).regex(/^[^/\\\u0000-\u001f\u007f]+$/),
+  folder: z.enum(["posts", "avatars", "covers"]).default("posts"),
 });
 
 const MAX_IMAGE_BYTES = 6 * 1024 * 1024;
@@ -37,12 +37,18 @@ export async function POST(req: Request) {
   if (imageBytes === 0) {
     return NextResponse.json({ error: "Gambar tidak boleh kosong" }, { status: 400 });
   }
+  const bytes = Buffer.from(encoded, "base64");
+  const validSignature = match[1] === "jpeg" ? bytes.subarray(0, 3).equals(Buffer.from([0xff, 0xd8, 0xff]))
+    : match[1] === "png" ? bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    : match[1] === "gif" ? ["GIF87a", "GIF89a"].includes(bytes.toString("ascii", 0, 6))
+    : bytes.toString("ascii", 0, 4) === "RIFF" && bytes.toString("ascii", 8, 12) === "WEBP";
+  if (!validSignature) return NextResponse.json({ error: "Isi gambar tidak sesuai format" }, { status: 400 });
 
   try {
     const result = await uploadImageBase64(
       parsed.data.base64,
       parsed.data.fileName,
-      `/bookclub/${parsed.data.folder}`
+      `/bookclub/${parsed.data.folder}${parsed.data.folder === "posts" ? "" : `/${session.user.id}`}`
     );
     return NextResponse.json(result);
   } catch (err) {

@@ -59,7 +59,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ threadI
       actorId: session.user.id,
       type: "CHAT",
       message: "membalas pesan customer service kamu",
-      link: `/messages`,
+      link: `/support`,
     },
   });
 

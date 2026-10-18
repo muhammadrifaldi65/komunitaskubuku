@@ -408,7 +408,9 @@ export const ModelName = {
   Notification: 'Notification',
   ChatThread: 'ChatThread',
   ChatMessage: 'ChatMessage',
-  ReadingListItem: 'ReadingListItem'
+  ReadingListItem: 'ReadingListItem',
+  DmThread: 'DmThread',
+  DmMessage: 'DmMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -424,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "post" | "comment" | "reaction" | "bookmark" | "share" | "follow" | "report" | "notification" | "chatThread" | "chatMessage" | "readingListItem"
+    modelProps: "user" | "post" | "comment" | "reaction" | "bookmark" | "share" | "follow" | "report" | "notification" | "chatThread" | "chatMessage" | "readingListItem" | "dmThread" | "dmMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1316,6 +1318,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DmThread: {
+      payload: Prisma.$DmThreadPayload<ExtArgs>
+      fields: Prisma.DmThreadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DmThreadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DmThreadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        findFirst: {
+          args: Prisma.DmThreadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DmThreadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        findMany: {
+          args: Prisma.DmThreadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>[]
+        }
+        create: {
+          args: Prisma.DmThreadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        createMany: {
+          args: Prisma.DmThreadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DmThreadCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>[]
+        }
+        delete: {
+          args: Prisma.DmThreadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        update: {
+          args: Prisma.DmThreadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        deleteMany: {
+          args: Prisma.DmThreadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DmThreadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DmThreadUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>[]
+        }
+        upsert: {
+          args: Prisma.DmThreadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmThreadPayload>
+        }
+        aggregate: {
+          args: Prisma.DmThreadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDmThread>
+        }
+        groupBy: {
+          args: Prisma.DmThreadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DmThreadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DmThreadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DmThreadCountAggregateOutputType> | number
+        }
+      }
+    }
+    DmMessage: {
+      payload: Prisma.$DmMessagePayload<ExtArgs>
+      fields: Prisma.DmMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DmMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DmMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.DmMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DmMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        findMany: {
+          args: Prisma.DmMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>[]
+        }
+        create: {
+          args: Prisma.DmMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        createMany: {
+          args: Prisma.DmMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DmMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.DmMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        update: {
+          args: Prisma.DmMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.DmMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DmMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DmMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.DmMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DmMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.DmMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDmMessage>
+        }
+        groupBy: {
+          args: Prisma.DmMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DmMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DmMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DmMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1363,6 +1513,9 @@ export const UserScalarFieldEnum = {
   passwordHash: 'passwordHash',
   bio: 'bio',
   avatarUrl: 'avatarUrl',
+  coverUrl: 'coverUrl',
+  location: 'location',
+  website: 'website',
   role: 'role',
   isBanned: 'isBanned',
   banReason: 'banReason',
@@ -1508,6 +1661,29 @@ export const ReadingListItemScalarFieldEnum = {
 } as const
 
 export type ReadingListItemScalarFieldEnum = (typeof ReadingListItemScalarFieldEnum)[keyof typeof ReadingListItemScalarFieldEnum]
+
+
+export const DmThreadScalarFieldEnum = {
+  id: 'id',
+  firstId: 'firstId',
+  secondId: 'secondId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DmThreadScalarFieldEnum = (typeof DmThreadScalarFieldEnum)[keyof typeof DmThreadScalarFieldEnum]
+
+
+export const DmMessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  senderId: 'senderId',
+  content: 'content',
+  createdAt: 'createdAt',
+  readAt: 'readAt'
+} as const
+
+export type DmMessageScalarFieldEnum = (typeof DmMessageScalarFieldEnum)[keyof typeof DmMessageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1807,6 +1983,8 @@ export type GlobalOmitConfig = {
   chatThread?: Prisma.ChatThreadOmit
   chatMessage?: Prisma.ChatMessageOmit
   readingListItem?: Prisma.ReadingListItemOmit
+  dmThread?: Prisma.DmThreadOmit
+  dmMessage?: Prisma.DmMessageOmit
 }
 
 /* Types for Logging */

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { rankPosts } from "@/lib/algorithm";
+import { hashtagMatches } from "@/lib/hashtags";
 const imageUrlSchema = z.string().refine((value) => {
   if (value.startsWith("/media/")) return true;
   try {
@@ -36,6 +37,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Harus login" }, { status: 401 });
   }
   const currentUserId = session?.user.id ?? "__no_user__";
+  const hashtag = q.startsWith("#") ? q.slice(1) : null;
+  const hashtagIds = hashtag !== null
+    ? (await prisma.$queryRaw<{ id: string }[]>(hashtagMatches(hashtag))).map((post) => post.id)
+    : null;
 
   const posts = await prisma.post.findMany({
     where: {
@@ -44,7 +49,7 @@ export async function GET(req: Request) {
         isBanned: false,
         ...(feed === "following" ? { followers: { some: { followerId: currentUserId } } } : {}),
       },
-      ...(q ? {
+      ...(hashtagIds !== null ? { id: { in: hashtagIds } } : q ? {
         OR: [
           { content: { contains: q, mode: "insensitive" as const } },
           { bookTitle: { contains: q, mode: "insensitive" as const } },

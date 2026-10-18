@@ -35,7 +35,7 @@ export default function Navbar() {
       { href: "/bookmarks", label: "Markah", icon: "bookmark" },
       { href: "/notifications", label: "Notifikasi", icon: "bell" },
       { href: "/messages", label: "Pesan", icon: "mail" },
-      { href: `/profile/${session.user.username}`, label: "Profil", icon: "user" },
+      { href: `/${encodeURIComponent(session.user.username)}`, label: "Profil", icon: "user" },
       ...(["ADMIN", "PEMBINA"].includes(session.user.role) ? [{ href: "/admin", label: "Dashboard admin", icon: "admin" }] : []),
       { href: "/settings", label: "Pengaturan", icon: "settings" },
     ] : []),
@@ -58,7 +58,7 @@ export default function Navbar() {
         </nav>
         {session ? <>
           <Link href="/create" className="button-primary compose-button" onClick={() => setOpen(false)}>Tulis post <span aria-hidden="true">+</span></Link>
-          <div className="sidebar-account"><Link href={`/profile/${session.user.username}`} onClick={() => setOpen(false)}><img src={toPublicImageUrl(session.user.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(session.user.name || "Pembaca")}`} alt="" width={40} height={40} /><span><strong>{session.user.name}</strong><small>@{session.user.username}</small></span></Link><button onClick={handleSignOut}>Keluar</button></div>
+          <div className="sidebar-account"><Link href={`/${encodeURIComponent(session.user.username)}`} onClick={() => setOpen(false)}><img src={toPublicImageUrl(session.user.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(session.user.name || "Pembaca")}`} alt="" width={40} height={40} /><span><strong>{session.user.name}</strong><small>@{session.user.username}</small></span></Link><button onClick={handleSignOut}>Keluar</button></div>
         </> : status !== "loading" && <div className="join-prompt"><h2>Temukan teman baca.</h2><p>Berbagi cerita, bertukar perspektif, menemukan buku berikutnya.</p><Link href="/login" className="button-primary" onClick={() => setOpen(false)}>Masuk ke PTHREE</Link></div>}
         <p className="navigation-caption">Satu buku. Banyak sudut pandang.</p>
       </div>

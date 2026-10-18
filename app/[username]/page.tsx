@@ -13,6 +13,9 @@ interface ProfileUser {
   name: string;
   bio?: string | null;
   avatarUrl?: string | null;
+  coverUrl?: string | null;
+  location?: string | null;
+  website?: string | null;
   role: "ADMIN" | "PEMBINA" | "USER";
   createdAt: string;
   _count: { posts: number; followers: number; following: number };
@@ -66,7 +69,7 @@ function MemberList({ username, kind }: { username: string; kind: ConnectionKind
       <ul className="divide-y divide-[var(--border)]">
         {members.map((member) => (
           <li key={member.id}>
-            <Link href={`/profile/${encodeURIComponent(member.username)}`} className="flex items-center gap-3 rounded-lg py-4 transition hover:bg-slate-100">
+            <Link href={`/${encodeURIComponent(member.username)}`} className="flex items-center gap-3 rounded-lg py-4 transition hover:bg-slate-100">
               <img src={avatar(member)} alt="" className="h-11 w-11 shrink-0 rounded-full border border-[var(--border)] object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium text-[var(--ink)]">{member.name}</p>
@@ -117,6 +120,7 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Gagal memuat profil");
         if (controller.signal.aborted) return;
+        if (data.user.username !== username) router.replace(`/${encodeURIComponent(data.user.username)}`);
         setUser(data.user);
         setPosts(data.posts);
         setIsFollowing(data.isFollowing);
@@ -128,13 +132,13 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
     }
     void load();
     return () => controller.abort();
-  }, [username, retry]);
+  }, [username, retry, router]);
 
   useEffect(() => () => followRequest.current?.abort(), []);
 
   async function changeFollow() {
     if (!viewerId) {
-      router.push(`/login?callbackUrl=${encodeURIComponent(`/profile/${username}`)}`);
+      router.push(`/login?callbackUrl=${encodeURIComponent(`/${username}`)}`);
       return;
     }
     if (followRequest.current || !user || user.id === viewerId) return;
@@ -149,7 +153,7 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
       });
       const data = await res.json();
       if (!res.ok) {
-        if (res.status === 401) router.push(`/login?callbackUrl=${encodeURIComponent(`/profile/${username}`)}`);
+        if (res.status === 401) router.push(`/login?callbackUrl=${encodeURIComponent(`/${username}`)}`);
         throw new Error(data.error || "Gagal mengubah status mengikuti");
       }
       if (controller.signal.aborted) return;
@@ -177,11 +181,17 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
   ];
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
-      <Link href="/" className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--muted)] hover:text-[var(--ink)]">Kembali ke ruang baca</Link>
-      <header className="mt-7 border-b border-[var(--border)] pb-7">
-        <div className="flex items-center justify-between gap-4">
-          <img src={avatar(user)} className="h-24 w-24 rounded-full border border-[var(--border)] object-cover p-1 sm:h-28 sm:w-28" alt="" />
+    <div className="mx-auto max-w-2xl border-x border-[var(--border)]">
+      <Link href="/" className="flex min-h-14 items-center gap-6 px-4 text-sm font-semibold text-[var(--ink)]"><span aria-hidden="true">←</span><span>Profil</span></Link>
+      <header className="border-b border-[var(--border)] pb-5">
+        <div className="aspect-[3/1] w-full overflow-hidden bg-[var(--border)]">
+          {user.coverUrl && <img src={toPublicImageUrl(user.coverUrl) || ""} alt="Sampul profil" className="h-full w-full object-cover" />}
+        </div>
+        <div className="px-4">
+        <div className="flex min-h-20 items-start justify-between gap-3">
+          <img src={avatar(user)} className="relative -mt-12 h-24 w-24 shrink-0 rounded-full border-4 border-[var(--canvas)] bg-[var(--canvas)] object-cover sm:-mt-18 sm:h-36 sm:w-36" alt="" />
+          <div className="flex flex-wrap justify-end gap-2 pt-3">
+          {!isOwnProfile && <Link href={`/messages?username=${encodeURIComponent(user.username)}`} className={outlineButton}>Pesan</Link>}
           {isOwnProfile ? (
             <Link href="/settings" className={outlineButton}>Edit profil</Link>
           ) : (
@@ -189,15 +199,19 @@ function ProfileContent({ username, viewerId }: { username: string; viewerId?: s
               {followBusy ? "Menyimpan…" : isFollowing ? "Mengikuti" : "Ikuti pembaca"}
             </button>
           )}
+          </div>
         </div>
         {followError && <p role="alert" className="mt-4 text-sm text-red-800">{followError}</p>}
-        <div className="mt-5 flex flex-wrap items-center gap-3">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <h1 className="break-words font-semibold text-2xl leading-tight text-[var(--ink)]">{user.name}</h1>
           {user.role !== "USER" && <span className="rounded-full border border-[var(--border)] px-2.5 py-1 text-[10px] uppercase tracking-widest text-blue-600">{user.role === "ADMIN" ? "Admin" : "Pembina"}</span>}
         </div>
-        <p className="mt-2 text-sm text-[var(--muted)]">@{user.username}</p>
+        <p className="mt-1 text-sm text-[var(--muted)]">@{user.username}</p>
         {user.bio && <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-[var(--ink)]">{user.bio}</p>}
+        {user.location && <p className="mt-3 text-sm text-[var(--muted)]">Lokasi: {user.location}</p>}
+        {user.website && <a href={user.website} target="_blank" rel="noopener noreferrer" className="mt-3 block break-all text-sm text-blue-700 underline">{user.website}</a>}
         <p className="mt-4 text-xs text-[var(--muted)]">Di ruang baca sejak {new Date(user.createdAt).toLocaleDateString("id-ID", { month: "long", year: "numeric" })}</p>
+        </div>
       </header>
       <nav aria-label="Isi profil" className="mb-6 grid grid-cols-3 border-b border-[var(--border)]">
         {tabs.map((item) => <button key={item.key} onClick={() => setTab(item.key)} aria-current={tab === item.key ? "page" : undefined} aria-controls="profile-content" className={`border-b-2 px-2 py-5 text-sm transition ${tab === item.key ? "border-blue-600 text-blue-600" : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"}`}><span className="block font-semibold text-2xl">{item.count}</span><span className="mt-1 block text-xs">{item.label}</span></button>)}

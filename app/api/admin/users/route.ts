@@ -5,13 +5,10 @@ import { permissions } from "@/lib/permissions";
 
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { usernameSchema } from "@/lib/profile-validation";
 
 const createUserSchema = z.object({
-  username: z
-    .string()
-    .min(3)
-    .max(24)
-    .regex(/^[a-zA-Z0-9_.]+$/, "Username hanya boleh huruf, angka, underscore, titik"),
+  username: usernameSchema,
   email: z.string().email(),
   password: z.string().min(8, "Password minimal 8 karakter"),
 });
@@ -22,7 +19,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Hanya Admin yang bisa membuat akun" }, { status: 403 });
   }
 
-  const body = await req.json();
+  const body = await req.json().catch(() => null);
   const parsed = createUserSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
@@ -31,7 +28,7 @@ export async function POST(req: Request) {
   const { username, email, password } = parsed.data;
   const [existingEmail, existingUsername] = await Promise.all([
     prisma.user.findUnique({ where: { email } }),
-    prisma.user.findUnique({ where: { username } }),
+    prisma.user.findFirst({ where: { username: { equals: username, mode: "insensitive" } } }),
   ]);
 
   if (existingEmail) {
@@ -42,6 +39,7 @@ export async function POST(req: Request) {
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
+  try {
   const user = await prisma.user.create({
     data: {
       name: username,
@@ -53,6 +51,11 @@ export async function POST(req: Request) {
   });
 
   return NextResponse.json({ user }, { status: 201 });
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "P2002") return NextResponse.json({ error: "Email atau username sudah dipakai" }, { status: 409 });
+    console.error(error);
+    return NextResponse.json({ error: "Gagal membuat akun" }, { status: 500 });
+  }
 }
 
 export async function GET(req: Request) {

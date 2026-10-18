@@ -32,6 +32,9 @@ export type UserMinAggregateOutputType = {
   passwordHash: string | null
   bio: string | null
   avatarUrl: string | null
+  coverUrl: string | null
+  location: string | null
+  website: string | null
   role: $Enums.Role | null
   isBanned: boolean | null
   banReason: string | null
@@ -47,6 +50,9 @@ export type UserMaxAggregateOutputType = {
   passwordHash: string | null
   bio: string | null
   avatarUrl: string | null
+  coverUrl: string | null
+  location: string | null
+  website: string | null
   role: $Enums.Role | null
   isBanned: boolean | null
   banReason: string | null
@@ -62,6 +68,9 @@ export type UserCountAggregateOutputType = {
   passwordHash: number
   bio: number
   avatarUrl: number
+  coverUrl: number
+  location: number
+  website: number
   role: number
   isBanned: number
   banReason: number
@@ -79,6 +88,9 @@ export type UserMinAggregateInputType = {
   passwordHash?: true
   bio?: true
   avatarUrl?: true
+  coverUrl?: true
+  location?: true
+  website?: true
   role?: true
   isBanned?: true
   banReason?: true
@@ -94,6 +106,9 @@ export type UserMaxAggregateInputType = {
   passwordHash?: true
   bio?: true
   avatarUrl?: true
+  coverUrl?: true
+  location?: true
+  website?: true
   role?: true
   isBanned?: true
   banReason?: true
@@ -109,6 +124,9 @@ export type UserCountAggregateInputType = {
   passwordHash?: true
   bio?: true
   avatarUrl?: true
+  coverUrl?: true
+  location?: true
+  website?: true
   role?: true
   isBanned?: true
   banReason?: true
@@ -197,6 +215,9 @@ export type UserGroupByOutputType = {
   passwordHash: string
   bio: string | null
   avatarUrl: string | null
+  coverUrl: string | null
+  location: string | null
+  website: string | null
   role: $Enums.Role
   isBanned: boolean
   banReason: string | null
@@ -233,6 +254,9 @@ export type UserWhereInput = {
   passwordHash?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  coverUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  location?: Prisma.StringNullableFilter<"User"> | string | null
+  website?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   banReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -251,6 +275,9 @@ export type UserWhereInput = {
   handledThreads?: Prisma.ChatThreadListRelationFilter
   reportsFiled?: Prisma.ReportListRelationFilter
   readingList?: Prisma.ReadingListItemListRelationFilter
+  dmThreadsFirst?: Prisma.DmThreadListRelationFilter
+  dmThreadsSecond?: Prisma.DmThreadListRelationFilter
+  sentDms?: Prisma.DmMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -261,6 +288,9 @@ export type UserOrderByWithRelationInput = {
   passwordHash?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,6 +309,9 @@ export type UserOrderByWithRelationInput = {
   handledThreads?: Prisma.ChatThreadOrderByRelationAggregateInput
   reportsFiled?: Prisma.ReportOrderByRelationAggregateInput
   readingList?: Prisma.ReadingListItemOrderByRelationAggregateInput
+  dmThreadsFirst?: Prisma.DmThreadOrderByRelationAggregateInput
+  dmThreadsSecond?: Prisma.DmThreadOrderByRelationAggregateInput
+  sentDms?: Prisma.DmMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -292,6 +325,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordHash?: Prisma.StringFilter<"User"> | string
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  coverUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  location?: Prisma.StringNullableFilter<"User"> | string | null
+  website?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   banReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -310,6 +346,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   handledThreads?: Prisma.ChatThreadListRelationFilter
   reportsFiled?: Prisma.ReportListRelationFilter
   readingList?: Prisma.ReadingListItemListRelationFilter
+  dmThreadsFirst?: Prisma.DmThreadListRelationFilter
+  dmThreadsSecond?: Prisma.DmThreadListRelationFilter
+  sentDms?: Prisma.DmMessageListRelationFilter
 }, "id" | "username" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -320,6 +359,9 @@ export type UserOrderByWithAggregationInput = {
   passwordHash?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -341,6 +383,9 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  coverUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isBanned?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   banReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -356,6 +401,9 @@ export type UserCreateInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -374,6 +422,9 @@ export type UserCreateInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -384,6 +435,9 @@ export type UserUncheckedCreateInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -402,6 +456,9 @@ export type UserUncheckedCreateInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserUpdateInput = {
@@ -412,6 +469,9 @@ export type UserUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -430,6 +490,9 @@ export type UserUpdateInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -440,6 +503,9 @@ export type UserUncheckedUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -458,6 +524,9 @@ export type UserUncheckedUpdateInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -468,6 +537,9 @@ export type UserCreateManyInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -483,6 +555,9 @@ export type UserUpdateManyMutationInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -498,6 +573,9 @@ export type UserUncheckedUpdateManyInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -513,6 +591,9 @@ export type UserCountOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  coverUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
@@ -528,6 +609,9 @@ export type UserMaxOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  coverUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
@@ -543,6 +627,9 @@ export type UserMinOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  coverUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   banReason?: Prisma.SortOrder
@@ -766,6 +853,48 @@ export type UserUpdateOneRequiredWithoutReadingListNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReadingListInput, Prisma.UserUpdateWithoutReadingListInput>, Prisma.UserUncheckedUpdateWithoutReadingListInput>
 }
 
+export type UserCreateNestedOneWithoutDmThreadsFirstInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsFirstInput, Prisma.UserUncheckedCreateWithoutDmThreadsFirstInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDmThreadsFirstInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutDmThreadsSecondInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsSecondInput, Prisma.UserUncheckedCreateWithoutDmThreadsSecondInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDmThreadsSecondInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDmThreadsFirstNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsFirstInput, Prisma.UserUncheckedCreateWithoutDmThreadsFirstInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDmThreadsFirstInput
+  upsert?: Prisma.UserUpsertWithoutDmThreadsFirstInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDmThreadsFirstInput, Prisma.UserUpdateWithoutDmThreadsFirstInput>, Prisma.UserUncheckedUpdateWithoutDmThreadsFirstInput>
+}
+
+export type UserUpdateOneRequiredWithoutDmThreadsSecondNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsSecondInput, Prisma.UserUncheckedCreateWithoutDmThreadsSecondInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDmThreadsSecondInput
+  upsert?: Prisma.UserUpsertWithoutDmThreadsSecondInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDmThreadsSecondInput, Prisma.UserUpdateWithoutDmThreadsSecondInput>, Prisma.UserUncheckedUpdateWithoutDmThreadsSecondInput>
+}
+
+export type UserCreateNestedOneWithoutSentDmsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentDmsInput, Prisma.UserUncheckedCreateWithoutSentDmsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentDmsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSentDmsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentDmsInput, Prisma.UserUncheckedCreateWithoutSentDmsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentDmsInput
+  upsert?: Prisma.UserUpsertWithoutSentDmsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentDmsInput, Prisma.UserUpdateWithoutSentDmsInput>, Prisma.UserUncheckedUpdateWithoutSentDmsInput>
+}
+
 export type UserCreateWithoutPostsInput = {
   id?: string
   username: string
@@ -774,6 +903,9 @@ export type UserCreateWithoutPostsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -791,6 +923,9 @@ export type UserCreateWithoutPostsInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
@@ -801,6 +936,9 @@ export type UserUncheckedCreateWithoutPostsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -818,6 +956,9 @@ export type UserUncheckedCreateWithoutPostsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -844,6 +985,9 @@ export type UserUpdateWithoutPostsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -861,6 +1005,9 @@ export type UserUpdateWithoutPostsInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -871,6 +1018,9 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -888,6 +1038,9 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutCommentsInput = {
@@ -898,6 +1051,9 @@ export type UserCreateWithoutCommentsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -915,6 +1071,9 @@ export type UserCreateWithoutCommentsInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutCommentsInput = {
@@ -925,6 +1084,9 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -942,6 +1104,9 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutCommentsInput = {
@@ -968,6 +1133,9 @@ export type UserUpdateWithoutCommentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,6 +1153,9 @@ export type UserUpdateWithoutCommentsInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -995,6 +1166,9 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1012,6 +1186,9 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutReactionsInput = {
@@ -1022,6 +1199,9 @@ export type UserCreateWithoutReactionsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1039,6 +1219,9 @@ export type UserCreateWithoutReactionsInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutReactionsInput = {
@@ -1049,6 +1232,9 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1066,6 +1252,9 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutReactionsInput = {
@@ -1092,6 +1281,9 @@ export type UserUpdateWithoutReactionsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1109,6 +1301,9 @@ export type UserUpdateWithoutReactionsInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReactionsInput = {
@@ -1119,6 +1314,9 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1136,6 +1334,9 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutBookmarksInput = {
@@ -1146,6 +1347,9 @@ export type UserCreateWithoutBookmarksInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1163,6 +1367,9 @@ export type UserCreateWithoutBookmarksInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutBookmarksInput = {
@@ -1173,6 +1380,9 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1190,6 +1400,9 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutBookmarksInput = {
@@ -1216,6 +1429,9 @@ export type UserUpdateWithoutBookmarksInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1233,6 +1449,9 @@ export type UserUpdateWithoutBookmarksInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBookmarksInput = {
@@ -1243,6 +1462,9 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1260,6 +1482,9 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutFollowingInput = {
@@ -1270,6 +1495,9 @@ export type UserCreateWithoutFollowingInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1287,6 +1515,9 @@ export type UserCreateWithoutFollowingInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutFollowingInput = {
@@ -1297,6 +1528,9 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1314,6 +1548,9 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutFollowingInput = {
@@ -1329,6 +1566,9 @@ export type UserCreateWithoutFollowersInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1346,6 +1586,9 @@ export type UserCreateWithoutFollowersInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutFollowersInput = {
@@ -1356,6 +1599,9 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1373,6 +1619,9 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutFollowersInput = {
@@ -1399,6 +1648,9 @@ export type UserUpdateWithoutFollowingInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1416,6 +1668,9 @@ export type UserUpdateWithoutFollowingInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -1426,6 +1681,9 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1443,6 +1701,9 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUpsertWithoutFollowersInput = {
@@ -1464,6 +1725,9 @@ export type UserUpdateWithoutFollowersInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1481,6 +1745,9 @@ export type UserUpdateWithoutFollowersInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -1491,6 +1758,9 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1508,6 +1778,9 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutReportsFiledInput = {
@@ -1518,6 +1791,9 @@ export type UserCreateWithoutReportsFiledInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1535,6 +1811,9 @@ export type UserCreateWithoutReportsFiledInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutReportsFiledInput = {
@@ -1545,6 +1824,9 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1562,6 +1844,9 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutReportsFiledInput = {
@@ -1588,6 +1873,9 @@ export type UserUpdateWithoutReportsFiledInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1605,6 +1893,9 @@ export type UserUpdateWithoutReportsFiledInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsFiledInput = {
@@ -1615,6 +1906,9 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1632,6 +1926,9 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1642,6 +1939,9 @@ export type UserCreateWithoutNotificationsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1659,6 +1959,9 @@ export type UserCreateWithoutNotificationsInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1669,6 +1972,9 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1686,6 +1992,9 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1701,6 +2010,9 @@ export type UserCreateWithoutActorNotifsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1718,6 +2030,9 @@ export type UserCreateWithoutActorNotifsInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutActorNotifsInput = {
@@ -1728,6 +2043,9 @@ export type UserUncheckedCreateWithoutActorNotifsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1745,6 +2063,9 @@ export type UserUncheckedCreateWithoutActorNotifsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutActorNotifsInput = {
@@ -1771,6 +2092,9 @@ export type UserUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1788,6 +2112,9 @@ export type UserUpdateWithoutNotificationsInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1798,6 +2125,9 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1815,6 +2145,9 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUpsertWithoutActorNotifsInput = {
@@ -1836,6 +2169,9 @@ export type UserUpdateWithoutActorNotifsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1853,6 +2189,9 @@ export type UserUpdateWithoutActorNotifsInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActorNotifsInput = {
@@ -1863,6 +2202,9 @@ export type UserUncheckedUpdateWithoutActorNotifsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1880,6 +2222,9 @@ export type UserUncheckedUpdateWithoutActorNotifsInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutChatThreadInput = {
@@ -1890,6 +2235,9 @@ export type UserCreateWithoutChatThreadInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1907,6 +2255,9 @@ export type UserCreateWithoutChatThreadInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutChatThreadInput = {
@@ -1917,6 +2268,9 @@ export type UserUncheckedCreateWithoutChatThreadInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1934,6 +2288,9 @@ export type UserUncheckedCreateWithoutChatThreadInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutChatThreadInput = {
@@ -1949,6 +2306,9 @@ export type UserCreateWithoutHandledThreadsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1966,6 +2326,9 @@ export type UserCreateWithoutHandledThreadsInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutHandledThreadsInput = {
@@ -1976,6 +2339,9 @@ export type UserUncheckedCreateWithoutHandledThreadsInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -1993,6 +2359,9 @@ export type UserUncheckedCreateWithoutHandledThreadsInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutHandledThreadsInput = {
@@ -2019,6 +2388,9 @@ export type UserUpdateWithoutChatThreadInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2036,6 +2408,9 @@ export type UserUpdateWithoutChatThreadInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChatThreadInput = {
@@ -2046,6 +2421,9 @@ export type UserUncheckedUpdateWithoutChatThreadInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2063,6 +2441,9 @@ export type UserUncheckedUpdateWithoutChatThreadInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUpsertWithoutHandledThreadsInput = {
@@ -2084,6 +2465,9 @@ export type UserUpdateWithoutHandledThreadsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2101,6 +2485,9 @@ export type UserUpdateWithoutHandledThreadsInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHandledThreadsInput = {
@@ -2111,6 +2498,9 @@ export type UserUncheckedUpdateWithoutHandledThreadsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2128,6 +2518,9 @@ export type UserUncheckedUpdateWithoutHandledThreadsInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutChatMessagesInput = {
@@ -2138,6 +2531,9 @@ export type UserCreateWithoutChatMessagesInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -2155,6 +2551,9 @@ export type UserCreateWithoutChatMessagesInput = {
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -2165,6 +2564,9 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -2182,6 +2584,9 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -2208,6 +2613,9 @@ export type UserUpdateWithoutChatMessagesInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2225,6 +2633,9 @@ export type UserUpdateWithoutChatMessagesInput = {
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -2235,6 +2646,9 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2252,6 +2666,9 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutReadingListInput = {
@@ -2262,6 +2679,9 @@ export type UserCreateWithoutReadingListInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -2279,6 +2699,9 @@ export type UserCreateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutReadingListInput = {
@@ -2289,6 +2712,9 @@ export type UserUncheckedCreateWithoutReadingListInput = {
   passwordHash: string
   bio?: string | null
   avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
   role?: $Enums.Role
   isBanned?: boolean
   banReason?: string | null
@@ -2306,6 +2732,9 @@ export type UserUncheckedCreateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
   handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
   reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutReadingListInput = {
@@ -2332,6 +2761,9 @@ export type UserUpdateWithoutReadingListInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2349,6 +2781,9 @@ export type UserUpdateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReadingListInput = {
@@ -2359,6 +2794,9 @@ export type UserUncheckedUpdateWithoutReadingListInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2376,6 +2814,453 @@ export type UserUncheckedUpdateWithoutReadingListInput = {
   chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
   handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
   reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutDmThreadsFirstInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutDmThreadsFirstInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutDmThreadsFirstInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsFirstInput, Prisma.UserUncheckedCreateWithoutDmThreadsFirstInput>
+}
+
+export type UserCreateWithoutDmThreadsSecondInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutDmThreadsSecondInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutDmThreadsSecondInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsSecondInput, Prisma.UserUncheckedCreateWithoutDmThreadsSecondInput>
+}
+
+export type UserUpsertWithoutDmThreadsFirstInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDmThreadsFirstInput, Prisma.UserUncheckedUpdateWithoutDmThreadsFirstInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsFirstInput, Prisma.UserUncheckedCreateWithoutDmThreadsFirstInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDmThreadsFirstInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDmThreadsFirstInput, Prisma.UserUncheckedUpdateWithoutDmThreadsFirstInput>
+}
+
+export type UserUpdateWithoutDmThreadsFirstInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDmThreadsFirstInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUpsertWithoutDmThreadsSecondInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDmThreadsSecondInput, Prisma.UserUncheckedUpdateWithoutDmThreadsSecondInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDmThreadsSecondInput, Prisma.UserUncheckedCreateWithoutDmThreadsSecondInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDmThreadsSecondInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDmThreadsSecondInput, Prisma.UserUncheckedUpdateWithoutDmThreadsSecondInput>
+}
+
+export type UserUpdateWithoutDmThreadsSecondInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDmThreadsSecondInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutSentDmsInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+}
+
+export type UserUncheckedCreateWithoutSentDmsInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+}
+
+export type UserCreateOrConnectWithoutSentDmsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentDmsInput, Prisma.UserUncheckedCreateWithoutSentDmsInput>
+}
+
+export type UserUpsertWithoutSentDmsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentDmsInput, Prisma.UserUncheckedUpdateWithoutSentDmsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentDmsInput, Prisma.UserUncheckedCreateWithoutSentDmsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSentDmsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentDmsInput, Prisma.UserUncheckedUpdateWithoutSentDmsInput>
+}
+
+export type UserUpdateWithoutSentDmsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSentDmsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
 }
 
 
@@ -2396,6 +3281,9 @@ export type UserCountOutputType = {
   handledThreads: number
   reportsFiled: number
   readingList: number
+  dmThreadsFirst: number
+  dmThreadsSecond: number
+  sentDms: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2411,6 +3299,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   handledThreads?: boolean | UserCountOutputTypeCountHandledThreadsArgs
   reportsFiled?: boolean | UserCountOutputTypeCountReportsFiledArgs
   readingList?: boolean | UserCountOutputTypeCountReadingListArgs
+  dmThreadsFirst?: boolean | UserCountOutputTypeCountDmThreadsFirstArgs
+  dmThreadsSecond?: boolean | UserCountOutputTypeCountDmThreadsSecondArgs
+  sentDms?: boolean | UserCountOutputTypeCountSentDmsArgs
 }
 
 /**
@@ -2507,6 +3398,27 @@ export type UserCountOutputTypeCountReadingListArgs<ExtArgs extends runtime.Type
   where?: Prisma.ReadingListItemWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDmThreadsFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DmThreadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDmThreadsSecondArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DmThreadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentDmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DmMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2516,6 +3428,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordHash?: boolean
   bio?: boolean
   avatarUrl?: boolean
+  coverUrl?: boolean
+  location?: boolean
+  website?: boolean
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
@@ -2534,6 +3449,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   handledThreads?: boolean | Prisma.User$handledThreadsArgs<ExtArgs>
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
   readingList?: boolean | Prisma.User$readingListArgs<ExtArgs>
+  dmThreadsFirst?: boolean | Prisma.User$dmThreadsFirstArgs<ExtArgs>
+  dmThreadsSecond?: boolean | Prisma.User$dmThreadsSecondArgs<ExtArgs>
+  sentDms?: boolean | Prisma.User$sentDmsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2545,6 +3463,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   bio?: boolean
   avatarUrl?: boolean
+  coverUrl?: boolean
+  location?: boolean
+  website?: boolean
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
@@ -2560,6 +3481,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   bio?: boolean
   avatarUrl?: boolean
+  coverUrl?: boolean
+  location?: boolean
+  website?: boolean
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
@@ -2575,6 +3499,9 @@ export type UserSelectScalar = {
   passwordHash?: boolean
   bio?: boolean
   avatarUrl?: boolean
+  coverUrl?: boolean
+  location?: boolean
+  website?: boolean
   role?: boolean
   isBanned?: boolean
   banReason?: boolean
@@ -2582,7 +3509,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "bio" | "avatarUrl" | "role" | "isBanned" | "banReason" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "name" | "email" | "passwordHash" | "bio" | "avatarUrl" | "coverUrl" | "location" | "website" | "role" | "isBanned" | "banReason" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
@@ -2597,6 +3524,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   handledThreads?: boolean | Prisma.User$handledThreadsArgs<ExtArgs>
   reportsFiled?: boolean | Prisma.User$reportsFiledArgs<ExtArgs>
   readingList?: boolean | Prisma.User$readingListArgs<ExtArgs>
+  dmThreadsFirst?: boolean | Prisma.User$dmThreadsFirstArgs<ExtArgs>
+  dmThreadsSecond?: boolean | Prisma.User$dmThreadsSecondArgs<ExtArgs>
+  sentDms?: boolean | Prisma.User$sentDmsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2618,6 +3548,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     handledThreads: Prisma.$ChatThreadPayload<ExtArgs>[]
     reportsFiled: Prisma.$ReportPayload<ExtArgs>[]
     readingList: Prisma.$ReadingListItemPayload<ExtArgs>[]
+    dmThreadsFirst: Prisma.$DmThreadPayload<ExtArgs>[]
+    dmThreadsSecond: Prisma.$DmThreadPayload<ExtArgs>[]
+    sentDms: Prisma.$DmMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2627,6 +3560,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordHash: string
     bio: string | null
     avatarUrl: string | null
+    coverUrl: string | null
+    location: string | null
+    website: string | null
     role: $Enums.Role
     isBanned: boolean
     banReason: string | null
@@ -3039,6 +3975,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   handledThreads<T extends Prisma.User$handledThreadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$handledThreadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reportsFiled<T extends Prisma.User$reportsFiledArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsFiledArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   readingList<T extends Prisma.User$readingListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$readingListArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReadingListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dmThreadsFirst<T extends Prisma.User$dmThreadsFirstArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dmThreadsFirstArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dmThreadsSecond<T extends Prisma.User$dmThreadsSecondArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dmThreadsSecondArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentDms<T extends Prisma.User$sentDmsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentDmsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3075,6 +4014,9 @@ export interface UserFieldRefs {
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly bio: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
+  readonly coverUrl: Prisma.FieldRef<"User", 'String'>
+  readonly location: Prisma.FieldRef<"User", 'String'>
+  readonly website: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isBanned: Prisma.FieldRef<"User", 'Boolean'>
   readonly banReason: Prisma.FieldRef<"User", 'String'>
@@ -3777,6 +4719,78 @@ export type User$readingListArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ReadingListItemScalarFieldEnum | Prisma.ReadingListItemScalarFieldEnum[]
+}
+
+/**
+ * User.dmThreadsFirst
+ */
+export type User$dmThreadsFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DmThread
+   */
+  select?: Prisma.DmThreadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DmThread
+   */
+  omit?: Prisma.DmThreadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DmThreadInclude<ExtArgs> | null
+  where?: Prisma.DmThreadWhereInput
+  orderBy?: Prisma.DmThreadOrderByWithRelationInput | Prisma.DmThreadOrderByWithRelationInput[]
+  cursor?: Prisma.DmThreadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DmThreadScalarFieldEnum | Prisma.DmThreadScalarFieldEnum[]
+}
+
+/**
+ * User.dmThreadsSecond
+ */
+export type User$dmThreadsSecondArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DmThread
+   */
+  select?: Prisma.DmThreadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DmThread
+   */
+  omit?: Prisma.DmThreadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DmThreadInclude<ExtArgs> | null
+  where?: Prisma.DmThreadWhereInput
+  orderBy?: Prisma.DmThreadOrderByWithRelationInput | Prisma.DmThreadOrderByWithRelationInput[]
+  cursor?: Prisma.DmThreadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DmThreadScalarFieldEnum | Prisma.DmThreadScalarFieldEnum[]
+}
+
+/**
+ * User.sentDms
+ */
+export type User$sentDmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DmMessage
+   */
+  select?: Prisma.DmMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DmMessage
+   */
+  omit?: Prisma.DmMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DmMessageInclude<ExtArgs> | null
+  where?: Prisma.DmMessageWhereInput
+  orderBy?: Prisma.DmMessageOrderByWithRelationInput | Prisma.DmMessageOrderByWithRelationInput[]
+  cursor?: Prisma.DmMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DmMessageScalarFieldEnum | Prisma.DmMessageScalarFieldEnum[]
 }
 
 /**

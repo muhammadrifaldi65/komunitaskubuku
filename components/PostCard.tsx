@@ -195,7 +195,7 @@ export default function PostCard({ post, onDeleted, onBookmarkChanged }: { post:
   return (
     <article className="post-card mb-4 rounded-2xl border border-[var(--border)] bg-white p-4 text-[var(--ink)] sm:p-5" aria-busy={deleting}>
       <div className="flex items-start justify-between gap-2">
-        <Link href={`/profile/${state.author.username}`} className="flex min-w-0 items-center gap-2.5">
+        <Link href={`/${encodeURIComponent(state.author.username)}`} className="flex min-w-0 items-center gap-2.5">
           <img src={toPublicImageUrl(state.author.avatarUrl) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(state.author.name)}`} className="h-10 w-10 shrink-0 rounded-full border border-[var(--border)] object-cover" alt="" />
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">

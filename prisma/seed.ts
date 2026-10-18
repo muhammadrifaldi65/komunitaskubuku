@@ -2,6 +2,7 @@ import "dotenv/config";
 import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
+import { usernameSchema } from "../lib/profile-validation";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -9,7 +10,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const email = process.env.SEED_ADMIN_EMAIL || "admin@bookclub.local";
   const password = process.env.SEED_ADMIN_PASSWORD || "Admin12345!";
-  const username = process.env.SEED_ADMIN_USERNAME || "admin";
+  const username = usernameSchema.parse(process.env.SEED_ADMIN_USERNAME || "bookclub_admin");
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
@@ -17,6 +18,7 @@ async function main() {
     return;
   }
 
+  if (await prisma.user.findFirst({ where: { username: { equals: username, mode: "insensitive" } } })) throw new Error("Username seed sudah dipakai; pilih SEED_ADMIN_USERNAME lain");
   const passwordHash = await bcrypt.hash(password, 10);
   const admin = await prisma.user.create({
     data: {

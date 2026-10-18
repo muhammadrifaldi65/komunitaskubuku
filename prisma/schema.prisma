@@ -32,6 +32,9 @@ model User {
   passwordHash  String
   bio           String?   @db.Text
   avatarUrl     String?
+  coverUrl      String?
+  location      String?   @db.VarChar(100)
+  website       String?   @db.VarChar(500)
   role          Role      @default(USER)
   isBanned      Boolean   @default(false)
   banReason     String?
@@ -51,6 +54,9 @@ model User {
   handledThreads ChatThread[]       @relation("AdminHandler")
   reportsFiled  Report[]            @relation("ReportedBy")
   readingList   ReadingListItem[]
+  dmThreadsFirst DmThread[] @relation("DmFirst")
+  dmThreadsSecond DmThread[] @relation("DmSecond")
+  sentDms DmMessage[]
 
   @@index([email])
   @@index([username])
@@ -217,4 +223,30 @@ model ReadingListItem {
   createdAt DateTime @default(now())
 
   @@index([userId])
+}
+
+model DmThread {
+  id String @id @default(cuid())
+  firstId String
+  first User @relation("DmFirst", fields: [firstId], references: [id], onDelete: Cascade)
+  secondId String
+  second User @relation("DmSecond", fields: [secondId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messages DmMessage[]
+  @@unique([firstId, secondId])
+  @@index([firstId, updatedAt, id])
+  @@index([secondId, updatedAt, id])
+}
+model DmMessage {
+  id String @id @default(cuid())
+  threadId String
+  thread DmThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  senderId String
+  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content String @db.Text
+  createdAt DateTime @default(now())
+  readAt DateTime?
+  @@index([threadId, createdAt, id])
+  @@index([threadId, readAt, senderId])
 }

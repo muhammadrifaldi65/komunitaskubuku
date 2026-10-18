@@ -101,3 +101,13 @@ export type ChatMessage = Prisma.ChatMessageModel
  * 
  */
 export type ReadingListItem = Prisma.ReadingListItemModel
+/**
+ * Model DmThread
+ * 
+ */
+export type DmThread = Prisma.DmThreadModel
+/**
+ * Model DmMessage
+ * 
+ */
+export type DmMessage = Prisma.DmMessageModel

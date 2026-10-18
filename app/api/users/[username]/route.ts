@@ -6,14 +6,17 @@ export async function GET(_req: Request, { params }: { params: Promise<{ usernam
   const { username } = await params;
   const session = await auth();
 
-  const user = await prisma.user.findUnique({
-    where: { username },
+  const user = await prisma.user.findFirst({
+    where: { username: { equals: username, mode: "insensitive" } },
     select: {
       id: true,
       username: true,
       name: true,
       bio: true,
       avatarUrl: true,
+      coverUrl: true,
+      location: true,
+      website: true,
       role: true,
       createdAt: true,
       isBanned: true,
