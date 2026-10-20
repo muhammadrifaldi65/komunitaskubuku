@@ -63,7 +63,7 @@ export default function ReadingListPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-6">
-      <h1 className="font-bold text-lg mb-1">📖 Reading List</h1>
+      <h1 className="font-bold text-lg mb-1 flex items-center gap-2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1m0-16c3-2 7-2 10-1v16c-3-1-7-1-10 1V5Z" /></svg>Reading List</h1>
       <p className="text-xs text-gray-500 mb-4">Catat buku yang ingin, sedang, dan sudah kamu baca</p>
 
       <form onSubmit={add} className="bg-white border rounded-xl p-4 mb-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">

@@ -29,7 +29,7 @@ export default function Navbar() {
   const router = useRouter();
   const links = [
     { href: "/", label: "Beranda", icon: "home" },
-    { href: "/?search=1", label: "Jelajahi", icon: "search" },
+    { href: "/explore", label: "Jelajahi", icon: "search" },
     ...(session ? [
       { href: "/reading-list", label: "Daftar bacaan", icon: "book" },
       { href: "/bookmarks", label: "Markah", icon: "bookmark" },

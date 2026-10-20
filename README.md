@@ -13,7 +13,7 @@
 - **Fitur minor**: notifikasi in-app, reading list (Ingin Dibaca/Sedang Dibaca/Selesai), laporkan post
 - **Tampilan**: feed tiga kolom di desktop, navigasi menu di mobile, sans-serif dan aksen biru; nama PTHREE serta rute fitur tetap. Dashboard admin menyediakan kelima menu di mobile dan desktop.
 - **Avatar**: upload dan gambar post memakai path publik `/media/...`; URL ImageKit lama dinormalisasi. Simpan profil memperbarui avatar sesi tanpa login ulang.
-- **Pencarian**: cari isi post, judul buku, atau penulis. Tab **Mengikuti** hanya memuat post akun yang diikuti; perlu login.
+- **Pencarian**: buka `/explore` lewat Jelajahi untuk melihat hashtag trending dan mencari isi post, judul buku, penulis, atau hashtag. Input didebounce 450 ms sebelum meminta hasil; memilih trending langsung mencari tag. Tab **Mengikuti** di beranda hanya memuat post akun yang diikuti; perlu login.
 - **Hapus post**: menu opsi pada post sendiri menyediakan hapus permanen dengan konfirmasi. Feed/profil diperbarui setelah berhasil; halaman detail kembali ke beranda. Admin tetap dapat menghapus post pengguna lain.
 - **Spoiler**: saat membuat post, centang **Mengandung spoiler** untuk menyembunyikan isi dan gambar di feed, profil, bookmark, dan halaman detail sampai pembaca menekan **Tampilkan isi dan gambar**. Judul/penulis buku tetap terlihat. Post lama tidak ditandai.
 
@@ -23,7 +23,7 @@
 
 - `/settings`: nama, username unik (3–24 karakter), bio, lokasi, website HTTP(S), avatar/sampul, serta ganti password dengan password lama. Avatar/sampul diunggah ke folder milik pengguna dan disajikan melalui `/media/...` pada domain aplikasi.
 - Profil publik memakai `/<username>`; username rute aplikasi seperti `admin`, `settings`, dan `messages` dilarang. Perubahan username langsung memperbarui sesi. URL profil lama tidak dipertahankan.
-- Klik pencarian/Jelajahi menampilkan 10 hashtag terbanyak selama 24 jam terakhir. Penghitungan tidak membedakan kapital, satu hashtag dihitung sekali per post; post diturunkan dan akun diblokir dikecualikan. Klik hashtag mencari tag utuh, bukan awalan.
+- Halaman Jelajahi menampilkan 10 hashtag terbanyak selama 24 jam terakhir saat pencarian kosong. Penghitungan tidak membedakan kapital, satu hashtag dihitung sekali per post; post diturunkan dan akun diblokir dikecualikan. Klik hashtag mencari tag utuh, bukan awalan.
 - `/messages`: DM privat, unread, riwayat berpaginasi, polling 8 detik. Pengiriman hanya diizinkan bila **penerima mengikuti pengirim**, diperiksa lagi setiap pengiriman termasuk setelah unfollow. Hanya kedua peserta bisa mengakses isi atau menandai pesan dibaca. Customer service tetap tersedia di `/support`.
 - Migrasi: `npx prisma migrate deploy && npx prisma generate`. Migrasi menolak username lama yang bentrok/terlarang tanpa menggantinya diam-diam; pilih pengganti sebelum menjalankannya. Seed baru menggunakan `bookclub_admin`.
 - Setelah pembaruan spoiler, jalankan `npx prisma migrate deploy && npx prisma generate` sebelum memulai aplikasi.
