@@ -24,6 +24,7 @@ export default function CreatePostPage() {
   const [content, setContent] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
+  const [isSpoiler, setIsSpoiler] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -111,6 +112,7 @@ export default function CreatePostPage() {
           imageFileId,
           bookTitle: bookTitle.trim() || null,
           bookAuthor: bookAuthor.trim() || null,
+          isSpoiler,
         }),
       });
       const data = await res.json().catch(() => null);
@@ -176,6 +178,8 @@ export default function CreatePostPage() {
               </div>
             </div>
           </section>
+
+          <label className="flex items-center gap-3 border-t pt-5 text-sm font-medium"><input type="checkbox" checked={isSpoiler} onChange={(e) => setIsSpoiler(e.target.checked)} /> Mengandung spoiler — sembunyikan isi dan gambar sampai pembaca memilih menampilkannya.</label>
 
           <section aria-labelledby="image-heading" className="border-t pt-5">
             <h2 id="image-heading" className="text-sm font-semibold">Gambar <span className="font-normal text-[var(--color-muted)]">(opsional)</span></h2>

@@ -49,6 +49,7 @@ function CommentItem({ comment, postId, onReplied, parentUsername }: {
   const [expanded, setExpanded] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [busy, setBusy] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
   const composerId = useId();
   const repliesId = useId();
@@ -68,6 +69,22 @@ function CommentItem({ comment, postId, onReplied, parentUsername }: {
       setError(error instanceof Error ? error.message : "Koneksi terputus. Silakan coba lagi");
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function deleteComment() {
+    if (deleting || !window.confirm("Hapus komentar ini beserta seluruh balasannya? Tindakan ini permanen.")) return;
+    setDeleting(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/posts/${encodeURIComponent(postId)}/comments/${encodeURIComponent(comment.id)}`, { method: "DELETE" });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(data?.error || "Gagal menghapus komentar. Coba lagi");
+      await onReplied();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Gagal menghapus komentar. Coba lagi");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -96,6 +113,7 @@ function CommentItem({ comment, postId, onReplied, parentUsername }: {
               {replying ? "Batal membalas" : "Balas"}
             </button>
           ) : <Link href="/login" className="inline-flex min-h-11 items-center text-xs text-[var(--color-accent)]">Masuk untuk membalas</Link>}
+          {(session?.user.id === comment.author.id || session?.user.role === "ADMIN") && <button type="button" disabled={deleting} onClick={deleteComment} className="ml-3 min-h-11 text-xs font-medium text-red-700 disabled:opacity-50">{deleting ? "Menghapus..." : "Hapus"}</button>}
           {replying && (
             <form id={composerId} onSubmit={submitReply} className="mb-2 space-y-2" aria-busy={busy}>
               <label htmlFor={`${composerId}-text`} className="block text-xs text-[var(--color-muted)]">Balasan untuk @{comment.author.username}</label>

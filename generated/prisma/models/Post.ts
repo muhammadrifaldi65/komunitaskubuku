@@ -47,6 +47,7 @@ export type PostMinAggregateOutputType = {
   imageFileId: string | null
   bookTitle: string | null
   bookAuthor: string | null
+  isSpoiler: boolean | null
   isTakenDown: boolean | null
   takedownReason: string | null
   createdAt: Date | null
@@ -65,6 +66,7 @@ export type PostMaxAggregateOutputType = {
   imageFileId: string | null
   bookTitle: string | null
   bookAuthor: string | null
+  isSpoiler: boolean | null
   isTakenDown: boolean | null
   takedownReason: string | null
   createdAt: Date | null
@@ -83,6 +85,7 @@ export type PostCountAggregateOutputType = {
   imageFileId: number
   bookTitle: number
   bookAuthor: number
+  isSpoiler: number
   isTakenDown: number
   takedownReason: number
   createdAt: number
@@ -117,6 +120,7 @@ export type PostMinAggregateInputType = {
   imageFileId?: true
   bookTitle?: true
   bookAuthor?: true
+  isSpoiler?: true
   isTakenDown?: true
   takedownReason?: true
   createdAt?: true
@@ -135,6 +139,7 @@ export type PostMaxAggregateInputType = {
   imageFileId?: true
   bookTitle?: true
   bookAuthor?: true
+  isSpoiler?: true
   isTakenDown?: true
   takedownReason?: true
   createdAt?: true
@@ -153,6 +158,7 @@ export type PostCountAggregateInputType = {
   imageFileId?: true
   bookTitle?: true
   bookAuthor?: true
+  isSpoiler?: true
   isTakenDown?: true
   takedownReason?: true
   createdAt?: true
@@ -258,6 +264,7 @@ export type PostGroupByOutputType = {
   imageFileId: string | null
   bookTitle: string | null
   bookAuthor: string | null
+  isSpoiler: boolean
   isTakenDown: boolean
   takedownReason: string | null
   createdAt: Date
@@ -299,6 +306,7 @@ export type PostWhereInput = {
   imageFileId?: Prisma.StringNullableFilter<"Post"> | string | null
   bookTitle?: Prisma.StringNullableFilter<"Post"> | string | null
   bookAuthor?: Prisma.StringNullableFilter<"Post"> | string | null
+  isSpoiler?: Prisma.BoolFilter<"Post"> | boolean
   isTakenDown?: Prisma.BoolFilter<"Post"> | boolean
   takedownReason?: Prisma.StringNullableFilter<"Post"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -314,6 +322,7 @@ export type PostWhereInput = {
   bookmarks?: Prisma.BookmarkListRelationFilter
   shares?: Prisma.ShareListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  managedImage?: Prisma.XOR<Prisma.PostImageNullableScalarRelationFilter, Prisma.PostImageWhereInput> | null
 }
 
 export type PostOrderByWithRelationInput = {
@@ -323,6 +332,7 @@ export type PostOrderByWithRelationInput = {
   imageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   bookTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   bookAuthor?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSpoiler?: Prisma.SortOrder
   isTakenDown?: Prisma.SortOrder
   takedownReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -338,6 +348,7 @@ export type PostOrderByWithRelationInput = {
   bookmarks?: Prisma.BookmarkOrderByRelationAggregateInput
   shares?: Prisma.ShareOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
+  managedImage?: Prisma.PostImageOrderByWithRelationInput
 }
 
 export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -350,6 +361,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   imageFileId?: Prisma.StringNullableFilter<"Post"> | string | null
   bookTitle?: Prisma.StringNullableFilter<"Post"> | string | null
   bookAuthor?: Prisma.StringNullableFilter<"Post"> | string | null
+  isSpoiler?: Prisma.BoolFilter<"Post"> | boolean
   isTakenDown?: Prisma.BoolFilter<"Post"> | boolean
   takedownReason?: Prisma.StringNullableFilter<"Post"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -365,6 +377,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   bookmarks?: Prisma.BookmarkListRelationFilter
   shares?: Prisma.ShareListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  managedImage?: Prisma.XOR<Prisma.PostImageNullableScalarRelationFilter, Prisma.PostImageWhereInput> | null
 }, "id">
 
 export type PostOrderByWithAggregationInput = {
@@ -374,6 +387,7 @@ export type PostOrderByWithAggregationInput = {
   imageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   bookTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   bookAuthor?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSpoiler?: Prisma.SortOrder
   isTakenDown?: Prisma.SortOrder
   takedownReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -400,6 +414,7 @@ export type PostScalarWhereWithAggregatesInput = {
   imageFileId?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   bookTitle?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   bookAuthor?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
+  isSpoiler?: Prisma.BoolWithAggregatesFilter<"Post"> | boolean
   isTakenDown?: Prisma.BoolWithAggregatesFilter<"Post"> | boolean
   takedownReason?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
@@ -418,6 +433,7 @@ export type PostCreateInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -432,6 +448,7 @@ export type PostCreateInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateInput = {
@@ -441,6 +458,7 @@ export type PostUncheckedCreateInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -455,6 +473,7 @@ export type PostUncheckedCreateInput = {
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostUpdateInput = {
@@ -464,6 +483,7 @@ export type PostUpdateInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,6 +498,7 @@ export type PostUpdateInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateInput = {
@@ -487,6 +508,7 @@ export type PostUncheckedUpdateInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -501,6 +523,7 @@ export type PostUncheckedUpdateInput = {
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostCreateManyInput = {
@@ -510,6 +533,7 @@ export type PostCreateManyInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -528,6 +552,7 @@ export type PostUpdateManyMutationInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -545,6 +570,7 @@ export type PostUncheckedUpdateManyInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -573,6 +599,7 @@ export type PostCountOrderByAggregateInput = {
   imageFileId?: Prisma.SortOrder
   bookTitle?: Prisma.SortOrder
   bookAuthor?: Prisma.SortOrder
+  isSpoiler?: Prisma.SortOrder
   isTakenDown?: Prisma.SortOrder
   takedownReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -598,6 +625,7 @@ export type PostMaxOrderByAggregateInput = {
   imageFileId?: Prisma.SortOrder
   bookTitle?: Prisma.SortOrder
   bookAuthor?: Prisma.SortOrder
+  isSpoiler?: Prisma.SortOrder
   isTakenDown?: Prisma.SortOrder
   takedownReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -616,6 +644,7 @@ export type PostMinOrderByAggregateInput = {
   imageFileId?: Prisma.SortOrder
   bookTitle?: Prisma.SortOrder
   bookAuthor?: Prisma.SortOrder
+  isSpoiler?: Prisma.SortOrder
   isTakenDown?: Prisma.SortOrder
   takedownReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -637,6 +666,11 @@ export type PostSumOrderByAggregateInput = {
 export type PostScalarRelationFilter = {
   is?: Prisma.PostWhereInput
   isNot?: Prisma.PostWhereInput
+}
+
+export type PostNullableScalarRelationFilter = {
+  is?: Prisma.PostWhereInput | null
+  isNot?: Prisma.PostWhereInput | null
 }
 
 export type PostCreateNestedManyWithoutAuthorInput = {
@@ -759,6 +793,22 @@ export type PostUpdateOneRequiredWithoutReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PostUpdateToOneWithWhereWithoutReportsInput, Prisma.PostUpdateWithoutReportsInput>, Prisma.PostUncheckedUpdateWithoutReportsInput>
 }
 
+export type PostCreateNestedOneWithoutManagedImageInput = {
+  create?: Prisma.XOR<Prisma.PostCreateWithoutManagedImageInput, Prisma.PostUncheckedCreateWithoutManagedImageInput>
+  connectOrCreate?: Prisma.PostCreateOrConnectWithoutManagedImageInput
+  connect?: Prisma.PostWhereUniqueInput
+}
+
+export type PostUpdateOneWithoutManagedImageNestedInput = {
+  create?: Prisma.XOR<Prisma.PostCreateWithoutManagedImageInput, Prisma.PostUncheckedCreateWithoutManagedImageInput>
+  connectOrCreate?: Prisma.PostCreateOrConnectWithoutManagedImageInput
+  upsert?: Prisma.PostUpsertWithoutManagedImageInput
+  disconnect?: Prisma.PostWhereInput | boolean
+  delete?: Prisma.PostWhereInput | boolean
+  connect?: Prisma.PostWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PostUpdateToOneWithWhereWithoutManagedImageInput, Prisma.PostUpdateWithoutManagedImageInput>, Prisma.PostUncheckedUpdateWithoutManagedImageInput>
+}
+
 export type PostCreateWithoutAuthorInput = {
   id?: string
   content: string
@@ -766,6 +816,7 @@ export type PostCreateWithoutAuthorInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -779,6 +830,7 @@ export type PostCreateWithoutAuthorInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutAuthorInput = {
@@ -788,6 +840,7 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -801,6 +854,7 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutAuthorInput = {
@@ -839,6 +893,7 @@ export type PostScalarWhereInput = {
   imageFileId?: Prisma.StringNullableFilter<"Post"> | string | null
   bookTitle?: Prisma.StringNullableFilter<"Post"> | string | null
   bookAuthor?: Prisma.StringNullableFilter<"Post"> | string | null
+  isSpoiler?: Prisma.BoolFilter<"Post"> | boolean
   isTakenDown?: Prisma.BoolFilter<"Post"> | boolean
   takedownReason?: Prisma.StringNullableFilter<"Post"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -857,6 +912,7 @@ export type PostCreateWithoutCommentsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -870,6 +926,7 @@ export type PostCreateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutCommentsInput = {
@@ -879,6 +936,7 @@ export type PostUncheckedCreateWithoutCommentsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -892,6 +950,7 @@ export type PostUncheckedCreateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutCommentsInput = {
@@ -917,6 +976,7 @@ export type PostUpdateWithoutCommentsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -930,6 +990,7 @@ export type PostUpdateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutCommentsInput = {
@@ -939,6 +1000,7 @@ export type PostUncheckedUpdateWithoutCommentsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -952,6 +1014,7 @@ export type PostUncheckedUpdateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostCreateWithoutReactionsInput = {
@@ -961,6 +1024,7 @@ export type PostCreateWithoutReactionsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -974,6 +1038,7 @@ export type PostCreateWithoutReactionsInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutReactionsInput = {
@@ -983,6 +1048,7 @@ export type PostUncheckedCreateWithoutReactionsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -996,6 +1062,7 @@ export type PostUncheckedCreateWithoutReactionsInput = {
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutReactionsInput = {
@@ -1021,6 +1088,7 @@ export type PostUpdateWithoutReactionsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1034,6 +1102,7 @@ export type PostUpdateWithoutReactionsInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutReactionsInput = {
@@ -1043,6 +1112,7 @@ export type PostUncheckedUpdateWithoutReactionsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1056,6 +1126,7 @@ export type PostUncheckedUpdateWithoutReactionsInput = {
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostCreateWithoutBookmarksInput = {
@@ -1065,6 +1136,7 @@ export type PostCreateWithoutBookmarksInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1078,6 +1150,7 @@ export type PostCreateWithoutBookmarksInput = {
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutBookmarksInput = {
@@ -1087,6 +1160,7 @@ export type PostUncheckedCreateWithoutBookmarksInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1100,6 +1174,7 @@ export type PostUncheckedCreateWithoutBookmarksInput = {
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutBookmarksInput = {
@@ -1125,6 +1200,7 @@ export type PostUpdateWithoutBookmarksInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1138,6 +1214,7 @@ export type PostUpdateWithoutBookmarksInput = {
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutBookmarksInput = {
@@ -1147,6 +1224,7 @@ export type PostUncheckedUpdateWithoutBookmarksInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1160,6 +1238,7 @@ export type PostUncheckedUpdateWithoutBookmarksInput = {
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostCreateWithoutSharesInput = {
@@ -1169,6 +1248,7 @@ export type PostCreateWithoutSharesInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1182,6 +1262,7 @@ export type PostCreateWithoutSharesInput = {
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutSharesInput = {
@@ -1191,6 +1272,7 @@ export type PostUncheckedCreateWithoutSharesInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1204,6 +1286,7 @@ export type PostUncheckedCreateWithoutSharesInput = {
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutSharesInput = {
@@ -1229,6 +1312,7 @@ export type PostUpdateWithoutSharesInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1242,6 +1326,7 @@ export type PostUpdateWithoutSharesInput = {
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutSharesInput = {
@@ -1251,6 +1336,7 @@ export type PostUncheckedUpdateWithoutSharesInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1264,6 +1350,7 @@ export type PostUncheckedUpdateWithoutSharesInput = {
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostCreateWithoutReportsInput = {
@@ -1273,6 +1360,7 @@ export type PostCreateWithoutReportsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1286,6 +1374,7 @@ export type PostCreateWithoutReportsInput = {
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageCreateNestedOneWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutReportsInput = {
@@ -1295,6 +1384,7 @@ export type PostUncheckedCreateWithoutReportsInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1308,6 +1398,7 @@ export type PostUncheckedCreateWithoutReportsInput = {
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
   shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
+  managedImage?: Prisma.PostImageUncheckedCreateNestedOneWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutReportsInput = {
@@ -1333,6 +1424,7 @@ export type PostUpdateWithoutReportsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1346,6 +1438,7 @@ export type PostUpdateWithoutReportsInput = {
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutReportsInput = {
@@ -1355,6 +1448,7 @@ export type PostUncheckedUpdateWithoutReportsInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1368,6 +1462,119 @@ export type PostUncheckedUpdateWithoutReportsInput = {
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
+}
+
+export type PostCreateWithoutManagedImageInput = {
+  id?: string
+  content: string
+  imageUrl?: string | null
+  imageFileId?: string | null
+  bookTitle?: string | null
+  bookAuthor?: string | null
+  isSpoiler?: boolean
+  isTakenDown?: boolean
+  takedownReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  likeCount?: number
+  dislikeCount?: number
+  commentCount?: number
+  shareCount?: number
+  author: Prisma.UserCreateNestedOneWithoutPostsInput
+  comments?: Prisma.CommentCreateNestedManyWithoutPostInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutPostInput
+  shares?: Prisma.ShareCreateNestedManyWithoutPostInput
+  reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+}
+
+export type PostUncheckedCreateWithoutManagedImageInput = {
+  id?: string
+  content: string
+  imageUrl?: string | null
+  imageFileId?: string | null
+  bookTitle?: string | null
+  bookAuthor?: string | null
+  isSpoiler?: boolean
+  isTakenDown?: boolean
+  takedownReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authorId: string
+  likeCount?: number
+  dislikeCount?: number
+  commentCount?: number
+  shareCount?: number
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutPostInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutPostInput
+  shares?: Prisma.ShareUncheckedCreateNestedManyWithoutPostInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+}
+
+export type PostCreateOrConnectWithoutManagedImageInput = {
+  where: Prisma.PostWhereUniqueInput
+  create: Prisma.XOR<Prisma.PostCreateWithoutManagedImageInput, Prisma.PostUncheckedCreateWithoutManagedImageInput>
+}
+
+export type PostUpsertWithoutManagedImageInput = {
+  update: Prisma.XOR<Prisma.PostUpdateWithoutManagedImageInput, Prisma.PostUncheckedUpdateWithoutManagedImageInput>
+  create: Prisma.XOR<Prisma.PostCreateWithoutManagedImageInput, Prisma.PostUncheckedCreateWithoutManagedImageInput>
+  where?: Prisma.PostWhereInput
+}
+
+export type PostUpdateToOneWithWhereWithoutManagedImageInput = {
+  where?: Prisma.PostWhereInput
+  data: Prisma.XOR<Prisma.PostUpdateWithoutManagedImageInput, Prisma.PostUncheckedUpdateWithoutManagedImageInput>
+}
+
+export type PostUpdateWithoutManagedImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  likeCount?: Prisma.IntFieldUpdateOperationsInput | number
+  dislikeCount?: Prisma.IntFieldUpdateOperationsInput | number
+  commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  shareCount?: Prisma.IntFieldUpdateOperationsInput | number
+  author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutPostNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
+  shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+}
+
+export type PostUncheckedUpdateWithoutManagedImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  likeCount?: Prisma.IntFieldUpdateOperationsInput | number
+  dislikeCount?: Prisma.IntFieldUpdateOperationsInput | number
+  commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  shareCount?: Prisma.IntFieldUpdateOperationsInput | number
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutPostNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
+  shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateManyAuthorInput = {
@@ -1377,6 +1584,7 @@ export type PostCreateManyAuthorInput = {
   imageFileId?: string | null
   bookTitle?: string | null
   bookAuthor?: string | null
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: string | null
   createdAt?: Date | string
@@ -1394,6 +1602,7 @@ export type PostUpdateWithoutAuthorInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1407,6 +1616,7 @@ export type PostUpdateWithoutAuthorInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutAuthorInput = {
@@ -1416,6 +1626,7 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1429,6 +1640,7 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutPostNestedInput
   shares?: Prisma.ShareUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  managedImage?: Prisma.PostImageUncheckedUpdateOneWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateManyWithoutAuthorInput = {
@@ -1438,6 +1650,7 @@ export type PostUncheckedUpdateManyWithoutAuthorInput = {
   imageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookAuthor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSpoiler?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isTakenDown?: Prisma.BoolFieldUpdateOperationsInput | boolean
   takedownReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1522,6 +1735,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   imageFileId?: boolean
   bookTitle?: boolean
   bookAuthor?: boolean
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: boolean
   createdAt?: boolean
@@ -1537,6 +1751,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   bookmarks?: boolean | Prisma.Post$bookmarksArgs<ExtArgs>
   shares?: boolean | Prisma.Post$sharesArgs<ExtArgs>
   reports?: boolean | Prisma.Post$reportsArgs<ExtArgs>
+  managedImage?: boolean | Prisma.Post$managedImageArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["post"]>
 
@@ -1547,6 +1762,7 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   imageFileId?: boolean
   bookTitle?: boolean
   bookAuthor?: boolean
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: boolean
   createdAt?: boolean
@@ -1566,6 +1782,7 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   imageFileId?: boolean
   bookTitle?: boolean
   bookAuthor?: boolean
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: boolean
   createdAt?: boolean
@@ -1585,6 +1802,7 @@ export type PostSelectScalar = {
   imageFileId?: boolean
   bookTitle?: boolean
   bookAuthor?: boolean
+  isSpoiler?: boolean
   isTakenDown?: boolean
   takedownReason?: boolean
   createdAt?: boolean
@@ -1596,7 +1814,7 @@ export type PostSelectScalar = {
   shareCount?: boolean
 }
 
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "imageUrl" | "imageFileId" | "bookTitle" | "bookAuthor" | "isTakenDown" | "takedownReason" | "createdAt" | "updatedAt" | "authorId" | "likeCount" | "dislikeCount" | "commentCount" | "shareCount", ExtArgs["result"]["post"]>
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "imageUrl" | "imageFileId" | "bookTitle" | "bookAuthor" | "isSpoiler" | "isTakenDown" | "takedownReason" | "createdAt" | "updatedAt" | "authorId" | "likeCount" | "dislikeCount" | "commentCount" | "shareCount", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   comments?: boolean | Prisma.Post$commentsArgs<ExtArgs>
@@ -1604,6 +1822,7 @@ export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   bookmarks?: boolean | Prisma.Post$bookmarksArgs<ExtArgs>
   shares?: boolean | Prisma.Post$sharesArgs<ExtArgs>
   reports?: boolean | Prisma.Post$reportsArgs<ExtArgs>
+  managedImage?: boolean | Prisma.Post$managedImageArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PostIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1622,6 +1841,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
     shares: Prisma.$SharePayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
+    managedImage: Prisma.$PostImagePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1630,6 +1850,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     imageFileId: string | null
     bookTitle: string | null
     bookAuthor: string | null
+    isSpoiler: boolean
     isTakenDown: boolean
     takedownReason: string | null
     createdAt: Date
@@ -2039,6 +2260,7 @@ export interface Prisma__PostClient<T, Null = never, ExtArgs extends runtime.Typ
   bookmarks<T extends Prisma.Post$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shares<T extends Prisma.Post$sharesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$sharesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.Post$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  managedImage<T extends Prisma.Post$managedImageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$managedImageArgs<ExtArgs>>): Prisma.Prisma__PostImageClient<runtime.Types.Result.GetResult<Prisma.$PostImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2074,6 +2296,7 @@ export interface PostFieldRefs {
   readonly imageFileId: Prisma.FieldRef<"Post", 'String'>
   readonly bookTitle: Prisma.FieldRef<"Post", 'String'>
   readonly bookAuthor: Prisma.FieldRef<"Post", 'String'>
+  readonly isSpoiler: Prisma.FieldRef<"Post", 'Boolean'>
   readonly isTakenDown: Prisma.FieldRef<"Post", 'Boolean'>
   readonly takedownReason: Prisma.FieldRef<"Post", 'String'>
   readonly createdAt: Prisma.FieldRef<"Post", 'DateTime'>
@@ -2601,6 +2824,25 @@ export type Post$reportsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * Post.managedImage
+ */
+export type Post$managedImageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PostImage
+   */
+  select?: Prisma.PostImageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PostImage
+   */
+  omit?: Prisma.PostImageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PostImageInclude<ExtArgs> | null
+  where?: Prisma.PostImageWhereInput
 }
 
 /**

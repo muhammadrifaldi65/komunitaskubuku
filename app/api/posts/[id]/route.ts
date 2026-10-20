@@ -2,11 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { imagekit } from "@/lib/imagekit";
 
 const updateSchema = z.object({
   content: z.string().min(1).max(3000).optional(),
   bookTitle: z.string().max(200).optional().nullable(),
   bookAuthor: z.string().max(200).optional().nullable(),
+  isSpoiler: z.boolean().optional(),
 });
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -67,8 +69,19 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: "Tidak diizinkan" }, { status: 403 });
   }
 
-  // imageFileId is client-supplied, not proof of upload ownership. Retain remote media.
-  await prisma.post.delete({ where: { id } });
+  const asset = post.imageFileId && post.imageUrl ? await prisma.postImage.findFirst({ where: { postId: id, ownerId: post.authorId, fileId: post.imageFileId, url: post.imageUrl } }) : null;
+  await prisma.$transaction(async (tx) => {
+    if (asset) await tx.postImage.update({ where: { fileId: asset.fileId }, data: { pendingDelete: true } });
+    await tx.post.delete({ where: { id } });
+  });
+  if (asset) {
+    try {
+      await imagekit.deleteFile(asset.fileId);
+      await prisma.postImage.delete({ where: { fileId: asset.fileId } });
+    } catch (error) {
+      console.error("Gagal menghapus gambar post dari ImageKit; pendingDelete tersimpan", asset.fileId, error);
+    }
+  }
 
   return NextResponse.json({ message: "Post dihapus" });
 }

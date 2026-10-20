@@ -15,6 +15,7 @@
 - **Avatar**: upload dan gambar post memakai path publik `/media/...`; URL ImageKit lama dinormalisasi. Simpan profil memperbarui avatar sesi tanpa login ulang.
 - **Pencarian**: cari isi post, judul buku, atau penulis. Tab **Mengikuti** hanya memuat post akun yang diikuti; perlu login.
 - **Hapus post**: menu opsi pada post sendiri menyediakan hapus permanen dengan konfirmasi. Feed/profil diperbarui setelah berhasil; halaman detail kembali ke beranda. Admin tetap dapat menghapus post pengguna lain.
+- **Spoiler**: saat membuat post, centang **Mengandung spoiler** untuk menyembunyikan isi dan gambar di feed, profil, bookmark, dan halaman detail sampai pembaca menekan **Tampilkan isi dan gambar**. Judul/penulis buku tetap terlihat. Post lama tidak ditandai.
 
 ### Profil, trending, dan pesan pribadi
 
@@ -25,6 +26,7 @@
 - Klik pencarian/Jelajahi menampilkan 10 hashtag terbanyak selama 24 jam terakhir. Penghitungan tidak membedakan kapital, satu hashtag dihitung sekali per post; post diturunkan dan akun diblokir dikecualikan. Klik hashtag mencari tag utuh, bukan awalan.
 - `/messages`: DM privat, unread, riwayat berpaginasi, polling 8 detik. Pengiriman hanya diizinkan bila **penerima mengikuti pengirim**, diperiksa lagi setiap pengiriman termasuk setelah unfollow. Hanya kedua peserta bisa mengakses isi atau menandai pesan dibaca. Customer service tetap tersedia di `/support`.
 - Migrasi: `npx prisma migrate deploy && npx prisma generate`. Migrasi menolak username lama yang bentrok/terlarang tanpa menggantinya diam-diam; pilih pengganti sebelum menjalankannya. Seed baru menggunakan `bookclub_admin`.
+- Setelah pembaruan spoiler, jalankan `npx prisma migrate deploy && npx prisma generate` sebelum memulai aplikasi.
 - Verifikasi: `npx tsx scripts/profile-regression.mjs`, `npx tsx scripts/hashtags-regression.ts`, dan `node scripts/dm-regression.mjs`. Regresi DM membutuhkan tiga akun sekali pakai; variabel lingkungan tercantum di awal skrip. Skrip hashtag memakai PostgreSQL nyata tanpa mengubah data.
 - Production self-hosted: set `AUTH_TRUST_HOST=true` hanya jika host/proxy deployment dikendalikan sendiri dan header Host diteruskan secara tepercaya; tanpa konfigurasi tersebut Auth.js bisa menolak sesi dengan `UntrustedHost`.
 
@@ -32,7 +34,8 @@
 
 - `GET /api/posts?q=...&feed=all|following&cursor=...`: pencarian tanpa membedakan huruf besar/kecil, maksimal 100 karakter. Reset cursor saat filter berubah. Post akun diblokir atau konten diturunkan tidak ditampilkan.
 - Pagination mengikuti urutan waktu dan ID, 20 post per halaman; ranking diterapkan di dalam halaman agar tidak melewatkan atau menggandakan post.
-- `DELETE /api/posts/:id`: hanya pemilik atau admin; komentar/reaksi terkait ikut terhapus. File ImageKit tetap disimpan: `imageFileId` dari klien tidak membuktikan kepemilikan aset, sehingga penghapusan remote bisa merusak media milik orang lain.
+- `DELETE /api/posts/:id`: hanya pemilik atau admin; komentar/reaksi terkait ikut terhapus. Gambar ImageKit yang diunggah setelah migrasi kepemilikan dihapus bila ID, URL, post, dan pemilik cocok. File lama tanpa catatan kepemilikan tidak dihapus otomatis.
+- Jika ImageKit gagal saat penghapusan, catatan `pendingDelete` disimpan; jalankan `npx tsx scripts/cleanup-post-images.ts` untuk mencoba lagi. Terapkan migrasi dengan `npx prisma migrate deploy`, lalu `npx prisma generate` sebelum memulai aplikasi.
 - Regresi feed: `node scripts/feed-regression.mjs`.
 - Regresi hapus: `node scripts/delete-post-regression.mjs`, dengan `DELETE_TEST_DISPOSABLE=1`, `DELETE_TEST_OWNER_COOKIE`, `DELETE_TEST_OTHER_COOKIE`; opsional `DELETE_TEST_ADMIN_COOKIE`. Gunakan akun uji sekali pakai.
 
@@ -49,6 +52,7 @@
 - `/create`: penghitung 3.000 karakter, informasi buku opsional, pratinjau gambar, batas 6 MB, status upload/publikasi, dan pencegahan kirim ganda. Kegagalan tidak mengosongkan draf pada halaman.
 - `/bookmarks`: markah privat disimpan di database, tetap tersedia setelah refresh. `PUT /api/posts/:id/bookmark` menerima `{ "bookmarked": true }` atau `false`; idempoten. `GET /api/bookmarks?cursor=...` mengurutkan waktu penyimpanan dengan pagination 20 post.
 - Balasan komentar tersembunyi sampai tombol **Lihat balasan lainnya** ditekan; dapat disembunyikan kembali. Balasan mempertahankan komentar tujuan, termasuk percakapan bertingkat.
+- Penulis komentar atau `ADMIN` dapat menghapus komentar beserta semua balasannya setelah konfirmasi. API `DELETE /api/posts/:id/comments/:commentId` memeriksa izin dan memperbarui penghitung komentar. `PEMBINA` hanya dapat menghapus komentar sendiri.
 - Regresi: `node scripts/bookmark-regression.mjs` dan `node scripts/comments-regression.mjs`. Variabel akun/post uji dijelaskan pada awal masing-masing skrip; gunakan data sekali pakai.
 - Media ImageKit: kegagalan koneksi upstream mengembalikan HTTP 502 tanpa cache. `UND_ERR_CONNECT_TIMEOUT` berarti koneksi server ke ImageKit tidak tersambung; periksa DNS, firewall, dan akses HTTPS server. Penanganan error aplikasi tidak memperbaiki jaringan eksternal.
 

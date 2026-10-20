@@ -17,6 +17,7 @@ export interface PostData {
   content: string;
   imageUrl?: string | null;
   bookTitle?: string | null;
+  isSpoiler: boolean;
   bookAuthor?: string | null;
   createdAt: string;
   likeCount: number;
@@ -86,6 +87,7 @@ export default function PostCard({ post, onDeleted, onBookmarkChanged }: { post:
   const { data: session } = useSession();
   const [state, setState] = useState(post);
   const [busy, setBusy] = useState(false);
+  const [showSpoiler, setShowSpoiler] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [reportReason, setReportReason] = useState("");
   const [showOptions, setShowOptions] = useState(false);
@@ -220,10 +222,10 @@ export default function PostCard({ post, onDeleted, onBookmarkChanged }: { post:
         <p className="font-medium">{state.bookTitle}{state.bookAuthor ? ` — ${state.bookAuthor}` : ""}</p>
       </div>}
 
-      <Link href={`/post/${state.id}`}>
+      {state.isSpoiler && !showSpoiler ? <button type="button" onClick={() => setShowSpoiler(true)} className="mt-4 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--canvas)] px-4 py-3 text-left text-sm font-medium text-[var(--ink)] hover:bg-slate-100">Mengandung spoiler · Tampilkan isi dan gambar</button> : <Link href={`/post/${state.id}`}>
         <p className="mt-4 whitespace-pre-wrap break-words text-[15px] leading-7">{state.content}</p>
         {imageUrl && <img src={imageUrl} alt="Gambar postingan" className="mt-3 max-h-[480px] w-full rounded-xl border border-[var(--border)] object-cover" />}
-      </Link>
+      </Link>}
 
       {showReport && <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--canvas)] p-3 text-sm">
         <label htmlFor={`report-${state.id}`} className="mb-2 block font-medium">Laporkan postingan ini</label>

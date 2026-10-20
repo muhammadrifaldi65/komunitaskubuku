@@ -57,6 +57,7 @@ model User {
   dmThreadsFirst DmThread[] @relation("DmFirst")
   dmThreadsSecond DmThread[] @relation("DmSecond")
   sentDms DmMessage[]
+  postImages PostImage[]
 
   @@index([email])
   @@index([username])
@@ -69,6 +70,7 @@ model Post {
   imageFileId String?
   bookTitle   String?
   bookAuthor  String?
+  isSpoiler   Boolean   @default(false)
   isTakenDown Boolean   @default(false)
   takedownReason String?
   createdAt   DateTime  @default(now())
@@ -82,6 +84,7 @@ model Post {
   bookmarks   Bookmark[]
   shares      Share[]
   reports     Report[]
+  managedImage PostImage?
 
   // Denormalized counters for fast feed ranking
   likeCount    Int @default(0)
@@ -249,4 +252,18 @@ model DmMessage {
   readAt DateTime?
   @@index([threadId, createdAt, id])
   @@index([threadId, readAt, senderId])
+}
+
+model PostImage {
+  fileId String @id
+  url String
+  ownerId String
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  postId String? @unique
+  post Post? @relation(fields: [postId], references: [id], onDelete: SetNull)
+  pendingDelete Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([ownerId, postId])
+  @@index([pendingDelete])
 }

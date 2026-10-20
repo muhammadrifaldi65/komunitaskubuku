@@ -111,3 +111,8 @@ export type DmThread = Prisma.DmThreadModel
  * 
  */
 export type DmMessage = Prisma.DmMessageModel
+/**
+ * Model PostImage
+ * 
+ */
+export type PostImage = Prisma.PostImageModel

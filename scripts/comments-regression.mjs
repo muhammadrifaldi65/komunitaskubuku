@@ -53,4 +53,11 @@ for (const id of ids) {
 }
 const after = await request(`/api/posts/${encodeURIComponent(post)}`);
 assert.equal(after.body.post.commentCount, baseline.body.post.commentCount + 7);
-console.log("Comments regression passed: auth, malformed JSON, blank content, invalid/cross-post parents, whitespace, deep target tree, counter.");
+const deleteComment = (id, headers) => request(`${endpoint(post)}/${encodeURIComponent(id)}`, { method: "DELETE", headers });
+assert.equal((await deleteComment(root.body.comment.id, { Cookie: "" })).status, 401);
+assert.equal((await deleteComment(root.body.comment.id)).status, 200);
+const remaining = await request(endpoint(post));
+assert.ok(!remaining.body.comments.some((comment) => comment.id === root.body.comment.id), "Deleted thread must disappear");
+assert.equal((await request(`/api/posts/${encodeURIComponent(post)}`)).body.post.commentCount, baseline.body.post.commentCount);
+assert.equal((await deleteComment(root.body.comment.id)).status, 404);
+console.log("Comments regression passed: auth, malformed JSON, blank content, invalid/cross-post parents, deep thread deletion, counter.");

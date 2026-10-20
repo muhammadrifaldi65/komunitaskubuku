@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { uploadImageBase64 } from "@/lib/imagekit";
+import { prisma } from "@/lib/prisma";
+import { imagekit } from "@/lib/imagekit";
 
 const schema = z.object({
   base64: z.string().min(10),
@@ -50,6 +52,14 @@ export async function POST(req: Request) {
       parsed.data.fileName,
       `/bookclub/${parsed.data.folder}${parsed.data.folder === "posts" ? "" : `/${session.user.id}`}`
     );
+    if (parsed.data.folder === "posts") {
+      try {
+        await prisma.postImage.create({ data: { fileId: result.fileId, url: result.url, ownerId: session.user.id } });
+      } catch (error) {
+        await imagekit.deleteFile(result.fileId).catch((cleanupError) => console.error("Gagal membersihkan upload yang belum tercatat", cleanupError));
+        throw error;
+      }
+    }
     return NextResponse.json(result);
   } catch (err) {
     console.error(err);

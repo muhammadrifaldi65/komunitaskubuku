@@ -64,7 +64,8 @@ export const ModelName = {
   ChatMessage: 'ChatMessage',
   ReadingListItem: 'ReadingListItem',
   DmThread: 'DmThread',
-  DmMessage: 'DmMessage'
+  DmMessage: 'DmMessage',
+  PostImage: 'PostImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,6 +112,7 @@ export const PostScalarFieldEnum = {
   imageFileId: 'imageFileId',
   bookTitle: 'bookTitle',
   bookAuthor: 'bookAuthor',
+  isSpoiler: 'isSpoiler',
   isTakenDown: 'isTakenDown',
   takedownReason: 'takedownReason',
   createdAt: 'createdAt',
@@ -262,6 +264,18 @@ export const DmMessageScalarFieldEnum = {
 } as const
 
 export type DmMessageScalarFieldEnum = (typeof DmMessageScalarFieldEnum)[keyof typeof DmMessageScalarFieldEnum]
+
+
+export const PostImageScalarFieldEnum = {
+  fileId: 'fileId',
+  url: 'url',
+  ownerId: 'ownerId',
+  postId: 'postId',
+  pendingDelete: 'pendingDelete',
+  createdAt: 'createdAt'
+} as const
+
+export type PostImageScalarFieldEnum = (typeof PostImageScalarFieldEnum)[keyof typeof PostImageScalarFieldEnum]
 
 
 export const SortOrder = {

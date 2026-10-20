@@ -278,6 +278,7 @@ export type UserWhereInput = {
   dmThreadsFirst?: Prisma.DmThreadListRelationFilter
   dmThreadsSecond?: Prisma.DmThreadListRelationFilter
   sentDms?: Prisma.DmMessageListRelationFilter
+  postImages?: Prisma.PostImageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -312,6 +313,7 @@ export type UserOrderByWithRelationInput = {
   dmThreadsFirst?: Prisma.DmThreadOrderByRelationAggregateInput
   dmThreadsSecond?: Prisma.DmThreadOrderByRelationAggregateInput
   sentDms?: Prisma.DmMessageOrderByRelationAggregateInput
+  postImages?: Prisma.PostImageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -349,6 +351,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   dmThreadsFirst?: Prisma.DmThreadListRelationFilter
   dmThreadsSecond?: Prisma.DmThreadListRelationFilter
   sentDms?: Prisma.DmMessageListRelationFilter
+  postImages?: Prisma.PostImageListRelationFilter
 }, "id" | "username" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -425,6 +428,7 @@ export type UserCreateInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -459,6 +463,7 @@ export type UserUncheckedCreateInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -493,6 +498,7 @@ export type UserUpdateInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -527,6 +533,7 @@ export type UserUncheckedUpdateInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -895,6 +902,20 @@ export type UserUpdateOneRequiredWithoutSentDmsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentDmsInput, Prisma.UserUpdateWithoutSentDmsInput>, Prisma.UserUncheckedUpdateWithoutSentDmsInput>
 }
 
+export type UserCreateNestedOneWithoutPostImagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPostImagesInput, Prisma.UserUncheckedCreateWithoutPostImagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostImagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPostImagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPostImagesInput, Prisma.UserUncheckedCreateWithoutPostImagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostImagesInput
+  upsert?: Prisma.UserUpsertWithoutPostImagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostImagesInput, Prisma.UserUpdateWithoutPostImagesInput>, Prisma.UserUncheckedUpdateWithoutPostImagesInput>
+}
+
 export type UserCreateWithoutPostsInput = {
   id?: string
   username: string
@@ -926,6 +947,7 @@ export type UserCreateWithoutPostsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
@@ -959,6 +981,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -1008,6 +1031,7 @@ export type UserUpdateWithoutPostsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -1041,6 +1065,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutCommentsInput = {
@@ -1074,6 +1099,7 @@ export type UserCreateWithoutCommentsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutCommentsInput = {
@@ -1107,6 +1133,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutCommentsInput = {
@@ -1156,6 +1183,7 @@ export type UserUpdateWithoutCommentsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -1189,6 +1217,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutReactionsInput = {
@@ -1222,6 +1251,7 @@ export type UserCreateWithoutReactionsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutReactionsInput = {
@@ -1255,6 +1285,7 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutReactionsInput = {
@@ -1304,6 +1335,7 @@ export type UserUpdateWithoutReactionsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReactionsInput = {
@@ -1337,6 +1369,7 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutBookmarksInput = {
@@ -1370,6 +1403,7 @@ export type UserCreateWithoutBookmarksInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutBookmarksInput = {
@@ -1403,6 +1437,7 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutBookmarksInput = {
@@ -1452,6 +1487,7 @@ export type UserUpdateWithoutBookmarksInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBookmarksInput = {
@@ -1485,6 +1521,7 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutFollowingInput = {
@@ -1518,6 +1555,7 @@ export type UserCreateWithoutFollowingInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutFollowingInput = {
@@ -1551,6 +1589,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutFollowingInput = {
@@ -1589,6 +1628,7 @@ export type UserCreateWithoutFollowersInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutFollowersInput = {
@@ -1622,6 +1662,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutFollowersInput = {
@@ -1671,6 +1712,7 @@ export type UserUpdateWithoutFollowingInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -1704,6 +1746,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUpsertWithoutFollowersInput = {
@@ -1748,6 +1791,7 @@ export type UserUpdateWithoutFollowersInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -1781,6 +1825,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutReportsFiledInput = {
@@ -1814,6 +1859,7 @@ export type UserCreateWithoutReportsFiledInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutReportsFiledInput = {
@@ -1847,6 +1893,7 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutReportsFiledInput = {
@@ -1896,6 +1943,7 @@ export type UserUpdateWithoutReportsFiledInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsFiledInput = {
@@ -1929,6 +1977,7 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1962,6 +2011,7 @@ export type UserCreateWithoutNotificationsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1995,6 +2045,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2033,6 +2084,7 @@ export type UserCreateWithoutActorNotifsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutActorNotifsInput = {
@@ -2066,6 +2118,7 @@ export type UserUncheckedCreateWithoutActorNotifsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutActorNotifsInput = {
@@ -2115,6 +2168,7 @@ export type UserUpdateWithoutNotificationsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2148,6 +2202,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUpsertWithoutActorNotifsInput = {
@@ -2192,6 +2247,7 @@ export type UserUpdateWithoutActorNotifsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActorNotifsInput = {
@@ -2225,6 +2281,7 @@ export type UserUncheckedUpdateWithoutActorNotifsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutChatThreadInput = {
@@ -2258,6 +2315,7 @@ export type UserCreateWithoutChatThreadInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutChatThreadInput = {
@@ -2291,6 +2349,7 @@ export type UserUncheckedCreateWithoutChatThreadInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutChatThreadInput = {
@@ -2329,6 +2388,7 @@ export type UserCreateWithoutHandledThreadsInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutHandledThreadsInput = {
@@ -2362,6 +2422,7 @@ export type UserUncheckedCreateWithoutHandledThreadsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutHandledThreadsInput = {
@@ -2411,6 +2472,7 @@ export type UserUpdateWithoutChatThreadInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChatThreadInput = {
@@ -2444,6 +2506,7 @@ export type UserUncheckedUpdateWithoutChatThreadInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUpsertWithoutHandledThreadsInput = {
@@ -2488,6 +2551,7 @@ export type UserUpdateWithoutHandledThreadsInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHandledThreadsInput = {
@@ -2521,6 +2585,7 @@ export type UserUncheckedUpdateWithoutHandledThreadsInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutChatMessagesInput = {
@@ -2554,6 +2619,7 @@ export type UserCreateWithoutChatMessagesInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -2587,6 +2653,7 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -2636,6 +2703,7 @@ export type UserUpdateWithoutChatMessagesInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -2669,6 +2737,7 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutReadingListInput = {
@@ -2702,6 +2771,7 @@ export type UserCreateWithoutReadingListInput = {
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutReadingListInput = {
@@ -2735,6 +2805,7 @@ export type UserUncheckedCreateWithoutReadingListInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutReadingListInput = {
@@ -2784,6 +2855,7 @@ export type UserUpdateWithoutReadingListInput = {
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReadingListInput = {
@@ -2817,6 +2889,7 @@ export type UserUncheckedUpdateWithoutReadingListInput = {
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutDmThreadsFirstInput = {
@@ -2850,6 +2923,7 @@ export type UserCreateWithoutDmThreadsFirstInput = {
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutDmThreadsFirstInput = {
@@ -2883,6 +2957,7 @@ export type UserUncheckedCreateWithoutDmThreadsFirstInput = {
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutDmThreadsFirstInput = {
@@ -2921,6 +2996,7 @@ export type UserCreateWithoutDmThreadsSecondInput = {
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutDmThreadsSecondInput = {
@@ -2954,6 +3030,7 @@ export type UserUncheckedCreateWithoutDmThreadsSecondInput = {
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutDmThreadsSecondInput = {
@@ -3003,6 +3080,7 @@ export type UserUpdateWithoutDmThreadsFirstInput = {
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDmThreadsFirstInput = {
@@ -3036,6 +3114,7 @@ export type UserUncheckedUpdateWithoutDmThreadsFirstInput = {
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUpsertWithoutDmThreadsSecondInput = {
@@ -3080,6 +3159,7 @@ export type UserUpdateWithoutDmThreadsSecondInput = {
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDmThreadsSecondInput = {
@@ -3113,6 +3193,7 @@ export type UserUncheckedUpdateWithoutDmThreadsSecondInput = {
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutSentDmsInput = {
@@ -3146,6 +3227,7 @@ export type UserCreateWithoutSentDmsInput = {
   readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
   dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  postImages?: Prisma.PostImageCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutSentDmsInput = {
@@ -3179,6 +3261,7 @@ export type UserUncheckedCreateWithoutSentDmsInput = {
   readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
   dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  postImages?: Prisma.PostImageUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutSentDmsInput = {
@@ -3228,6 +3311,7 @@ export type UserUpdateWithoutSentDmsInput = {
   readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
   dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  postImages?: Prisma.PostImageUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentDmsInput = {
@@ -3261,6 +3345,159 @@ export type UserUncheckedUpdateWithoutSentDmsInput = {
   readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
   dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
   dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  postImages?: Prisma.PostImageUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutPostImagesInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutPostImagesInput = {
+  id?: string
+  username: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  avatarUrl?: string | null
+  coverUrl?: string | null
+  location?: string | null
+  website?: string | null
+  role?: $Enums.Role
+  isBanned?: boolean
+  banReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  actorNotifs?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  chatThread?: Prisma.ChatThreadUncheckedCreateNestedOneWithoutUserInput
+  handledThreads?: Prisma.ChatThreadUncheckedCreateNestedManyWithoutHandledByInput
+  reportsFiled?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  readingList?: Prisma.ReadingListItemUncheckedCreateNestedManyWithoutUserInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedCreateNestedManyWithoutFirstInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedCreateNestedManyWithoutSecondInput
+  sentDms?: Prisma.DmMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutPostImagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPostImagesInput, Prisma.UserUncheckedCreateWithoutPostImagesInput>
+}
+
+export type UserUpsertWithoutPostImagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPostImagesInput, Prisma.UserUncheckedUpdateWithoutPostImagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPostImagesInput, Prisma.UserUncheckedCreateWithoutPostImagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPostImagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPostImagesInput, Prisma.UserUncheckedUpdateWithoutPostImagesInput>
+}
+
+export type UserUpdateWithoutPostImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPostImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  actorNotifs?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  chatThread?: Prisma.ChatThreadUncheckedUpdateOneWithoutUserNestedInput
+  handledThreads?: Prisma.ChatThreadUncheckedUpdateManyWithoutHandledByNestedInput
+  reportsFiled?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  readingList?: Prisma.ReadingListItemUncheckedUpdateManyWithoutUserNestedInput
+  dmThreadsFirst?: Prisma.DmThreadUncheckedUpdateManyWithoutFirstNestedInput
+  dmThreadsSecond?: Prisma.DmThreadUncheckedUpdateManyWithoutSecondNestedInput
+  sentDms?: Prisma.DmMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 
@@ -3284,6 +3521,7 @@ export type UserCountOutputType = {
   dmThreadsFirst: number
   dmThreadsSecond: number
   sentDms: number
+  postImages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3302,6 +3540,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   dmThreadsFirst?: boolean | UserCountOutputTypeCountDmThreadsFirstArgs
   dmThreadsSecond?: boolean | UserCountOutputTypeCountDmThreadsSecondArgs
   sentDms?: boolean | UserCountOutputTypeCountSentDmsArgs
+  postImages?: boolean | UserCountOutputTypeCountPostImagesArgs
 }
 
 /**
@@ -3419,6 +3658,13 @@ export type UserCountOutputTypeCountSentDmsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.DmMessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPostImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PostImageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3452,6 +3698,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   dmThreadsFirst?: boolean | Prisma.User$dmThreadsFirstArgs<ExtArgs>
   dmThreadsSecond?: boolean | Prisma.User$dmThreadsSecondArgs<ExtArgs>
   sentDms?: boolean | Prisma.User$sentDmsArgs<ExtArgs>
+  postImages?: boolean | Prisma.User$postImagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3527,6 +3774,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   dmThreadsFirst?: boolean | Prisma.User$dmThreadsFirstArgs<ExtArgs>
   dmThreadsSecond?: boolean | Prisma.User$dmThreadsSecondArgs<ExtArgs>
   sentDms?: boolean | Prisma.User$sentDmsArgs<ExtArgs>
+  postImages?: boolean | Prisma.User$postImagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3551,6 +3799,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     dmThreadsFirst: Prisma.$DmThreadPayload<ExtArgs>[]
     dmThreadsSecond: Prisma.$DmThreadPayload<ExtArgs>[]
     sentDms: Prisma.$DmMessagePayload<ExtArgs>[]
+    postImages: Prisma.$PostImagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3978,6 +4227,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   dmThreadsFirst<T extends Prisma.User$dmThreadsFirstArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dmThreadsFirstArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dmThreadsSecond<T extends Prisma.User$dmThreadsSecondArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dmThreadsSecondArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentDms<T extends Prisma.User$sentDmsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentDmsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DmMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  postImages<T extends Prisma.User$postImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4791,6 +5041,30 @@ export type User$sentDmsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.DmMessageScalarFieldEnum | Prisma.DmMessageScalarFieldEnum[]
+}
+
+/**
+ * User.postImages
+ */
+export type User$postImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PostImage
+   */
+  select?: Prisma.PostImageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PostImage
+   */
+  omit?: Prisma.PostImageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PostImageInclude<ExtArgs> | null
+  where?: Prisma.PostImageWhereInput
+  orderBy?: Prisma.PostImageOrderByWithRelationInput | Prisma.PostImageOrderByWithRelationInput[]
+  cursor?: Prisma.PostImageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PostImageScalarFieldEnum | Prisma.PostImageScalarFieldEnum[]
 }
 
 /**

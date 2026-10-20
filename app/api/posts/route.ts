@@ -20,6 +20,7 @@ const createSchema = z.object({
   imageFileId: z.string().optional().nullable(),
   bookTitle: z.string().max(200).optional().nullable(),
   bookAuthor: z.string().max(200).optional().nullable(),
+  isSpoiler: z.boolean().optional(),
 });
 
 export async function GET(req: Request) {
@@ -103,18 +104,32 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
 
-  const post = await prisma.post.create({
-    data: {
-      content: parsed.data.content,
-      imageUrl: parsed.data.imageUrl ?? undefined,
-      imageFileId: parsed.data.imageFileId ?? undefined,
-      bookTitle: parsed.data.bookTitle ?? undefined,
-      bookAuthor: parsed.data.bookAuthor ?? undefined,
-      authorId: session.user.id,
-    },
-    include: {
-      author: { select: { id: true, username: true, name: true, avatarUrl: true, role: true } },
-    },
+  if (parsed.data.imageUrl || parsed.data.imageFileId) {
+    if (!parsed.data.imageUrl || !parsed.data.imageFileId) return NextResponse.json({ error: "Gambar tidak valid" }, { status: 400 });
+    const asset = await prisma.postImage.findUnique({ where: { fileId: parsed.data.imageFileId } });
+    if (!asset || asset.ownerId !== session.user.id || asset.postId || asset.pendingDelete || asset.url !== parsed.data.imageUrl) {
+      return NextResponse.json({ error: "Gambar bukan milik akun ini atau sudah digunakan" }, { status: 400 });
+    }
+  }
+
+  const post = await prisma.$transaction(async (tx) => {
+    const created = await tx.post.create({
+      data: {
+        content: parsed.data.content,
+        imageUrl: parsed.data.imageUrl ?? undefined,
+        imageFileId: parsed.data.imageFileId ?? undefined,
+        bookTitle: parsed.data.bookTitle ?? undefined,
+        bookAuthor: parsed.data.bookAuthor ?? undefined,
+        isSpoiler: parsed.data.isSpoiler ?? false,
+        authorId: session.user.id,
+      },
+      include: { author: { select: { id: true, username: true, name: true, avatarUrl: true, role: true } } },
+    });
+    if (parsed.data.imageFileId) {
+      const claimed = await tx.postImage.updateMany({ where: { fileId: parsed.data.imageFileId, ownerId: session.user.id, postId: null, pendingDelete: false, url: parsed.data.imageUrl! }, data: { postId: created.id } });
+      if (claimed.count !== 1) throw new Error("Gambar sudah digunakan");
+    }
+    return created;
   });
 
   return NextResponse.json({ post }, { status: 201 });
